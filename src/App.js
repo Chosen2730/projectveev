@@ -3,7 +3,7 @@ import AppRoute from "./Routes/routes";
 
 function App() {
   return (
-    <div>
+    <div className='mx-auto max-w-7xl'>
       <AppRoute />
     </div>
   );
