@@ -8,7 +8,7 @@ const Hero = () => {
       <h1 className='text-5xl md:text-8xl font-bold text-white'>
         Repping a <br /> better you!
       </h1>
-      <button className='uppercase font-medium text-lg bg-black w-fit p-4 px-12 text-white my-5 hover:scale-105 hover:bg-gray-900'>
+      <button className='uppercase font-medium text-sm bg-black w-fit p-4 px-12 text-white my-5 hover:scale-105 hover:bg-gray-700'>
         Shop now
       </button>
       <div className='flex items-center cat-bg-grad gap-4 p-8 w-full sm:w-[40%] ml-auto'>
