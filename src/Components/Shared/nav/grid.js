@@ -6,7 +6,7 @@ import { BsSearch } from "react-icons/bs";
 
 const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
   return (
-    <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-md bg-white my-5'>
+    <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-xl shadow-gray-200 bg-white my-5'>
       <Link>
         <img src={logo} alt='logo' className='w-52' />
       </Link>

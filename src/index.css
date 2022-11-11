@@ -6,3 +6,45 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hero-bg {
+  background-image: url("./images/hero-img.png");
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.cat-bg-grad {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.horScroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #e1e1e1;
+}
+
+.horScroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px white;
+  border-radius: 10px;
+}
+
+.horScroll::-webkit-scrollbar-thumb {
+  background: #0700007c;
+  border-radius: 10px;
+}
+
+.horScroll::-webkit-scrollbar-thumb:hover {
+  background: #a5a7a8;
+}
+.overflow {
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.overflow::-webkit-scrollbar {
+  display: none;
+}
