@@ -4,7 +4,7 @@ import Slide from "./categorySlide";
 import { category } from "../../Utils/category";
 const Hero = () => {
   return (
-    <div className='min-h-screen hero-bg flex flex-col justify-center p-8'>
+    <div className='min-h-[600px] hero-bg flex flex-col justify-center p-8'>
       <h1 className='text-5xl md:text-8xl font-bold text-white'>
         Repping a <br /> better you!
       </h1>
