@@ -1,7 +1,5 @@
 import React from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import Slide from "./categorySlide";
-import { category } from "../../Utils/category";
 const Hero = () => {
   return (
     <div className='min-h-[600px] hero-bg flex flex-col justify-center p-8'>

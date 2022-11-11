@@ -9,7 +9,7 @@ const List = ({ selectedIndex, setSelectedIndex, navItems, isSideBarOpen }) => {
     <nav
       className={`${
         isSideBarOpen ? "translate-x-0" : "translate-x-full"
-      } transition fixed flex flex-col items-center top-0 md:hidden gap-4 p-8 shadow-md bg-white w-[70%] min-h-screen right-0`}
+      } transition fixed flex flex-col items-center top-0 md:hidden gap-4 p-8 shadow-md bg-white w-[70%] min-h-screen right-0 z-50`}
     >
       <Link>
         <img src={logo} alt='logo' className='w-56' />
