@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Subscribe = () => {
+  const [focus, setFocus] = useState(false);
   return (
-    <div className='md:w-3/4 mx-auto'>
+    <div className='max-w-md mx-auto'>
       <p className='text-sm text-center'>
         Hear the lastest. (new products, exclusive offers and other suprises)
       </p>
@@ -16,8 +17,9 @@ const Subscribe = () => {
           className='w-full p-3 rounded-full px-8'
           placeholder='Email address'
           type='email'
+          onFocus={() => setFocus(true)}
         />
-        <button className='rounded-full p-4 bg-black text-white px-10'>
+        <button className='rounded-full p-4 py-6 bg-black text-white px-10'>
           Submit
         </button>
       </form>

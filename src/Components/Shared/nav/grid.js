@@ -6,17 +6,17 @@ import { BsSearch } from "react-icons/bs";
 
 const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
   return (
-    <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-xl shadow-gray-200 bg-white my-5'>
+    <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-xl shadow-gray-100 bg-white my-5'>
       <Link>
         <img src={logo} alt='logo' className='w-52' />
       </Link>
-      <div className='flex gap-4 items-center justify-center'>
+      <div className='flex gap-12 items-center justify-center'>
         {navItems.map((item, index) => {
           return (
             <Link
               className={`${
                 selectedIndex === index ? "border-b-2 border-b-black" : ""
-              } uppercase font-medium hover:border-b-2 md:hover:border-b-gray-400 hover:text-gray-400 transition text-sm`}
+              } uppercase font-medium hover:border-b-2 md:hover:border-b-gray-400 hover:text-gray-400 transition text-xs`}
               key={index}
               to={item.url}
               onClick={() => setSelectedIndex(index)}

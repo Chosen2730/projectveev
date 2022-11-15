@@ -23,7 +23,7 @@ const Nav = () => {
         >
           {isSideBarOpen ? <IoMdClose /> : <RiMenu4Fill />}
         </i>
-        <div className='ml-auto font-medium flex gap-2 items-center text-xs p-4 shadow-md w-fit rounded-md'>
+        <div className='ml-auto font-medium flex gap-2 items-center text-xs p-4 shadow-xl shadow-gray-100 w-fit rounded-md'>
           <img className='w-5 h-5' src={ngn} alt='' />
           <h1>|</h1>
           <h1>Nigeria</h1>
@@ -32,7 +32,7 @@ const Nav = () => {
           <img
             src='https://media.istockphoto.com/id/517998264/vector/male-user-icon.jpg?s=612x612&w=0&k=20&c=4RMhqIXcJMcFkRJPq6K8h7ozuUoZhPwKniEke6KYa_k='
             alt='profile-img'
-            className='w-7 h-7 object-cover rounded-full border-2 border-black shadow-md bg-black'
+            className='w-7 h-7 object-cover rounded-full border-2 border-black shadow-md  bg-black'
           />
         </div>
       </div>

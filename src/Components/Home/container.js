@@ -8,11 +8,11 @@ const Container = ({ name, data }) => {
   return (
     <div className='my-20'>
       <div className='flex gap-3 items-center my-6'>
-        <div className='h-1 w-full bg-gradient-to-r from-white via-gray-400 to-gray-700' />
+        <div className='h-[2px] w-full bg-gray-700 ' />
         <h2 className='uppercase text-xl md:text-2xl font-bold w-full text-center'>
           {name}
         </h2>
-        <div className='h-1 w-full bg-gradient-to-l from-white via-gray-400 to-gray-700' />
+        <div className='h-[2px] w-full bg-gray-700' />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {data?.slice(0, 3).map(({ img, item, price, oldPrice }, i) => {
@@ -22,7 +22,7 @@ const Container = ({ name, data }) => {
               key={i}
             >
               <img
-                className='w-full h-[500px] object-cover shadow-md rounded-md'
+                className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                 src={img}
                 alt={item}
               />
@@ -35,7 +35,7 @@ const Container = ({ name, data }) => {
                 />
               </div>
               <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
-              <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28'>
+              <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'>
                 Add to Cart
                 <FaOpencart className='text-2xl' />
               </button>
