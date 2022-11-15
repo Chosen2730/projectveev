@@ -2,7 +2,7 @@ import React from "react";
 
 const Slide = ({ data }) => {
   return (
-    <div className='my-10 max-w-6xl mx-auto md:-mt-28 p-8'>
+    <div className='my-10 mx-auto md:-mt-28'>
       <div className='grid grid-flow-col overflow-x-scroll horScroll scroll gap-6 md:gap-2'>
         {data.map(({ title, img }, i) => {
           return (
