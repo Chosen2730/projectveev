@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdFilterList } from "react-icons/md";
 import { allCategory } from "../../Utils/category";
 
 const Header = () => {
@@ -20,14 +21,17 @@ const Header = () => {
           </h1>
         ))}
       </div>
-      <div className='md:hidden w-full flex items-center bg-black text-white gap-4'>
-        <select className='bg-black w-full p-4 rounded-md'>
-          {allCategory.map((item, i) => (
-            <option className='capitalize text-sm' key={i}>
-              {item}
-            </option>
-          ))}
-        </select>
+      <div className='p-4 flex items-center md:hidden bg-black '>
+        <MdFilterList className='text-3xl text-white' />
+        <div className='w-full flex items-center bg-black text-white gap-4'>
+          <select className='w-full bg-black  p-4 rounded-md'>
+            {allCategory.map((item, i) => (
+              <option className='capitalize text-sm' key={i}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </section>
   );
