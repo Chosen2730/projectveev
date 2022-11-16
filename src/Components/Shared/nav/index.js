@@ -37,7 +37,7 @@ const Nav = () => {
         >
           {isSideBarOpen ? <IoMdClose /> : <RiMenu4Fill />}
         </i>
-        <div className='shadow-xl shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-0 right-5 bg-white'>
+        <div className='shadow-md shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-0 right-5 bg-white'>
           <div
             className='font-medium flex gap-2 items-center text-xs'
             onClick={() => setIsDropDown(!isDropDown)}

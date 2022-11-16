@@ -4,7 +4,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const auth = getAuth();
 const googleProvider = new GoogleAuthProvider();
-const ADMIN_EMAIL = "patiencesimoniseoluwa@gmail.com";
+const ADMINS = ["patiencesimoniseoluwa@gmail.com", "olaitantijesuni@gmail.com"];
+
 const initialState = {
   isLoggedIn: false,
   token: "",
@@ -47,12 +48,15 @@ const authSlice = createSlice({
       state.token = newToken;
       state.isLoggedIn = true;
       state.user = {
+        ...user,
         name: user.displayName,
         email: user.email,
         img: user.photoURL,
       };
-      if (state.user.email === ADMIN_EMAIL) {
-        state.user.admin = true;
+      for (let i = 0; i < ADMINS.length; i++) {
+        if (state.user.email === ADMINS[i]) {
+          state.user.admin = true;
+        }
       }
     },
     [login.rejected]: (state) => {
