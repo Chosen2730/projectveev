@@ -1,6 +1,10 @@
 import React from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { useSelector } from "react-redux";
+
 const Hero = () => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <div className='min-h-[600px] hero-bg flex flex-col justify-center p-8'>
       <h1 className='text-5xl md:text-8xl font-bold text-white'>

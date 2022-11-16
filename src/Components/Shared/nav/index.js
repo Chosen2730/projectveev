@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import ngn from "../../../images/flag.png";
-import { RiMenu4Fill } from "react-icons/ri";
+import { RiMenu4Fill, RiUserAddLine } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import Grid from "./grid";
 import List from "./list";
+import { BsChevronDown } from "react-icons/bs";
+import { AiOutlineUser, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../../../Redux/features/authSlice";
 
 const Nav = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isDropDown, setIsDropDown] = useState(false);
   const navItems = [
     { item: "Home", url: "/" },
     { item: "Shop", url: "/shop" },
     { item: "About Us", url: "/about" },
     { item: "Events", url: "/events" },
   ];
+  const dispatch = useDispatch();
+  const {
+    isLoggedIn,
+    user: { name, img, admin },
+  } = useSelector((state) => state.auth);
+  const imageUrl =
+    img ||
+    "https://media.istockphoto.com/id/517998264/vector/male-user-icon.jpg?s=612x612&w=0&k=20&c=4RMhqIXcJMcFkRJPq6K8h7ozuUoZhPwKniEke6KYa_k=";
+
   return (
-    <div className='p-4'>
+    <div className='p-4 relative'>
       <div className='flex items-center justify-between bg-white uppercase'>
         <i
           className='bg-black rounded-md md:hidden text-white p-3 text-xl shadow-md items-center justify-center text-center'
@@ -23,17 +37,72 @@ const Nav = () => {
         >
           {isSideBarOpen ? <IoMdClose /> : <RiMenu4Fill />}
         </i>
-        <div className='ml-auto font-medium flex gap-2 items-center text-xs p-4 shadow-xl shadow-gray-100 w-fit rounded-md'>
-          <img className='w-5 h-5' src={ngn} alt='' />
-          <h1>|</h1>
-          <h1>Nigeria</h1>
-          <h1>NGN</h1>
-          <h1>|</h1>
-          <img
-            src='https://media.istockphoto.com/id/517998264/vector/male-user-icon.jpg?s=612x612&w=0&k=20&c=4RMhqIXcJMcFkRJPq6K8h7ozuUoZhPwKniEke6KYa_k='
-            alt='profile-img'
-            className='w-7 h-7 object-cover rounded-full border-2 border-black shadow-md  bg-black'
-          />
+        <div className='shadow-xl shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-0 right-5 bg-white'>
+          <div
+            className='font-medium flex gap-2 items-center text-xs'
+            onClick={() => setIsDropDown(!isDropDown)}
+          >
+            <img className='w-5 h-5' src={ngn} alt='' />
+            <h1>|</h1>
+            <h1>Nigeria</h1>
+            <h1>NGN</h1>
+            <h1>|</h1>
+            <img
+              src={imageUrl}
+              alt=''
+              className='w-7 h-7 object-cover rounded-full border-2 shadow-md  bg-black'
+            />
+            <i className='cursor-pointer'>
+              <BsChevronDown />
+            </i>
+          </div>
+          <div className={`${isDropDown ? "block" : "hidden"} transition`}>
+            {isLoggedIn && (
+              <div>
+                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'>
+                  <i className='text-lg'>
+                    <AiOutlineUser />
+                  </i>
+                  <h1 className='capitalize'>{name}</h1>
+                </div>
+                {admin && (
+                  <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'>
+                    <i className='text-lg'>
+                      <RiUserAddLine />
+                    </i>
+                    <h1 className='capitalize'>Admin Area</h1>
+                  </div>
+                )}
+              </div>
+            )}
+            {isLoggedIn ? (
+              <div
+                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500'
+                onClick={() => {
+                  setIsDropDown(false);
+                  dispatch(logout());
+                }}
+              >
+                <i className='text-lg'>
+                  <AiOutlineLogout />
+                </i>
+                <h1 className='capitalize'>Logout</h1>
+              </div>
+            ) : (
+              <div
+                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'
+                onClick={() => {
+                  setIsDropDown(false);
+                  dispatch(login());
+                }}
+              >
+                <i className='text-lg'>
+                  <AiOutlineLogin />
+                </i>
+                <h1 className='capitalize'>Login</h1>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <Grid
