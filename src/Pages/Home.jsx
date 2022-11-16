@@ -10,7 +10,7 @@ import { featured, trending } from "../Utils/products";
 
 const Home = () => {
   return (
-    <Shared>
+    <>
       <Hero />
       <div className='max-w-6xl mx-auto p-8'>
         <Slide data={category} />
@@ -19,7 +19,7 @@ const Home = () => {
         <Testimonial />
         <Subscribe />
       </div>
-    </Shared>
+    </>
   );
 };
 

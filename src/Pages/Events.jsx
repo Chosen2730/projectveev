@@ -2,11 +2,7 @@ import React from "react";
 import Shared from "../Components/Shared";
 
 const Events = () => {
-  return (
-    <Shared>
-      <h2>Events</h2>
-    </Shared>
-  );
+  return <h2>Events</h2>;
 };
 
 export default Events;

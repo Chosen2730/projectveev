@@ -20,3 +20,30 @@ export const category = [
     img: "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/72/2066921/1.jpg?0345",
   },
 ];
+export const allCategory = [
+  "Ready-To-Wear",
+  "Women",
+  "Men",
+  "Kids",
+  "Fabrics",
+  "Custom",
+];
+
+export const sizes = [
+  "one size",
+  "8",
+  "10",
+  "12",
+  "14",
+  "16",
+  "s",
+  "m",
+  "l",
+  "xl",
+  "xxl",
+  "xxxl",
+];
+
+export const color = ["red", "blue", "black", "green", "orange", "purple"];
+export const status = ["On Sale", "Featured", "In Stock", "On Backorder"];
+export const prices = ["$0 - $25", "$25 - $30", "$31 - $40", "$40 - $50"];
