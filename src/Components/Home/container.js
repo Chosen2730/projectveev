@@ -3,6 +3,7 @@ import Currency from "../Configs/currency";
 import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Container = ({ name, data }) => {
   return (
@@ -34,7 +35,9 @@ const Container = ({ name, data }) => {
                   amount={oldPrice}
                 />
               </div>
-              <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
+              <Link to={`/product/${i}`} className='modal_buttons link'>
+                <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
+              </Link>
               <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'>
                 Add to Cart
                 <FaOpencart className='text-2xl' />
@@ -44,10 +47,12 @@ const Container = ({ name, data }) => {
         })}
       </div>
       <div className='flex items-center justify-center mb-10'>
-        <button className='hover:scale-105 transition flex items-center justify-center border-2 border-black text-black p-4 px-8 rounded-full bg-white'>
-          See More
-          <IoIosArrowForward className='text-2xl' />
-        </button>
+        <Link to='shop'>
+          <button className='hover:scale-105 transition flex items-center justify-center border-2 border-black text-black p-4 px-8 rounded-full bg-white'>
+            See More
+            <IoIosArrowForward className='text-2xl' />
+          </button>
+        </Link>
       </div>
     </div>
   );

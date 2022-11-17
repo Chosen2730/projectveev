@@ -2,12 +2,13 @@ import React from "react";
 import Currency from "../Configs/currency";
 import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const ProductContainer = ({ name, data }) => {
+const ProductContainer = ({ data }) => {
   return (
     <div className='my-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        {data?.slice(0, 3).map(({ img, item, price, oldPrice }, i) => {
+        {data?.map(({ img, item, price, oldPrice }, i) => {
           return (
             <div
               className='flex flex-col items-center justify-center relative'
@@ -26,7 +27,9 @@ const ProductContainer = ({ name, data }) => {
                   amount={oldPrice}
                 />
               </div>
-              <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
+              <Link to={`/product/${i}`} className='modal_buttons link'>
+                <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
+              </Link>
               <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'>
                 Add to Cart
                 <FaOpencart className='text-2xl' />

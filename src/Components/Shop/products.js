@@ -3,8 +3,8 @@ import { MdFilterList } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import SideFilter from "./SideFilter";
 import { hideFilter } from "../../Redux/features/productSlice";
-import { featured, trending } from "../../Utils/products";
 import ProductContainer from "./productContainer";
+import { arr } from "../../Redux/features/productSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -23,8 +23,7 @@ const Products = () => {
           </h1>
           <MdFilterList className='text-2xl' />
         </div>
-        <ProductContainer data={featured} />
-        <ProductContainer data={trending} />
+        <ProductContainer data={arr} />
       </div>
     </div>
   );

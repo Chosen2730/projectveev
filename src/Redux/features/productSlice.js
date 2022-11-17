@@ -1,4 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { featured, trending } from "../../Utils/products";
+
+export const arr = [...featured, ...trending];
 
 const initialState = {
   filterShown: true,
