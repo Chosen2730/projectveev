@@ -39,7 +39,7 @@ const Nav = () => {
         </i>
         <div className='shadow-md shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-0 right-5 bg-white'>
           <div
-            className='font-medium flex gap-2 items-center text-xs'
+            className='font-medium flex gap-2 items-center text-xs cursor-pointer'
             onClick={() => setIsDropDown(!isDropDown)}
           >
             <img className='w-5 h-5' src={ngn} alt='' />
@@ -59,14 +59,14 @@ const Nav = () => {
           <div className={`${isDropDown ? "block" : "hidden"} transition`}>
             {isLoggedIn && (
               <div>
-                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'>
+                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'>
                   <i className='text-lg'>
                     <AiOutlineUser />
                   </i>
                   <h1 className='capitalize'>{name}</h1>
                 </div>
                 {admin && (
-                  <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'>
+                  <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'>
                     <i className='text-lg'>
                       <RiUserAddLine />
                     </i>
@@ -77,7 +77,7 @@ const Nav = () => {
             )}
             {isLoggedIn ? (
               <div
-                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500'
+                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'
                 onClick={() => {
                   setIsDropDown(false);
                   dispatch(logout());
@@ -90,7 +90,7 @@ const Nav = () => {
               </div>
             ) : (
               <div
-                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4'
+                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'
                 onClick={() => {
                   setIsDropDown(false);
                   dispatch(login());
