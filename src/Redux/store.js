@@ -3,8 +3,9 @@ import authReducer from "./features/authSlice";
 import productReducer from "./features/productSlice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore, createMigrate } from "redux-persist";
 import thunk from "redux-thunk";
+import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  stateReconciler: autoMergeLevel2,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

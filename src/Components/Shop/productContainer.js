@@ -3,6 +3,7 @@ import Currency from "../Configs/currency";
 import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { addToCart } from "../../Redux/features/productSlice";
 
 const ProductContainer = ({ data }) => {
   return (
@@ -30,7 +31,10 @@ const ProductContainer = ({ data }) => {
               <Link to={`/product/${i}`} className='modal_buttons link'>
                 <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
               </Link>
-              <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'>
+              <button
+                className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'
+                // onClick={() => dispatch(addToCart({ id }))}
+              >
                 Add to Cart
                 <FaOpencart className='text-2xl' />
               </button>

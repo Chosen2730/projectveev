@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { MdArrowBack, MdAttachMoney } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Currency from "../Components/Configs/currency";
 import Container from "../Components/Home/container";
 import { arr } from "../Redux/features/productSlice";
 import { sizes } from "../Utils/category";
 import { featured } from "../Utils/products";
+import { addToCart, updateQty } from "../Redux/features/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const Product = () => {
+  const navigate = useNavigate();
   const { productId } = useParams();
   const { desc, img, oldPrice, price, item } = arr[productId];
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
+  const dispatch = useDispatch();
+  const { qty } = useSelector((state) => state.product);
+
   return (
     <div className='mx-auto max-w-6xl p-4'>
       <Link to='/shop'>
@@ -86,15 +93,24 @@ const Product = () => {
           </div>
           <div className='grid grid-cols-1 xl:flex gap-6'>
             <div className='flex gap-5 justify-center w-fit items-center border border-black'>
-              <h2 className='p-2 cursor-pointer select-none text-2xl font-medium'>
+              <h2
+                className='p-2 cursor-pointer select-none text-2xl font-medium'
+                onClick={() => dispatch(updateQty({ qty, action: "DEC" }))}
+              >
                 -
               </h2>
-              <h2 className='font-medium text-xl'>2</h2>
-              <h2 className='p-2 cursor-pointer select-none text-2xl font-medium'>
+              <h2 className='font-medium text-xl'>{qty}</h2>
+              <h2
+                className='p-2 cursor-pointer select-none text-2xl font-medium'
+                onClick={() => dispatch(updateQty({ qty, action: "INC" }))}
+              >
                 +
               </h2>
             </div>
-            <button className='font-medium flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition'>
+            <button
+              className='font-medium flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition'
+              onClick={() => dispatch(addToCart({ navigate, productId, qty }))}
+            >
               Add to Cart
               <FaOpencart className='text-2xl' />
             </button>

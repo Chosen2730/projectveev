@@ -7,6 +7,7 @@ import Shop from "../Pages/Shop";
 import Nav from "../Components/Shared/nav";
 import Footer from "../Components/Shared/footer";
 import Product from "../Pages/Product";
+import Cart from "../Pages/Cart";
 
 const AppRoute = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoute = () => {
         <Route path='/events' element={<Events />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/product/:productId/' element={<Product />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<h1>Error page</h1>} />
       </Routes>
       <Footer />
