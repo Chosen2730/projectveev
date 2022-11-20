@@ -71,6 +71,6 @@ html {
 }
 @media (max-width: 768px) {
   .category {
-    padding: 6rem 2rem;
+    padding: 2rem 1rem;
   }
 }

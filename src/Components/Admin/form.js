@@ -49,8 +49,9 @@ const Form = () => {
                   placeholder='Browse to upload your file'
                   className='hidden'
                   id='image'
+                  accept='image/*'
                   value={""}
-                  // onChange={imageHandler}
+                  onChange={(e) => console.log(e.target.files[0])}
                 />
                 " Browse to upload your file"
                 <h4>Image uploaded</h4>
