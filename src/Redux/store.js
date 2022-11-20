@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
 import productReducer from "./features/productSlice";
+import adminReducer from "./features/adminSlice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore, createMigrate } from "redux-persist";
@@ -10,6 +11,7 @@ import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 const rootReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
+  admin: adminReducer,
 });
 
 const persistConfig = {

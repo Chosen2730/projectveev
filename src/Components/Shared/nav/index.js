@@ -8,6 +8,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../Redux/features/authSlice";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -66,12 +67,14 @@ const Nav = () => {
                   <h1 className='capitalize'>{name}</h1>
                 </div>
                 {admin && (
-                  <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'>
-                    <i className='text-lg'>
-                      <RiUserAddLine />
-                    </i>
-                    <h1 className='capitalize'>Admin Area</h1>
-                  </div>
+                  <Link to='/admin'>
+                    <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'>
+                      <i className='text-lg'>
+                        <RiUserAddLine />
+                      </i>
+                      <h1 className='capitalize'>Admin Area</h1>
+                    </div>
+                  </Link>
                 )}
               </div>
             )}
