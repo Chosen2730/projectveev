@@ -23,7 +23,7 @@ const Header = () => {
               } capitalize flex flex-col items-center justify-center gap-2 transition hover:text-gray-300 cursor-pointer`}
               onClick={() => dispatch(setSelectedHeaderIndex(id))}
             >
-              <i className='text-3xl'>
+              <i className='text-xl md:text-3xl'>
                 {id === 0 ? (
                   <MdSpaceDashboard />
                 ) : id === 1 ? (
@@ -36,7 +36,7 @@ const Header = () => {
                   <FaLuggageCart />
                 )}
               </i>
-              <h2 className='text-sm select-none'>{item}</h2>{" "}
+              <h2 className='text-xs sm:text-sm select-none'>{item}</h2>{" "}
             </div>
           );
         })}

@@ -48,3 +48,29 @@ html {
 .overflow::-webkit-scrollbar {
   display: none;
 }
+.category {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  position: fixed;
+  top: 0;
+  width: 100%;
+  right: 0;
+  transition: all 0.5s ease-in-out;
+  transform: scale(1);
+  padding: 4rem;
+}
+.hider {
+  transform: scale(0);
+}
+.gridLayout {
+  grid-template-columns: 230px 100px 350px 120px 80px 100px;
+}
+@media (max-width: 768px) {
+  .category {
+    padding: 6rem 2rem;
+  }
+}
