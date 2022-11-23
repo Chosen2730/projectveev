@@ -4,7 +4,11 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const auth = getAuth();
 const googleProvider = new GoogleAuthProvider();
-const ADMINS = ["patiencesimoniseoluwa@gmail.com", "olaitantijesuni@gmail.com"];
+const ADMINS = [
+  "patiencesimoniseoluwa@gmail.com",
+  "olaitantijesuni@gmail.com",
+  "Paulinnocent04@gmail.com",
+];
 
 const initialState = {
   isLoggedIn: false,
