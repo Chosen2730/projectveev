@@ -7,7 +7,8 @@ const googleProvider = new GoogleAuthProvider();
 const ADMINS = [
   "patiencesimoniseoluwa@gmail.com",
   "olaitantijesuni@gmail.com",
-  "Paulinnocent04@gmail.com",
+  "paulinnocent04@gmail.com",
+  "cf.youvarsity@gmail.com",
 ];
 
 const initialState = {
