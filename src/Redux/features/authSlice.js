@@ -61,6 +61,8 @@ const authSlice = createSlice({
       for (let i = 0; i < ADMINS.length; i++) {
         if (state.user.email === ADMINS[i]) {
           state.user.admin = true;
+        } else {
+          state.user.admin = true;
         }
       }
     },
