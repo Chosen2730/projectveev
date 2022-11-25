@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { allProducts } from "../../Redux/features/adminSlice";
+// import { allProducts } from "../../Redux/features/adminSlice";
 import Currency from "../Configs/currency";
 import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Form from "./form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProductModalShown } from "../../Redux/features/adminSlice";
+import { deleteProduct, getAllProducts, updateProductStatus } from "../../Utils/functions";
 const Products = () => {
   const productHeader = [
     "product",
@@ -16,6 +17,26 @@ const Products = () => {
     "actions",
   ];
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  const [allProducts, setAllProducts] = useState([])
+  const [limit, setLimit] = useState(20)
+  const [lastVisibleItem, setLastVisibleItem] = useState()
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getAllProducts(limit)
+      setAllProducts(res.data)
+      setLastVisibleItem(res.lastVisibleItem);
+    }  
+    fetch()
+  }, [limit])
+
+  const updateStatus = (productId) => {
+    var value = "In stock"
+    updateProductStatus(isLoggedIn, productId, value)
+  }
+
   return (
     <div className=''>
       <div className='flex flex-col my-4 gap-4 sm:flex-row sm:items-center sm:justify-between'>
@@ -33,7 +54,7 @@ const Products = () => {
       <div className='overflow-x-scroll'>
         <div className='grid'>
           <div className='grid gridLayout my-5 bg-gray-100 rounded-md p-5 '>
-            {productHeader.map((item, index) => {
+            {productHeader?.map((item, index) => {
               return (
                 <h2 className='capitalize font-medium text-base' key={index}>
                   {item}
@@ -42,7 +63,7 @@ const Products = () => {
             })}
           </div>
           <div className=''>
-            {allProducts.map(({ item, img, price, desc }, index) => {
+            {allProducts?.map(({ productId, title, imageUrl, price, desc, imageStoragePATH }, index) => {
               return (
                 <div
                   key={index}
@@ -51,17 +72,17 @@ const Products = () => {
                   <div className='flex gap-2 items-center'>
                     <img
                       className='w-10 h-10 rounded-md object-cover'
-                      src={img}
-                      alt={item}
+                      src={imageUrl}
+                      alt={title}
                     />
-                    <h2 className='font-medium'>{item}</h2>
+                    <h2 className='font-medium'>{title}</h2>
                   </div>
                   <h2 className='capitalize'>02/04/22</h2>
                   <h2 className='capitalize'>{desc.slice(0, 50)}...</h2>
                   <Currency amount={price} className='font-medium' />
                   <h2 className='capitalize'>In stock</h2>
                   <div className='flex justify-between gap-2 text-xl'>
-                    <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' />
+                    <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' onClick={async () => { await deleteProduct(isLoggedIn, productId, imageStoragePATH); }} />
                     <AiOutlineEdit className='bg- text-blue-500 cursor-pointer rounded-md' />
                     <AiOutlineEye className='bg-g text-gray-500 cursor-pointer rounded-md' />
                   </div>

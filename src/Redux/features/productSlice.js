@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getAllProducts } from "../../Utils/functions";
 import { featured, trending } from "../../Utils/products";
 
 export const arr = [...featured, ...trending];
+
+// export const arr = async () => await getAllProducts(20)
 
 const initialState = {
   filterShown: true,
