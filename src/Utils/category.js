@@ -45,5 +45,7 @@ export const sizes = [
 ];
 
 export const color = ["red", "blue", "black", "green", "orange", "purple"];
+
 export const status = ["On Sale", "Featured", "In Stock", "On Backorder"];
+
 export const prices = ["$0 - $25", "$25 - $30", "$31 - $40", "$40 - $50"];

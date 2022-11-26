@@ -1,8 +1,20 @@
 import React from "react";
 
-const Input = ({ id, title, input, textarea, type, dropdown, data, setItem, value }) => {
+const Input = ({
+  id,
+  title,
+  input,
+  textarea,
+  type,
+  dropdown,
+  data,
+  setItem,
+  value,
+  check,
+  setCheck,
+}) => {
   return (
-    <div className='my-4'>
+    <div className={`${check ? "flex gap-2 items-center" : "block"} my-4`}>
       <label className='text-black text-sm block' htmlFor={id}>
         {title}
       </label>
@@ -12,23 +24,27 @@ const Input = ({ id, title, input, textarea, type, dropdown, data, setItem, valu
           id={id}
           type={type}
           value={value}
-          onChange={(e) => { setItem(e.target.value) }}
+          onChange={setItem}
+          name={id}
         />
       )}
       {textarea && (
         <textarea
           className='block w-full bg-gray-100 my-2'
-          name=''
+          name={id}
           id=''
           cols='30'
           rows='4'
           value={value}
-          onChange={(e) => { setItem(e.target.value) }}
+          onChange={setItem}
         ></textarea>
       )}
       {dropdown && (
-        <select className='w-full bg-gray-100 p-4 my-2' name='' id=''
-          onChange={(e) => { setItem(e.target.value) }}
+        <select
+          className='w-full bg-gray-100 p-4 my-2'
+          name={id}
+          id=''
+          onChange={setItem}
         >
           {data.map((item, id) => {
             return (
@@ -38,6 +54,14 @@ const Input = ({ id, title, input, textarea, type, dropdown, data, setItem, valu
             );
           })}
         </select>
+      )}
+      {check && (
+        <input
+          name={id}
+          type='checkbox'
+          onChange={setItem}
+          onClick={setCheck}
+        />
       )}
     </div>
   );
