@@ -4,7 +4,7 @@ import productReducer from "./features/productSlice";
 import adminReducer from "./features/adminSlice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import { persistReducer, persistStore, createMigrate } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 

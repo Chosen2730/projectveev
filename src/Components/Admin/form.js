@@ -16,7 +16,6 @@ const Form = () => {
 
   const { isProductModalShown } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
-  // const { isLoggedIn, user: { name, img, admin } } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [image, setImage] = useState();
   const [discount, setDiscount] = useState(false);

@@ -26,6 +26,7 @@ const Input = ({
           value={value}
           onChange={setItem}
           name={id}
+          required
         />
       )}
       {textarea && (
@@ -37,6 +38,7 @@ const Input = ({
           rows='4'
           value={value}
           onChange={setItem}
+          required
         ></textarea>
       )}
       {dropdown && (
@@ -45,6 +47,7 @@ const Input = ({
           name={id}
           id=''
           onChange={setItem}
+          required
         >
           {data.map((item, id) => {
             return (
