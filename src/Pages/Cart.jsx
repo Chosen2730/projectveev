@@ -69,10 +69,10 @@ const Cart = () => {
               <Currency className='inline-flex' amount={totalAmount} />
             </span>{" "}
           </h2>
-          <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition font-bold'>
+          <a href="/checkout" className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition font-bold'>
             Checkout
             <IoBagCheckOutline className='text-2xl' />
-          </button>
+          </a>
         </div>
       </div>
       <Container data={featured} name='related posts' />
