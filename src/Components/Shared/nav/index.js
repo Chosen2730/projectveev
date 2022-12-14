@@ -67,7 +67,7 @@ const Nav = () => {
                   <h1 className='capitalize'>{name}</h1>
                 </div>
                 {admin && (
-                  <Link to='/admin'>
+                  <Link to='/admin' onClick={() => setIsDropDown(false)}>
                     <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 cursor-pointer'>
                       <i className='text-lg'>
                         <RiUserAddLine />
