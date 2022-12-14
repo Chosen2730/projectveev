@@ -6,6 +6,7 @@ import Container from "../Components/Home/container";
 import { featured } from "../Utils/products";
 import { getTotalAmount, removeItem } from "../Redux/features/productSlice";
 import { IoBagCheckOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cartItems, totalAmount } = useSelector((state) => state.product);
@@ -13,6 +14,13 @@ const Cart = () => {
     dispatch(getTotalAmount());
   }, [cartItems]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const checkout = () => {
+    if (totalAmount > 0) {
+      navigate("/checkout");
+    }
+  };
   return (
     <div className='max-w-6xl mx-auto p-4'>
       <h2 className='font-bold uppercase'>Bag ({cartItems.length} items)</h2>
@@ -69,10 +77,13 @@ const Cart = () => {
               <Currency className='inline-flex' amount={totalAmount} />
             </span>{" "}
           </h2>
-          <a href="/checkout" className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition font-bold'>
+          <button
+            className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition font-bold'
+            onClick={checkout}
+          >
             Checkout
             <IoBagCheckOutline className='text-2xl' />
-          </a>
+          </button>
         </div>
       </div>
       <Container data={featured} name='related posts' />

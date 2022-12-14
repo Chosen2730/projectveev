@@ -11,6 +11,7 @@ import Cart from "../Pages/Cart";
 import Checkout from "../Pages/Checkout";
 import { useSelector } from "react-redux";
 import Admin from "../Pages/Admin";
+import Checkout from "../Pages/Checkout";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
