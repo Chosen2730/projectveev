@@ -27,9 +27,9 @@ const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
         })}
       </div>
       <div className='flex gap-4 items-center justify-center text-xl'>
-        <a href="/cart">
+        <i>
           <FaOpencart />
-        </a>
+        </i>
         <i>
           <BsSearch />
         </i>
