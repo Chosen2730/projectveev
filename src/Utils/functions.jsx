@@ -13,17 +13,6 @@ export const getAllProducts = async (docLimit) => {
     return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
 }
 
-export const getOrders = async (docLimit) => {
-    const productsRef = collection(db, "orders");
-    // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
-    let first = query(productsRef, limit(parseInt(docLimit)));
-    const documentSnapshots = await getDocs(first).catch(error => { console.log('getOrders error:', error) });
-    let data = documentSnapshots.docs.map(doc => ({ ...doc.data(), orderId: doc.id }));
-    const lastVisibleItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-
-    return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
-}
-
 export const getProductsByCategory = async (category, docLimit) => {
     if (category) {
         try {
@@ -118,19 +107,6 @@ export const addProduct = async (isLoggedIn, data, image) => {
         return 'authError'
     }
     return 'success final'
-}
-
-export const addOrder = async (isLoggedIn, data) => {
-    if (isLoggedIn) {
-        const orderData = { ...data}
-        await addDoc(collection(db, "orders"), orderData);
-        // window.location.reload()
-        return 'success'
-
-    } else {
-        alert('You have to login to continue');
-        return 'authError'
-    }
 }
 
 export const updateProduct = async (isLoggedIn, data, image) => {
