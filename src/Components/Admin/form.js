@@ -57,6 +57,8 @@ const Form = () => {
       status,
       featured,
       trending,
+      _createdAt: new Date().getTime(),
+      _updatedAt: new Date().getTime(),
     };
     const addProductRef = await addProduct(isLoggedIn, data, image);
     console.log(addProductRef);

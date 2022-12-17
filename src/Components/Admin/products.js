@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProductModalShown } from "../../Redux/features/adminSlice";
 import { deleteProduct, getAllProducts, updateProductStatus } from "../../Utils/functions";
 const Products = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const productHeader = [
     "product",
     "date",
@@ -16,26 +18,32 @@ const Products = () => {
     "status",
     "actions",
   ];
-  const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.auth);
 
   const [allProducts, setAllProducts] = useState([])
-  const [limit, setLimit] = useState(20)
-  const [lastVisibleItem, setLastVisibleItem] = useState()
+  const [limit] = useState(20)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getAllProducts(limit)
-      setAllProducts(res.data)
-      setLastVisibleItem(res.lastVisibleItem);
-    }  
+      console.log({ page });
+      const res = await getAllProducts(page === 1 ? page - 1 : (page * limit) - 1, limit)
+      if (res) {
+        setAllProducts(res.data)
+      } else {
+        setPage(page-1)
+      }
+    }
     fetch()
-  }, [limit])
+  }, [limit, page])
+  // console.log(allProducts);
 
   const updateStatus = (productId) => {
     var value = "In stock"
     updateProductStatus(isLoggedIn, productId, value)
   }
+
+  const next = async () => setPage(page + 1)
+  const prev = async () => setPage(page > 1 ? page - 1 : page)
 
   return (
     <div className=''>
@@ -90,6 +98,20 @@ const Products = () => {
               );
             })}
           </div>
+        </div>
+        <div className="flex gap-10 my-5">
+          <button
+            className='flex items-center justify-center text-white p-4 px-8 rounded-md bg-black gap-2 hover:scale-105 transition w-fit'
+            onClick={() => prev()}
+          >
+            Prev
+          </button>
+          <button
+            className='flex items-center justify-center text-white p-4 px-8 rounded-md bg-black gap-2 hover:scale-105 transition w-fit'
+            onClick={() => next()}
+          >
+            Next
+          </button>
         </div>
       </div>
       <Form />

@@ -1,35 +1,90 @@
 import { info } from "autoprefixer";
 import React, { useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Information from "../Components/Checkout/information";
 import Payment from "../Components/Checkout/payment";
 import Shipping from "../Components/Checkout/shipping";
 import Currency from "../Components/Configs/currency";
+import { usePaystackPayment } from 'react-paystack'
+import { addOrder } from '../Utils/functions'
+import { removeItem } from "../Redux/features/productSlice";
+import { login } from "../Redux/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+    const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.product);
     const stages = ["information", "shipping", "payment"];
   const [selected, setSelected] = useState(0);
+  const [informationDetails, setInformationDetails] = useState({});
+  const [deliveryFee] = useState(500)
+  const {
+    isLoggedIn,
+    user: { name, admin },
+} = useSelector((state) => state.auth);
+  
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: informationDetails.email,
+    amount: (totalAmount + deliveryFee) * 100,
+    metadata: {
+      name: (informationDetails?.first_name)?.toUpperCase() + " " + (informationDetails?.last_name)?.toUpperCase(),
+      phone: informationDetails.tel,
+    },
+    publicKey: 'pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52',
+  };
+  const initializePayment = usePaystackPayment(config);
+  
+  const handleSuccess = async (ref) => {
+    const data = { ...ref, cartItems, completed: false, name, admin }
+    // console.log(data);
+    const orderRef = await addOrder(isLoggedIn, data)
+    // console.log(orderRef);
+    cartItems.forEach(item => {
+        // console.log(item);
+        if (item.productId) {     
+          dispatch(removeItem({ id: item.productId }))
+        }
+      navigate("/cart")
+    });
+    // alert("Thanks for doing business with us! Come back soon!!");
+  }
+  
+  const onSuccess = (reference) => {
+    handleSuccess(reference);
+  };
+
+  const onClose = () => {
+    alert("Wait! You need this oil, don't go!!!!");
+  }
+
   const nextCheck = () => {
     if (selected < stages.length - 1) {
-    } else {
-    }
         setSelected((oldState) => {
       const newState = oldState + 1;
       if (newState > 2) {
         return 2;
       } else return newState;
     });
+    } else {
+        if (isLoggedIn) {            
+            // If paymentOption == PayStack
+            initializePayment(onSuccess, onClose);
+        }else{
+            alert('You have to login to continue!')
+            dispatch(login())
+        }
+    }
   };
-  const [informationDetails, setInformationDetails] = useState({});
 
   const handleInputChange = (e) => {
     setInformationDetails({
       ...informationDetails,
       [e.target.name]: e.target.value,
     });
-    console.log(informationDetails);
+    // console.log(informationDetails);
   };
 
   return (
@@ -117,9 +172,7 @@ const Checkout = () => {
               </div>
             </div>
           );
-                    })}
-
-        
+        })}        
             </div>
                     <div className='border-b-2 bg-gray-50 shadow-md p-4'>
           <div className='flex justify-between items-center'>
@@ -131,7 +184,7 @@ const Checkout = () => {
                       <div className='flex justify-between items-center'>
             <h2 className='text-lg my-4'>Delivery Fee: </h2>
             <span className='text-lg font-medium'>
-              <Currency className='inline-flex' amount={500} />
+              <Currency className='inline-flex' amount={deliveryFee} />
             </span>{" "}
             </div>
           </div>
@@ -139,10 +192,8 @@ const Checkout = () => {
           <div className='flex justify-between items-center'>
             <h2 className='text-lg my-4'>Grand Total: </h2>
             <span className='text-lg font-bold'>
-              <Currency className='inline-flex' amount={totalAmount + 500} />
+              <Currency className='inline-flex' amount={totalAmount + deliveryFee} />
             </span>{" "}
-
-          {/* <PaystackButton className="paystack-button" {...componentProps} /> */}
         </div>
       </div>
     </div>

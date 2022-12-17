@@ -18,7 +18,7 @@ const Orders = () => {
     fetch()
   }, [limit])
 
-  console.log(allOrders);
+  console.log({allOrders});
 
   return (<>
     <div className="">Orders</div>

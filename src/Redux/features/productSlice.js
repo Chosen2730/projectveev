@@ -24,7 +24,7 @@ const productSlice = createSlice({
       const { productId, navigate, qty } = payload;
       const addedProduct = arr[productId];
       const itemTotal = qty * addedProduct.price;
-      const cartProduct = { ...addedProduct, qty, itemTotal };
+      const cartProduct = { ...addedProduct, productId, qty, itemTotal };
       state.qty = 1;
       state.cartItems.push(cartProduct);
       navigate("/cart");
@@ -39,9 +39,16 @@ const productSlice = createSlice({
     },
     removeItem: (state, { payload }) => {
       const { id } = payload;
-      state.cartItems = state.cartItems = state.cartItems.filter(
-        (item) => state.cartItems.indexOf(item) !== id
+      const r = state.cartItems = state.cartItems.filter(
+        // (item) => state.cartItems.indexOf(item) !== id
+        (item) => {
+          const res = parseInt(item.productId) !== parseInt(id)
+          return res
+        }
       );
+
+      console.log(r);
+      state.cartItems = r
     },
     getTotalAmount: (state) => {
       let total = state.cartItems.reduce((acc, crr) => {

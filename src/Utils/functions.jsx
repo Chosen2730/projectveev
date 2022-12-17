@@ -1,16 +1,17 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, startAt, endAt, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { db } from "../Firebase/config";
 
-export const getAllProducts = async (docLimit) => {
+export const getAllProducts = async (_startAt, docLimit) => {
+    console.log(_startAt);
     const productsRef = collection(db, "products");
-    // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
-    let first = query(productsRef, limit(parseInt(docLimit)));
-    const documentSnapshots = await getDocs(first).catch(error => { console.log('getAllProducts error:', error) });
+    let q = query(productsRef, orderBy('title'), startAt(3), limit(docLimit));
+    const documentSnapshots = await getDocs(q).catch(error => { console.log('getAllProducts error:', error) });
     let data = documentSnapshots.docs.map(doc => ({ ...doc.data(), productId: doc.id }));
-    const lastVisibleItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    // const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
-    return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
+    // return { data, lastVisibleItem: JSON.stringify(lastVisible) }
+    return { data }
 }
 
 export const getOrders = async (docLimit) => {
@@ -18,6 +19,17 @@ export const getOrders = async (docLimit) => {
     // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
     let first = query(productsRef, limit(parseInt(docLimit)));
     const documentSnapshots = await getDocs(first).catch(error => { console.log('getOrders error:', error) });
+    let data = documentSnapshots.docs.map(doc => ({ ...doc.data(), orderId: doc.id }));
+    const lastVisibleItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+    return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
+}
+
+export const getUsers = async (docLimit) => {
+    const productsRef = collection(db, "users");
+    // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
+    let first = query(productsRef, limit(parseInt(docLimit)));
+    const documentSnapshots = await getDocs(first).catch(error => { console.log('getUsers error:', error) });
     let data = documentSnapshots.docs.map(doc => ({ ...doc.data(), orderId: doc.id }));
     const lastVisibleItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
@@ -122,14 +134,14 @@ export const addProduct = async (isLoggedIn, data, image) => {
 
 export const addOrder = async (isLoggedIn, data) => {
     if (isLoggedIn) {
-        const orderData = { ...data}
-        await addDoc(collection(db, "orders"), orderData);
+        const orderData = { ...data, createdAt: new Date().getTime() }
+        const res = (await addDoc(collection(db, "orders"), orderData)).id;
         // window.location.reload()
-        return 'success'
+        return {msg: 'success', res}
 
     } else {
         alert('You have to login to continue');
-        return 'authError'
+        return {msg:'authError'}
     }
 }
 

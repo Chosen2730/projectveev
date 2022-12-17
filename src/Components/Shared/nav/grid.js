@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../images/logo.png";
 import { FaOpencart } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 
 const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
+  const navigate = useNavigate();
   return (
     <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-xl shadow-gray-100 bg-white my-5'>
       <Link>
@@ -27,7 +28,7 @@ const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
         })}
       </div>
       <div className='flex gap-4 items-center justify-center text-xl'>
-        <a href="/cart">
+        <a href="/cart" onClick={(e) => { e.preventDefault(); navigate("/cart"); }}>
           <FaOpencart />
         </a>
         <i>
