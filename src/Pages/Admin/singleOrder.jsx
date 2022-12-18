@@ -85,6 +85,10 @@ const SingleOrder = () => {
             )}
           </div>
         </div>
+        <div className='flex gap-4 justify-between border-b py-4 bg-gray-400 p-4'>
+          <h2 className=''>Grand Total</h2>
+          <Currency className='font-bold' amount={totalPrice} />{" "}
+        </div>
         <div className='flex gap-4 justify-between border-b py-4 items-center'>
           <h2 className=''>Order Status</h2>
           <select
@@ -97,6 +101,9 @@ const SingleOrder = () => {
             <option value='Cancelled'>Cancelled</option>
           </select>
         </div>
+        <button className='bg-black text-white p-4 px-10 rounded-md shadow-md hover:scale-95 hover:bg-gray-700'>
+          Update Order Status
+        </button>
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ const Orders = () => {
     "Action",
   ];
   return (
-    <div>
+    <div className='p-4'>
       <h2 className='font-bold text-2xl'>Orders</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
         <div className='rounded-xl shadow-xl bg-black text-white p-8'>
@@ -82,8 +82,8 @@ const Orders = () => {
           <p className='text-4xl font-medium'>{0}</p>
         </div>
       </div>
-      <div className='overflow-x-scroll'>
-        <div className='grid'>
+      <div className='overflow-x-scroll '>
+        <div className='grid min-w-[1000px]'>
           <div className='grid grid-cols-7 gap-2 my-5 bg-gray-100 rounded-md p-5 '>
             {orderHeader?.map((item, index) => {
               return (

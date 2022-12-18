@@ -23,6 +23,8 @@ import { ImCart, ImUsers } from "react-icons/im";
 import { RiLuggageCartFill } from "react-icons/ri";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { Navigate, useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import Spinner from "../Configs/spinner";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const Products = () => {
   const [fabricInput, setFabricInput] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -105,7 +108,8 @@ const Products = () => {
   }, [currentItem]);
 
   const uploadProduct = async (e) => {
-    e.preventDefault();
+    setIsLoading(true);
+    // e.preventDefault();
     const {
       title,
       desc,
@@ -129,11 +133,21 @@ const Products = () => {
       _updatedAt: new Date().getTime(),
     };
     const addProductRef = await addProduct(isLoggedIn, data, image);
+    setIsLoading(false);
+    dispatch(setProductModalShown());
     console.log(addProductRef);
+    setIsLoading(false);
   };
-
+  console.log(isLoading);
   const goToSingleProduct = (id) => {
     navigate(`/admin/product/${id}`);
+  };
+
+  const handleSubmit = () => {
+    if (isEditing) {
+    } else {
+      uploadProduct();
+    }
   };
   return (
     <div className=''>
@@ -272,6 +286,8 @@ const Products = () => {
           <h1 className='text-center text-xl sm:text-2xl font-semibold my-3'>
             {isEditing ? "Update Product" : "Upload Product"}
           </h1>
+
+          {/* ====================FORM================ */}
           <Input
             type='text'
             input
@@ -408,9 +424,15 @@ const Products = () => {
           </div>
           <button
             className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
-            onClick={uploadProduct}
+            onClick={handleSubmit}
           >
-            {isEditing ? "Update" : "Upload"}
+            {isLoading ? (
+              <Spinner loaderText={isEditing ? "Updating" : "Uploading"} />
+            ) : isEditing ? (
+              "Update"
+            ) : (
+              "Upload"
+            )}
           </button>
         </div>
       </div>
