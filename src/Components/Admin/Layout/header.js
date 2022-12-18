@@ -6,10 +6,12 @@ import { RiGitPullRequestFill } from "react-icons/ri";
 import { setSelectedHeaderIndex } from "../../../Redux/features/adminSlice";
 import { BiShoppingBag } from "react-icons/bi";
 import { SlNote } from "react-icons/sl";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { selectedHeaderIndex } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const headerContents = ["Dashboard", "users", "orders", "products"];
   return (
     <div className='p-8 bg-black'>
@@ -23,7 +25,10 @@ const Header = () => {
                   ? "text-gray-50 font-bold"
                   : "text-gray-400"
               } capitalize flex flex-col items-center justify-center gap-2 transition hover:text-gray-300 cursor-pointer`}
-              onClick={() => dispatch(setSelectedHeaderIndex(id))}
+              onClick={() => {
+                dispatch(setSelectedHeaderIndex(id));
+                navigate("/admin");
+              }}
             >
               <i className='text-xl md:text-3xl'>
                 {id === 0 ? (

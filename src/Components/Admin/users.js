@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { FaUsers, FaUsersSlash } from "react-icons/fa";
+import { RiLuggageCartFill } from "react-icons/ri";
+import { SlNote } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { getUsers } from "../../Utils/functions";
+import { ImUsers } from "react-icons/im";
 
 const Users = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -23,7 +27,35 @@ const Users = () => {
   return (
     <div>
       <h2 className='font-bold text-2xl'>Users</h2>
-      <p className='text-lg font-medium my-2'>All Users</p>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
+        <div className='rounded-xl shadow-xl bg-black text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>All Users</p>
+            <i className='bg-white text-black text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <FaUsers />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>0</p>
+        </div>
+        <div className='rounded-xl shadow-xl bg-blue-800 text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>Active Users</p>
+            <i className='bg-white text-blue-800 text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <ImUsers />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>{allUsers?.length}</p>
+        </div>
+        <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>Blocked Users</p>
+            <i className='bg-white text-red-800 text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <FaUsersSlash />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>{0}</p>
+        </div>
+      </div>
       <div className='overflow-x-scroll'>
         <div className='grid'>
           <div className='grid grid-cols-5 my-5 bg-gray-100 rounded-md p-5 '>

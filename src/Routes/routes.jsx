@@ -10,7 +10,10 @@ import Product from "../Pages/Product";
 import Cart from "../Pages/Cart";
 import Checkout from "../Pages/Checkout";
 import { useSelector } from "react-redux";
-import Admin from "../Pages/Admin";
+import Admin from "../Pages/Admin/Admin";
+import SingleProduct from "../Pages/Admin/singleProduct";
+import AdminIndex from "../Pages/Admin/";
+import SingleOrder from "../Pages/Admin/singleOrder";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
@@ -25,7 +28,14 @@ const AppRoute = () => {
         <Route path='/product/:productId/' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<Checkout />} />
-        {user.admin && <Route path='/admin' element={<Admin />} />}
+        {user.admin && (
+          <Route path='/admin' element={<AdminIndex />}>
+            <Route index element={<Admin />} />
+            <Route path='user/:userID/' element={<SingleProduct />} />
+            <Route path='order/:orderID/' element={<SingleOrder />} />
+            <Route path='product/:productID/' element={<SingleProduct />} />
+          </Route>
+        )}
         <Route path='*' element={<h1>Error page</h1>} />
       </Routes>
       <Footer />

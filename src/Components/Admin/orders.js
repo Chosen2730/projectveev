@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../../Utils/functions";
 import { RiLuggageCartFill } from "react-icons/ri";
 import {
@@ -9,9 +9,13 @@ import {
   MdOutlineCancel,
 } from "react-icons/md";
 import Currency from "../Configs/currency";
+import { setOrders } from "../../Redux/features/adminSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [allOrders, setAllOrders] = useState([]);
   const [limit, setLimit] = useState(20);
@@ -21,6 +25,7 @@ const Orders = () => {
     const fetch = async () => {
       const res = await getOrders(limit);
       setAllOrders(res.data);
+      dispatch(setOrders(res.data));
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
@@ -89,7 +94,7 @@ const Orders = () => {
             })}
           </div>
           <div className=''>
-            {allOrders?.map(({ cartItems, message, name }, index) => {
+            {allOrders?.map(({ cartItems, message, name, orderId }, index) => {
               const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
               const totalPrice = prices?.reduce((sum, price) => sum + price);
               return (
@@ -105,8 +110,15 @@ const Orders = () => {
                   <h2>Pending</h2>
                   <div className='flex gap-4 text-xl'>
                     {/* <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' /> */}
-                    <h2 className='text-sm italic text-red-700'>delete</h2>
-                    <h2 className='text-sm italic text-blue-700'>details</h2>
+                    <h2 className='text-sm italic text-red-700 cursor-pointer'>
+                      delete
+                    </h2>
+                    <h2
+                      className='text-sm italic text-blue-700 cursor-pointer'
+                      onClick={() => navigate(`/admin/order/${orderId}`)}
+                    >
+                      details
+                    </h2>
                     {/* <AiOutlineEye className='bg-g text-gray-500 cursor-pointer rounded-md' /> */}
                   </div>
                 </div>

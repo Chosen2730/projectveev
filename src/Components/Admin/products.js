@@ -13,11 +13,20 @@ import {
 import upload from "../../images/upload.png";
 import Input from "../Form/input";
 import { IoClose } from "react-icons/io5";
-import { setProductModalShown } from "../../Redux/features/adminSlice";
+import {
+  setProductModalShown,
+  setProducts,
+} from "../../Redux/features/adminSlice";
 import { addProduct } from "../../Utils/functions";
+import { FaUsers, FaUsersSlash } from "react-icons/fa";
+import { ImCart, ImUsers } from "react-icons/im";
+import { RiLuggageCartFill } from "react-icons/ri";
+import { MdRemoveShoppingCart } from "react-icons/md";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.auth);
   const productHeader = [
     "product",
@@ -32,6 +41,16 @@ const Products = () => {
   const [limit] = useState(20);
   const [page, setPage] = useState(1);
 
+  const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
+  const statusList = ["Select", "In Stock", "Out of Stock"];
+  const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
+  const { isProductModalShown } = useSelector((state) => state.admin);
+  const [image, setImage] = useState();
+  const [discount, setDiscount] = useState(false);
+  const [fabricInput, setFabricInput] = useState(false);
+  const [currentItem, setCurrentItem] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+
   useEffect(() => {
     const fetch = async () => {
       console.log({ page });
@@ -41,6 +60,7 @@ const Products = () => {
       );
       if (res) {
         setAllProducts(res.data);
+        dispatch(setProducts(res.data));
       } else {
         setPage(page - 1);
       }
@@ -58,22 +78,19 @@ const Products = () => {
   const prev = async () => setPage(page > 1 ? page - 1 : page);
 
   const editFunc = (id) => {
+    setIsEditing(true);
     dispatch(setProductModalShown());
     const productToEdit = allProducts.find(
       (product) => product.productId === id
     );
-    setCurrentItem({});
+    setCurrentItem({
+      category: productToEdit.category,
+      desc: productToEdit.desc,
+      image: productToEdit.imageUrl,
+      price: productToEdit.price,
+      title: productToEdit.title,
+    });
   };
-
-  const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
-  const statusList = ["Select", "In Stock", "Out of Stock"];
-  const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
-  const { isProductModalShown } = useSelector((state) => state.admin);
-  const [image, setImage] = useState();
-  const [discount, setDiscount] = useState(false);
-  const [fabricInput, setFabricInput] = useState(false);
-  const [currentItem, setCurrentItem] = useState({});
-
   const handleInputChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value, image });
     console.log(currentItem);
@@ -115,8 +132,40 @@ const Products = () => {
     console.log(addProductRef);
   };
 
+  const goToSingleProduct = (id) => {
+    navigate(`/admin/product/${id}`);
+  };
   return (
     <div className=''>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
+        <div className='rounded-xl shadow-xl bg-black text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>All Products</p>
+            <i className='bg-white text-black text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <RiLuggageCartFill />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>{allProducts?.length}</p>
+        </div>
+        <div className='rounded-xl shadow-xl bg-blue-800 text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>In Stock</p>
+            <i className='bg-white text-blue-800 text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <ImCart />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>{0}</p>
+        </div>
+        <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
+          <div className='flex justify-between gap-2 items-center'>
+            <p className='text-lg font-medium my-2'>Out of Stock</p>
+            <i className='bg-white text-red-800 text-2xl w-8 rounded-md h-8 flex items-center justify-center'>
+              <MdRemoveShoppingCart />
+            </i>
+          </div>
+          <p className='text-4xl font-medium'>{0}</p>
+        </div>
+      </div>
       <div className='flex flex-col my-4 gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <h2 className='text-xl font-bold'>
           All Products ({allProducts.length})
@@ -178,7 +227,10 @@ const Products = () => {
                         className='bg- text-blue-500 cursor-pointer rounded-md'
                         onClick={() => editFunc(productId)}
                       />
-                      <AiOutlineEye className='bg-g text-gray-500 cursor-pointer rounded-md' />
+                      <AiOutlineEye
+                        className='bg-g text-gray-500 cursor-pointer rounded-md'
+                        onClick={() => goToSingleProduct(productId)}
+                      />
                     </div>
                   </div>
                 );
@@ -211,10 +263,14 @@ const Products = () => {
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
             className='bg-black text-white text-4xl p-2 ml-auto rounded-md'
-            onClick={() => dispatch(setProductModalShown())}
+            onClick={() => {
+              dispatch(setProductModalShown());
+              setCurrentItem({});
+              setIsEditing(false);
+            }}
           />
           <h1 className='text-center text-xl sm:text-2xl font-semibold my-3'>
-            Upload A Product
+            {isEditing ? "Update Product" : "Upload Product"}
           </h1>
           <Input
             type='text'
@@ -354,7 +410,7 @@ const Products = () => {
             className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
             onClick={uploadProduct}
           >
-            Upload
+            {isEditing ? "Update" : "Upload"}
           </button>
         </div>
       </div>

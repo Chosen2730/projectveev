@@ -6,6 +6,9 @@ export const allProducts = [...featured, ...trending];
 const initialState = {
   selectedHeaderIndex: 0,
   isProductModalShown: false,
+  allProducts: [],
+  allOrders: [],
+  allUsers: [],
 };
 
 const adminSlice = createSlice({
@@ -18,9 +21,23 @@ const adminSlice = createSlice({
     setProductModalShown: (state) => {
       state.isProductModalShown = !state.isProductModalShown;
     },
+    setUsers: (state, { payload }) => {
+      state.allUsers = payload;
+    },
+    setOrders: (state, { payload }) => {
+      state.allOrders = payload;
+    },
+    setProducts: (state, { payload }) => {
+      state.allProducts = payload;
+    },
   },
   extraReducers: {},
 });
-export const { setSelectedHeaderIndex, setProductModalShown } =
-  adminSlice.actions;
+export const {
+  setSelectedHeaderIndex,
+  setProductModalShown,
+  setOrders,
+  setProducts,
+  setUsers,
+} = adminSlice.actions;
 export default adminSlice.reducer;
