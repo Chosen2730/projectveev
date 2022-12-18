@@ -17,7 +17,7 @@ const SingleOrder = () => {
   const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
   const totalPrice = prices?.reduce((sum, price) => sum + price);
   return (
-    <div>
+    <div className='p-4'>
       <Link to='/admin' className='flex items-center gap-2 font-medium'>
         <i>
           <MdOutlineArrowBackIos />
@@ -62,7 +62,7 @@ const SingleOrder = () => {
               ({ img, item, desc, itemTotal, price, qty }, index) => {
                 return (
                   <div
-                    className='flex gap-5 items-center text-sm my-4 border-b p-3'
+                    className='grid grid-cols-2 md:flex gap-5 items-center text-sm my-4 border-b p-3'
                     key={index}
                   >
                     <img

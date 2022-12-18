@@ -150,7 +150,7 @@ const Products = () => {
     }
   };
   return (
-    <div className=''>
+    <div className='p-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
         <div className='rounded-xl shadow-xl bg-black text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
