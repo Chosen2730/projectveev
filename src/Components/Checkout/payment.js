@@ -1,8 +1,24 @@
 import React from "react";
 import Currency from "../Configs/currency";
 import pay from "../../images/pay.png";
+// import { PaystackButton } from 'react-paystack'
 
 const Payment = ({ informationDetails }) => {
+  // const componentProps = {
+  //   email: informationDetails,
+  //   amount: 3000,
+  //   metadata: {
+  //     name: informationDetails.name,
+  //     phone: informationDetails.phone,
+  //   },
+  //   publicKey: 'pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52',
+    
+  //   text: () => { return <h1>Place Order</h1> },
+  //   onSuccess: () =>
+  //     alert("Thanks for doing business with us! Come back soon!!"),
+  //   onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+  // }
+
   return (
     <div className='my-10'>
       <h2 className='font-medium uppercase text-base my-3'>Shipping</h2>
@@ -26,6 +42,7 @@ const Payment = ({ informationDetails }) => {
       <p className='text-sm my-3'>How do you want to place your order?</p>
       <div className='flex flex-col sm:flex-row sm:items-center my-10 gap-4'>
         <img src={pay} className='w-72' alt='payment_method' />
+        {/* <PaystackButton className="paystack-button" {...componentProps} /> */}
         <h2 className='font-medium italic text-base'>
           Pay with your Debit / Credit cards
         </h2>

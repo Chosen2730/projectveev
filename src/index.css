@@ -69,6 +69,9 @@ html {
 .gridLayout {
   grid-template-columns: 230px 100px 350px 120px 80px 100px;
 }
+.gridLay2 {
+  grid-template-columns: repeat(8, 1fr);
+}
 @media (max-width: 768px) {
   .category {
     padding: 2rem 1rem;

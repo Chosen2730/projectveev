@@ -27,7 +27,7 @@ const Cart = () => {
       <div className='flex flex-col md:flex-row gap-8'>
         <div className='md:w-[75%]'>
           {cartItems.map(
-            ({ img, item, price, oldPrice, itemTotal, qty }, id) => {
+            ({ img, item, price, oldPrice, productId, itemTotal, qty }, id) => {
               return (
                 <div
                   key={id}
@@ -35,7 +35,7 @@ const Cart = () => {
                 >
                   <MdClose
                     className='absolute top-4 right-4 text-2xl p-1 bg-black text-white rounded-full'
-                    onClick={() => dispatch(removeItem({ id }))}
+                    onClick={() => dispatch(removeItem({ id: productId }))}
                   />
                   <img
                     className='w-24 h-28 object-cover'

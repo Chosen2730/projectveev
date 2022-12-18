@@ -5,22 +5,16 @@ import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductModalShown } from "../../Redux/features/adminSlice";
 import { addProduct } from "../../Utils/functions";
-import { info } from "autoprefixer";
-import { sizes } from "../../Utils/category";
 const Form = () => {
   const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
-
   const statusList = ["Select", "In Stock", "Out of Stock"];
-
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
-
   const { isProductModalShown } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [image, setImage] = useState();
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
-
   const [currentItem, setCurrentItem] = useState({});
 
   const handleInputChange = (e) => {
@@ -57,6 +51,8 @@ const Form = () => {
       status,
       featured,
       trending,
+      _createdAt: new Date().getTime(),
+      _updatedAt: new Date().getTime(),
     };
     const addProductRef = await addProduct(isLoggedIn, data, image);
     console.log(addProductRef);

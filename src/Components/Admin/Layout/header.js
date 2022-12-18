@@ -4,6 +4,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUsers, FaSellsy, FaLuggageCart } from "react-icons/fa";
 import { RiGitPullRequestFill } from "react-icons/ri";
 import { setSelectedHeaderIndex } from "../../../Redux/features/adminSlice";
+import { BiShoppingBag } from "react-icons/bi";
+import { SlNote } from "react-icons/sl";
 
 const Header = () => {
   const { selectedHeaderIndex } = useSelector((state) => state.admin);
@@ -29,11 +31,11 @@ const Header = () => {
                 ) : id === 1 ? (
                   <FaUsers />
                 ) : id === 2 ? (
-                  <RiGitPullRequestFill />
+                  <SlNote />
                 ) : id === 3 ? (
-                  <FaSellsy />
+                  <BiShoppingBag />
                 ) : (
-                  <FaLuggageCart />
+                  <BiShoppingBag />
                 )}
               </i>
               <h2 className='text-xs sm:text-sm select-none'>{item}</h2>{" "}
