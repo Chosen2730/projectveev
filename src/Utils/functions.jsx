@@ -137,11 +137,48 @@ export const addOrder = async (isLoggedIn, data) => {
         const orderData = { ...data, createdAt: new Date().getTime() }
         const res = (await addDoc(collection(db, "orders"), orderData)).id;
         // window.location.reload()
-        return {msg: 'success', res}
+        return { msg: 'success', res }
 
     } else {
         alert('You have to login to continue');
-        return {msg:'authError'}
+        return { msg: 'authError' }
+    }
+}
+
+export const deleteOrder = async (orderId) => {
+    if (orderId) {
+        if (window.confirm("Do you want to delete this order?")) {
+            await deleteDoc(doc(db, "orders", orderId)).catch((error) => {
+                console.log("An error occured durring order delete: ", error);
+            });
+            alert('order deleted!');
+            window.location.reload()
+            return 'success'
+        } else {
+            return ''
+        }
+    } else {
+        alert('You have to login to continue');
+        return 'authError || itemId not specified!'
+    }
+}
+
+export const updateOrderStatus = async (id, orderStatus) => {
+    if (orderStatus) {
+        if (window.confirm(`Do you want to update this order? to ${orderStatus}`)) {
+            const docRef = doc(db, "orders", id);
+            const data = { orderStatus };
+
+            const res = await updateDoc(docRef, data).catch(error => {
+                console.log(error);
+            })
+            return { msg: 'success', res }
+        }
+        return { msg: ''}
+
+    } else {
+        alert('No status set!');
+        return { msg: 'authError' }
     }
 }
 
