@@ -13,6 +13,9 @@ import {
 import { featured, trending } from "../Utils/products";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
 

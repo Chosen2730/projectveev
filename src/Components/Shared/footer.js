@@ -7,7 +7,7 @@ import ig from "../../images/ig.png";
 
 const Footer = () => {
   return (
-    <footer className='bg-black p-8 text-gray-200'>
+    <footer className='bg-black p-8 text-gray-200 pb-32'>
       <img src={logo} className='w-52' alt='logo' />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-8'>
         <div className=''>

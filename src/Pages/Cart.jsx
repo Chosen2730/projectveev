@@ -9,6 +9,9 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   const { cartItems, totalAmount } = useSelector((state) => state.product);
   useEffect(() => {
     dispatch(getTotalAmount());

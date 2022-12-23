@@ -15,6 +15,9 @@ import { login } from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.product);
@@ -62,12 +65,22 @@ const Checkout = () => {
   const initializePayment = usePaystackPayment(config);
 
   const handleSuccess = async (ref) => {
-    if(user){
+    if (user) {
       console.log(ref);
-      const data = { ...ref, uid, cartItems, orderStatus: 'pending', name, email: informationDetails.email, admin, shippingAddress: informationDetails.address, phone: informationDetails.tel };
+      const data = {
+        ...ref,
+        uid,
+        cartItems,
+        orderStatus: "pending",
+        name,
+        email: informationDetails.email,
+        admin,
+        shippingAddress: informationDetails.address,
+        phone: informationDetails.tel,
+      };
       console.log(data);
       await addOrder(isLoggedIn, data);
-      
+
       cartItems.forEach((item) => {
         // console.log(item);
         if (item.productId) {
@@ -78,7 +91,6 @@ const Checkout = () => {
       });
     }
   };
-
 
   const nextCheck = () => {
     setSelected((oldState) => {
@@ -186,12 +198,14 @@ const Checkout = () => {
             >
               Next
             </button>
-          ) : (<>
-            <PaystackButton
-              className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
-              {...componentProps}
-            />
-          </>)}
+          ) : (
+            <>
+              <PaystackButton
+                className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
+                {...componentProps}
+              />
+            </>
+          )}
         </div>
       </div>
       <div className='md:w-[35%]'>

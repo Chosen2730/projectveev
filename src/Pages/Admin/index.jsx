@@ -1,8 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../../Components/Admin/Layout/header";
 
 const AdminIndex = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   return (
     <div>
       <Header />

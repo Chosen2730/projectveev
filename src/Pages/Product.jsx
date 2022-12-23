@@ -10,6 +10,7 @@ import { sizes } from "../Utils/category";
 import { featured } from "../Utils/products";
 import { addToCart, updateQty } from "../Redux/features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Product = () => {
   const navigate = useNavigate();
@@ -18,7 +19,9 @@ const Product = () => {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
   const dispatch = useDispatch();
   const { qty } = useSelector((state) => state.product);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   return (
     <div className='mx-auto max-w-6xl p-4'>
       <Link to='/shop'>
