@@ -21,7 +21,8 @@ const Checkout = () => {
   const [userDetails, setUserDetails] = useState(Object);
   const {
     isLoggedIn,
-    user: { name, admin, email, phoneNumber },
+    user,
+    user: { uid, name, admin, email, phoneNumber },
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -61,45 +62,41 @@ const Checkout = () => {
   const initializePayment = usePaystackPayment(config);
 
   const handleSuccess = async (ref) => {
-    const data = { ...ref, cartItems, orderStatus: 'pending', name, email: informationDetails.email, admin, shippingAddress: informationDetails.address, phone: informationDetails.tel };
-    // console.log(data);
-    const orderRef = await addOrder(isLoggedIn, data);
-    // console.log(orderRef);
-    cartItems.forEach((item) => {
-      // console.log(item);
-      if (item.productId) {
-        dispatch(removeItem({ id: item.productId }));
-      }
-      navigate("/cart");
-    });
-    // alert("Thanks for doing business with us! Come back soon!!");
+    if(user){
+      console.log(ref);
+      const data = { ...ref, uid, cartItems, orderStatus: 'pending', name, email: informationDetails.email, admin, shippingAddress: informationDetails.address, phone: informationDetails.tel };
+      console.log(data);
+      await addOrder(isLoggedIn, data);
+      
+      cartItems.forEach((item) => {
+        // console.log(item);
+        if (item.productId) {
+          dispatch(removeItem({ id: item.productId }));
+        }
+        alert("Thanks for doing business with us! Come back soon!!");
+        navigate("/cart");
+      });
+    }
   };
 
-  const onSuccess = (reference) => {
-    handleSuccess(reference);
-  };
-
-  const onClose = () => {
-    alert("Wait! You need this oil, don't go!!!!");
-  };
 
   const nextCheck = () => {
-    if (selected < stages.length - 1) {
-      setSelected((oldState) => {
-        const newState = oldState + 1;
-        if (newState > 2) {
-          return 2;
-        } else return newState;
-      });
-    } else {
-      if (isLoggedIn) {
-        // If paymentOption == PayStack
-        initializePayment(onSuccess, onClose);
-      } else {
-        alert("You have to login to continue!");
-        dispatch(login());
-      }
-    }
+    setSelected((oldState) => {
+      const newState = oldState + 1;
+      if (newState > 2) {
+        return 2;
+      } else return newState;
+    });
+    // if (selected < stages.length - 1) {
+    // } else {
+    //   if (isLoggedIn) {
+    //     // If paymentOption == PayStack
+    //     initializePayment(onSuccess, onClose);
+    //   } else {
+    //     alert("You have to login to continue!");
+    //     dispatch(login());
+    //   }
+    // }
   };
 
   const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52"; // generate your key and save in env var (after everything is set) this is just a test key anyways.....
@@ -114,8 +111,8 @@ const Checkout = () => {
     publicKey,
     text: "Pay Now",
     // onSuccess: handleSuccess,
-    onSuccess: () => {
-      handleSuccess();
+    onSuccess: (ref) => {
+      handleSuccess(ref);
     },
     onClose: () => alert("Wait! You need those orders, don't go!!!!"),
   };
@@ -189,12 +186,12 @@ const Checkout = () => {
             >
               Next
             </button>
-          ) : (
+          ) : (<>
             <PaystackButton
               className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
               {...componentProps}
             />
-          )}
+          </>)}
         </div>
       </div>
       <div className='md:w-[35%]'>

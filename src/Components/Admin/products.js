@@ -50,7 +50,7 @@ const Products = () => {
   const [image, setImage] = useState();
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
-  const [currentItem, setCurrentItem] = useState({});
+  const [currentItem, setCurrentItem] = useState({ discountValue: '', trending: '', featured: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -132,6 +132,7 @@ const Products = () => {
       _createdAt: new Date().getTime(),
       _updatedAt: new Date().getTime(),
     };
+    console.log(data);
     const addProductRef = await addProduct(isLoggedIn, data, image);
     setIsLoading(false);
     dispatch(setProductModalShown());
@@ -270,9 +271,8 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${
-          isProductModalShown ? "category" : "category hider"
-        } overflow`}
+        className={`${isProductModalShown ? "category" : "category hider"
+          } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
