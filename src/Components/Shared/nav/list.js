@@ -7,15 +7,10 @@ import { BsSearch } from "react-icons/bs";
 const List = ({ selectedIndex, setSelectedIndex, navItems, isSideBarOpen }) => {
   return (
     <nav
-      className={`${
-        isSideBarOpen ? "translate-x-0" : "translate-x-full"
-      } transition fixed flex flex-col items-center top-0 md:hidden gap-4 p-8 shadow-md bg-white w-[70%] min-h-screen right-0 z-50`}
+      className={`fixed bottom-0 flex items-center md:hidden gap-4 p-8 shadow-md bg-white w-full z-50`}
     >
-      <Link>
-        <img src={logo} alt='logo' className='w-56' />
-      </Link>
-      <div className='my-10 flex flex-col items-center'>
-        {navItems.map((item, index) => {
+      <div className='flex items-center justify-between'>
+        {navItems.slice(0, 2).map((item, index) => {
           return (
             <Link
               className={`${
@@ -34,9 +29,9 @@ const List = ({ selectedIndex, setSelectedIndex, navItems, isSideBarOpen }) => {
         <i>
           <FaOpencart />
         </i>
-        <i>
+        {/* <i>
           <BsSearch />
-        </i>
+        </i> */}
       </div>
     </nav>
   );

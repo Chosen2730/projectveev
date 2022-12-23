@@ -3,18 +3,22 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Currency from "../../Components/Configs/currency";
-import { updateOrderStatus } from "../../Utils/functions";
+import { getOrderById, updateOrderStatus } from "../../Utils/functions";
 
 const SingleOrder = () => {
   const { orderID } = useParams();
   const { allOrders } = useSelector((state) => state.admin);
   const [order, setOrder] = useState({});
   const [orderStatus, setOrderStatus] = useState("");
-
+  // useEffect(() => {
+  //   setOrder(() => allOrders.find((order) => order.orderId === orderID));
+  // }, [allOrders, orderID]);
   useEffect(() => {
-    if (orderID && allOrders) {
-      setOrder(() => allOrders.find((order) => order.orderId === orderID));
-    }
+    const fetch = async () => {
+      const orderRef = await getOrderById(orderID);
+      setOrder(orderRef);
+    };
+    return fetch;
   }, [allOrders, orderID]);
 
   console.log(order, allOrders);

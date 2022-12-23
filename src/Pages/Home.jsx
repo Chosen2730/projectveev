@@ -15,18 +15,20 @@ import { featured, trending } from "../Utils/products";
 const Home = () => {
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const feat = await getAllFeaturedProducts();
-      const trend = await getAllTrendingProducts();
-      setTrendingProduct(trendingProduct);
-      setFeaturedProduct(featuredProduct);
-    };
 
+  const fetch = async () => {
+    const feat = await getAllFeaturedProducts();
+    const trend = await getAllTrendingProducts();
+    setTrendingProduct(trend);
+    setFeaturedProduct(feat);
+
+    console.log(feat, trend);
+  };
+
+  useEffect(() => {
     fetch();
   }, []);
 
-  console.log(trendingProduct, featuredProduct);
   return (
     <>
       <Hero />

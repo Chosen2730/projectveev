@@ -49,6 +49,7 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, { payload }) => {
       const user = payload.user;
+      console.log({user});
       const newToken = user.stsTokenManager.accessToken;
       state.token = newToken;
       state.isLoggedIn = true;

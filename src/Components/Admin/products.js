@@ -50,7 +50,11 @@ const Products = () => {
   const [image, setImage] = useState();
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
-  const [currentItem, setCurrentItem] = useState({});
+  const [currentItem, setCurrentItem] = useState({
+    discountValue: "",
+    trending: "",
+    featured: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -132,6 +136,7 @@ const Products = () => {
       _createdAt: new Date().getTime(),
       _updatedAt: new Date().getTime(),
     };
+    console.log(data);
     const addProductRef = await addProduct(isLoggedIn, data, image);
     setIsLoading(false);
     dispatch(setProductModalShown());
@@ -149,6 +154,7 @@ const Products = () => {
       uploadProduct();
     }
   };
+  console.log(allProducts);
   return (
     <div className='p-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>

@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../images/logo.png";
 import { FaOpencart } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
   const navigate = useNavigate();
+  const { cartItems } = useSelector((state) => state.product);
   return (
     <nav className='hidden md:flex gap-4 items-center justify-between p-8 shadow-xl shadow-gray-100 bg-white my-5'>
       <Link>
@@ -28,9 +30,20 @@ const Grid = ({ selectedIndex, setSelectedIndex, navItems }) => {
         })}
       </div>
       <div className='flex gap-4 items-center justify-center text-xl'>
-        <a href="/cart" onClick={(e) => { e.preventDefault(); navigate("/cart"); }}>
+        <Link
+          to='/cart'
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/cart");
+          }}
+          className='flex'
+        >
           <FaOpencart />
-        </a>
+          <h2 className='bg-black text-xs text-white p-3 rounded-full w-4 h-4 flex items-center justify-center relative bottom-3 right-2 font-bold'>
+            {cartItems?.length}
+          </h2>
+        </Link>
+
         <i>
           <BsSearch />
         </i>

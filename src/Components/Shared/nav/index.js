@@ -9,6 +9,7 @@ import { AiOutlineUser, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../Redux/features/authSlice";
 import { Link } from "react-router-dom";
+import logo from "../../../images/logo.png";
 
 const Nav = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -31,23 +32,26 @@ const Nav = () => {
 
   return (
     <div className='p-4 relative'>
-      <div className='flex items-center justify-between bg-white uppercase'>
-        <i
+      <div className='flex items-center justify-between bg-white uppercase py-4'>
+        {/* <i
           className='bg-black rounded-md md:hidden text-white p-3 text-xl shadow-md items-center justify-center text-center'
           onClick={() => setIsSideBarOpen(!isSideBarOpen)}
         >
           {isSideBarOpen ? <IoMdClose /> : <RiMenu4Fill />}
-        </i>
-        <div className='shadow-md shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-0 right-5 bg-white'>
+        </i> */}
+        <Link to='/'>
+          <img src={logo} alt='logo' className='w-24 md:hidden' />
+        </Link>
+        <div className='shadow-md shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-2 right-5 bg-white z-50'>
           <div
             className='font-medium flex gap-2 items-center text-xs cursor-pointer'
             onClick={() => setIsDropDown(!isDropDown)}
           >
             <img className='w-5 h-5' src={ngn} alt='' />
-            <h1>|</h1>
-            <h1>Nigeria</h1>
-            <h1>NGN</h1>
-            <h1>|</h1>
+            <h1 className='text-xs'>|</h1>
+            <h1 className='text-xs'>Nigeria</h1>
+            <h1 className='text-xs'>NGN</h1>
+            <h1 className='text-xs'>|</h1>
             <img
               src={imageUrl}
               alt=''
