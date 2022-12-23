@@ -7,22 +7,26 @@ import { updateOrderStatus } from "../../Utils/functions";
 
 const SingleOrder = () => {
   const { orderID } = useParams();
-  console.log(orderID);
   const { allOrders } = useSelector((state) => state.admin);
   const [order, setOrder] = useState({});
-  const [orderStatus, setOrderStatus] = useState('')
+  const [orderStatus, setOrderStatus] = useState("");
+
   useEffect(() => {
-    setOrder(() => allOrders.find((order) => order.orderId === orderID));
+    if (orderID && allOrders) {
+      setOrder(() => allOrders.find((order) => order.orderId === orderID));
+    }
   }, [allOrders, orderID]);
-  console.log(order);
-  const { name, email, phone, shippingAddress, message, trxref, cartItems } = order && order;
+
+  console.log(order, allOrders);
+  const { name, email, phone, shippingAddress, message, trxref, cartItems } =
+    order || null;
   const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
   const totalPrice = prices?.reduce((sum, price) => sum + price);
 
   const handleUpdateOrderStatus = async () => {
     const ref = await updateOrderStatus(orderID, orderStatus);
     console.log(ref);
-  }
+  };
 
   return (
     <div className='p-4'>
@@ -99,15 +103,19 @@ const SingleOrder = () => {
             name='orderStatus'
             className='p-4 px-10 bg-gray-300 rounded-md'
             id=''
-            onChange={(e) => { setOrderStatus(e.target.value) }}
+            onChange={(e) => {
+              setOrderStatus(e.target.value);
+            }}
           >
             <option value='pending'>Pending</option>
             <option value='delivered'>Delivered</option>
             <option value='bancelled'>Cancelled</option>
           </select>
         </div>
-        <button className='bg-black text-white p-4 px-10 rounded-md shadow-md hover:scale-95 hover:bg-gray-700'
-        onClick={handleUpdateOrderStatus}>
+        <button
+          className='bg-black text-white p-4 px-10 rounded-md shadow-md hover:scale-95 hover:bg-gray-700'
+          onClick={handleUpdateOrderStatus}
+        >
           Update Order Status
         </button>
       </div>

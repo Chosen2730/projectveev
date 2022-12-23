@@ -6,23 +6,27 @@ import Subscribe from "../Components/Home/subscribe";
 import Testimonial from "../Components/Home/testimonial";
 import Shared from "../Components/Shared";
 import { category } from "../Utils/category";
-import { getAllFeaturedProducts, getAllTrendingProducts } from "../Utils/functions";
+import {
+  getAllFeaturedProducts,
+  getAllTrendingProducts,
+} from "../Utils/functions";
 import { featured, trending } from "../Utils/products";
 
 const Home = () => {
-  // const [featured, setFeatured] = useState(null)
-  // const [trending, setTrending] = useState(null)
-
+  const [trendingProduct, setTrendingProduct] = useState([]);
+  const [featuredProduct, setFeaturedProduct] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const f = await getAllFeaturedProducts()
-      const t = await getAllTrendingProducts()
-      console.log({f,t});
-    }
-  
-    fetch()
-  }, [])
-  
+      const feat = await getAllFeaturedProducts();
+      const trend = await getAllTrendingProducts();
+      setTrendingProduct(trendingProduct);
+      setFeaturedProduct(featuredProduct);
+    };
+
+    fetch();
+  }, []);
+
+  console.log(trendingProduct, featuredProduct);
   return (
     <>
       <Hero />
