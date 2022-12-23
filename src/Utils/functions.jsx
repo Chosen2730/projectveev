@@ -58,6 +58,28 @@ export const getProductsByCategory = async (category, docLimit) => {
     }
 }
 
+export const getUsersOrders = async (uid, docLimit) => {
+    if (uid) {
+        try {
+            const productsRef = collection(db, "orders");
+            let q;
+            if (docLimit) {
+                q = query(productsRef, where('uid', '==', uid), orderBy('updatedAt', 'desc'), limit(parseInt(docLimit)));
+            } else {
+                q = query(productsRef, where('uid', '==', uid), orderBy('updatedAt', 'desc'));
+            }
+            const documentSnapshots = await getDocs(q).catch(error => { console.log('getProductsByCategory error:', error) });
+            let data = documentSnapshots?.docs.map(doc => ({ ...doc.data(), productId: doc.id }));
+            const lastVisibleItem = documentSnapshots?.docs[documentSnapshots.docs.length - 1];
+            return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
+        } catch (error) {
+            console.log('getProductsByCategory error by trycatch:', error)
+        }
+    } else {
+        return null
+    }
+}
+
 export const getOrderById = async (orderId) => {
     if (orderId) {
         try {
