@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../../Utils/functions";
+import { deleteOrder, getOrders } from "../../Utils/functions";
 import { RiLuggageCartFill } from "react-icons/ri";
 import {
   MdPendingActions,
@@ -25,8 +25,8 @@ const Orders = () => {
     const fetch = async () => {
       const res = await getOrders(limit);
       setAllOrders(res.data);
-      dispatch(setOrders(res.data));
-      setLastVisibleItem(res.lastVisibleItem);
+      // dispatch(setOrders(res.data));
+      // setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
   }, [limit]);
@@ -93,10 +93,14 @@ const Orders = () => {
               );
             })}
           </div>
+          {!allOrders.length > 0 && <div className="uppercase font-bold">No data yet!</div>}
           <div className=''>
             {allOrders?.map(({ cartItems, message, name, orderId }, index) => {
               const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
-              const totalPrice = prices?.reduce((sum, price) => sum + price);
+              var totalPrice;
+              if (prices && prices.length>0){
+                totalPrice = prices?.reduce((sum, price) => sum + price);
+              }
               return (
                 <div
                   key={index}
@@ -110,7 +114,7 @@ const Orders = () => {
                   <h2>Pending</h2>
                   <div className='flex gap-4 text-xl'>
                     {/* <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' /> */}
-                    <h2 className='text-sm italic text-red-700 cursor-pointer'>
+                    <h2 className='text-sm italic text-red-700 cursor-pointer' onClick={() => { deleteOrder(orderId) }}>
                       delete
                     </h2>
                     <h2

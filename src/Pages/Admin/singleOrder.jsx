@@ -3,19 +3,27 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Currency from "../../Components/Configs/currency";
+import { updateOrderStatus } from "../../Utils/functions";
 
 const SingleOrder = () => {
   const { orderID } = useParams();
   console.log(orderID);
   const { allOrders } = useSelector((state) => state.admin);
   const [order, setOrder] = useState({});
+  const [orderStatus, setOrderStatus] = useState('')
   useEffect(() => {
     setOrder(() => allOrders.find((order) => order.orderId === orderID));
-  }, [orderID]);
+  }, [allOrders, orderID]);
   console.log(order);
-  const { name, message, trxref, cartItems } = order && order;
+  const { name, email, phone, shippingAddress, message, trxref, cartItems } = order && order;
   const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
   const totalPrice = prices?.reduce((sum, price) => sum + price);
+
+  const handleUpdateOrderStatus = async () => {
+    const ref = await updateOrderStatus(orderID, orderStatus);
+    console.log(ref);
+  }
+
   return (
     <div className='p-4'>
       <Link to='/admin' className='flex items-center gap-2 font-medium'>
@@ -32,19 +40,15 @@ const SingleOrder = () => {
         </div>
         <div className='flex gap-4 justify-between border-b py-4'>
           <h2 className=''>Email</h2>
-          <h2>patiencesimoniseoluwa@gmail.com</h2>
+          <h2>{email}</h2>
         </div>
         <div className='flex gap-4 justify-between border-b py-4'>
           <h2 className=''>Phone Number</h2>
-          <h2>08132157321</h2>
+          <h2>{phone}</h2>
         </div>
         <div className='flex gap-4 justify-between border-b py-4'>
           <h2 className='w-[50%]'>Shipping Address</h2>
-          <h2>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam
-            quos eius in eaque soluta provident unde numquam, ipsum repellat
-            quod.
-          </h2>
+          <h2>{shippingAddress}</h2>
         </div>
         <div className='flex gap-4 justify-between border-b py-4'>
           <h2 className=''>Payment Status</h2>
@@ -95,13 +99,15 @@ const SingleOrder = () => {
             name='orderStatus'
             className='p-4 px-10 bg-gray-300 rounded-md'
             id=''
+            onChange={(e) => { setOrderStatus(e.target.value) }}
           >
             <option value='pending'>Pending</option>
-            <option value='Delivered'>Delivered</option>
-            <option value='Cancelled'>Cancelled</option>
+            <option value='delivered'>Delivered</option>
+            <option value='bancelled'>Cancelled</option>
           </select>
         </div>
-        <button className='bg-black text-white p-4 px-10 rounded-md shadow-md hover:scale-95 hover:bg-gray-700'>
+        <button className='bg-black text-white p-4 px-10 rounded-md shadow-md hover:scale-95 hover:bg-gray-700'
+        onClick={handleUpdateOrderStatus}>
           Update Order Status
         </button>
       </div>

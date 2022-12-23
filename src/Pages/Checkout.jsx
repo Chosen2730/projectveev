@@ -61,7 +61,7 @@ const Checkout = () => {
   const initializePayment = usePaystackPayment(config);
 
   const handleSuccess = async (ref) => {
-    const data = { ...ref, cartItems, completed: false, name, admin };
+    const data = { ...ref, cartItems, orderStatus: 'pending', name, email: informationDetails.email, admin, shippingAddress: informationDetails.address, phone: informationDetails.tel };
     // console.log(data);
     const orderRef = await addOrder(isLoggedIn, data);
     // console.log(orderRef);
