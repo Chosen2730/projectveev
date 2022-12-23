@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, startAt, endAt, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, startAt, endAt, getDocs, limit, orderBy, query, updateDoc, where, getDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { db } from "../Firebase/config";
 
@@ -52,6 +52,27 @@ export const getProductsByCategory = async (category, docLimit) => {
             return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) }
         } catch (error) {
             console.log('getProductsByCategory error by trycatch:', error)
+        }
+    } else {
+        return null
+    }
+}
+
+export const getOrderById = async (orderId) => {
+    if (orderId) {
+        try {
+            const docRef = doc(db, "orders", orderId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                return docSnap.data()
+            } else {
+                console.log("No such document!");
+                return "No such document!";
+            }
+        } catch (error) {
+            console.log('getProductsByCategory error by trycatch:', error)
+            return null;
         }
     } else {
         return null
