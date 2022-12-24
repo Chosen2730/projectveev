@@ -4,7 +4,7 @@ import { RiMenu4Fill, RiUserAddLine } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import Grid from "./grid";
 import List from "./list";
-import { BsChevronDown } from "react-icons/bs";
+import { BsChevronDown, BsCreditCard } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../Redux/features/authSlice";
@@ -83,17 +83,21 @@ const Nav = () => {
               </div>
             )}
             {isLoggedIn ? (
-              <div
-                className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'
-                onClick={() => {
-                  setIsDropDown(false);
-                  dispatch(logout());
-                }}
-              >
-                <i className='text-lg'>
-                  <AiOutlineLogout />
-                </i>
-                <h1 className='capitalize'>Logout</h1>
+              <div>
+                <Link onClick={() => setIsDropDown(false)} to='/orders'>
+                  <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-black cursor-pointer'>
+                    <i className='text-lg'>
+                      <BsCreditCard />
+                    </i>
+                    <h1 className='capitalize'>My Orders</h1>
+                  </div>
+                </Link>
+                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'>
+                  <i className='text-lg'>
+                    <AiOutlineLogout />
+                  </i>
+                  <h1 className='capitalize'>Logout</h1>
+                </div>
               </div>
             ) : (
               <div
