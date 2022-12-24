@@ -239,8 +239,8 @@ export const createUser = async (data) => {
   if (data) {
     console.log(data);
     const user = await getUserById(data.uid)
-    console.log({user});
-    if(!user){
+    console.log({ user });
+    if (!user) {
       // await addDoc(collection(db, "users"), data);
       // window.location.reload();
       return "success";
@@ -435,4 +435,22 @@ export const uploadImage = async (isLoggedIn, image, setUrl) => {
   }
 
   return "success";
+};
+
+export const updateUserStatus = async (uid, userStatus) => {
+  if (userStatus) {
+    if (window.confirm(`Do you want to ${userStatus === true ? "BLOCK" : 'UNBLOCK'} this user?`)) {
+      const docRef = doc(db, "users", uid);
+      const data = { blocked: userStatus };
+
+      const res = await updateDoc(docRef, data).catch((error) => {
+        console.log(error);
+      });
+      return { msg: "success", res };
+    }
+    return { msg: "" };
+  } else {
+    alert("No status set!");
+    return { msg: "authError" };
+  }
 };

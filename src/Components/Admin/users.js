@@ -3,11 +3,11 @@ import { FaUsers, FaUsersSlash } from "react-icons/fa";
 import { RiLuggageCartFill } from "react-icons/ri";
 import { SlNote } from "react-icons/sl";
 import { useSelector } from "react-redux";
-import { getUsers } from "../../Utils/functions";
+import { getUsers, updateUserStatus } from "../../Utils/functions";
 import { ImUsers } from "react-icons/im";
 
 const Users = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user: { uid } } = useSelector((state) => state.auth);
 
   const [allUsers, setAllUsers] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
@@ -18,16 +18,21 @@ const Users = () => {
   useEffect(() => {
     const fetch = async () => {
       const res = await getUsers(limit);
-      setAllUsers(res.data);
+      // setAllUsers(res.data);
       setActiveUsers(res.data.filter(user => user.blocked === false))
       setBlockedUsers(res.data.filter(user => user.blocked === true))
-      console.log({activeUsers, blockedUsers});
+      // console.log({activeUsers, blockedUsers});
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
   }, [limit]);
 
-  console.log({ allUsers });
+  const updateStatus = async () => {
+    var userStatus = false;
+    await updateUserStatus(uid, userStatus)
+  }
+
+  // console.log({ allUsers });
   const userHeader = ["Name", "Email", "Tel", "Status", "Actions"];
   return (
     <div>
