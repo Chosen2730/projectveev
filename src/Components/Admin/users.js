@@ -10,6 +10,8 @@ const Users = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   const [allUsers, setAllUsers] = useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
   const [limit, setLimit] = useState(20);
   const [lastVisibleItem, setLastVisibleItem] = useState();
 
@@ -17,6 +19,9 @@ const Users = () => {
     const fetch = async () => {
       const res = await getUsers(limit);
       setAllUsers(res.data);
+      setActiveUsers(res.data.filter(user => user.blocked === false))
+      setBlockedUsers(res.data.filter(user => user.blocked === true))
+      console.log({activeUsers, blockedUsers});
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
@@ -35,7 +40,7 @@ const Users = () => {
               <FaUsers />
             </i>
           </div>
-          <p className='text-4xl font-medium'>0</p>
+          <p className='text-4xl font-medium'>{allUsers?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-blue-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -44,7 +49,7 @@ const Users = () => {
               <ImUsers />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{allUsers?.length}</p>
+          <p className='text-4xl font-medium'>{activeUsers?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -53,7 +58,7 @@ const Users = () => {
               <FaUsersSlash />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{blockedUsers.length}</p>
         </div>
       </div>
       <div className='overflow-x-scroll'>

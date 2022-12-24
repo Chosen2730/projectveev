@@ -73,6 +73,21 @@ export const getUsers = async (docLimit) => {
   return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
 };
 
+export const getUserById = async (uid) => {
+  if (uid) {
+    try {
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      return docSnap.exists()
+    } catch (error) {
+      console.log("getProductsByCategory error by trycatch:", error);
+      return true;
+    }
+  } else {
+    return true;
+  }
+};
+
 export const getProductsByCategory = async (category, docLimit) => {
   if (category) {
     try {
@@ -220,6 +235,21 @@ export const getAllTrendingProducts = async (docLimit) => {
   }
 };
 
+export const createUser = async (data) => {
+  if (data) {
+    console.log(data);
+    const user = await getUserById(data.uid)
+    console.log({user});
+    if(!user){
+      // await addDoc(collection(db, "users"), data);
+      // window.location.reload();
+      return "success";
+    }
+  } else {
+    return "authError";
+  }
+};
+
 export const addProduct = async (isLoggedIn, data, image) => {
   if (isLoggedIn && image) {
     var storagePATH = `products/${image.name}`;
@@ -292,7 +322,6 @@ export const deleteOrder = async (orderId) => {
         console.log("An error occured durring order delete: ", error);
       });
       alert("order deleted!");
-      window.location.reload();
       return "success";
     } else {
       return "";
