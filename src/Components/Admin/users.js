@@ -18,7 +18,7 @@ const Users = () => {
   useEffect(() => {
     const fetch = async () => {
       const res = await getUsers(limit);
-      // setAllUsers(res.data);
+      setAllUsers(res.data);
       setActiveUsers(res.data.filter(user => user.blocked === false))
       setBlockedUsers(res.data.filter(user => user.blocked === true))
       // console.log({activeUsers, blockedUsers});
