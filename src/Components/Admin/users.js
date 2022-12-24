@@ -25,7 +25,7 @@ const Users = () => {
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
-  }, [limit]);
+  }, [limit]);//
 
   const updateStatus = async () => {
     var userStatus = false;
