@@ -21,11 +21,11 @@ const Users = () => {
       setAllUsers(res.data);
       setActiveUsers(res.data.filter(user => user.blocked === false))
       setBlockedUsers(res.data.filter(user => user.blocked === true))
-      // console.log({activeUsers, blockedUsers});
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
-  }, [limit]);//
+  }, [limit]);
+  // console.log({activeUsers, blockedUsers});
 
   const updateStatus = async () => {
     var userStatus = false;
