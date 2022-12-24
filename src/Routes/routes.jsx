@@ -14,6 +14,7 @@ import Admin from "../Pages/Admin/Admin";
 import SingleProduct from "../Pages/Admin/singleProduct";
 import AdminIndex from "../Pages/Admin/";
 import SingleOrder from "../Pages/Admin/singleOrder";
+import Orders from "../Pages/Orders";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
@@ -27,6 +28,7 @@ const AppRoute = () => {
         <Route path='/shop' element={<Shop />} />
         <Route path='/product/:productId/' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/orders' element={<Orders />} />
         <Route path='/checkout' element={<Checkout />} />
         {user.admin && (
           <Route path='/admin' element={<AdminIndex />}>
