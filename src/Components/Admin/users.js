@@ -3,13 +3,15 @@ import { FaUsers, FaUsersSlash } from "react-icons/fa";
 import { RiLuggageCartFill } from "react-icons/ri";
 import { SlNote } from "react-icons/sl";
 import { useSelector } from "react-redux";
-import { getUsers } from "../../Utils/functions";
+import { getUsers, updateUserStatus } from "../../Utils/functions";
 import { ImUsers } from "react-icons/im";
 
 const Users = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user: { uid } } = useSelector((state) => state.auth);
 
   const [allUsers, setAllUsers] = useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
   const [limit, setLimit] = useState(20);
   const [lastVisibleItem, setLastVisibleItem] = useState();
 
@@ -17,12 +19,20 @@ const Users = () => {
     const fetch = async () => {
       const res = await getUsers(limit);
       setAllUsers(res.data);
+      setActiveUsers(res.data.filter(user => user.blocked === false))
+      setBlockedUsers(res.data.filter(user => user.blocked === true))
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
   }, [limit]);
+  // console.log({activeUsers, blockedUsers});
 
-  console.log({ allUsers });
+  const updateStatus = async () => {
+    var userStatus = false;
+    await updateUserStatus(uid, userStatus)
+  }
+
+  // console.log({ allUsers });
   const userHeader = ["Name", "Email", "Tel", "Status", "Actions"];
   return (
     <div>
@@ -35,7 +45,7 @@ const Users = () => {
               <FaUsers />
             </i>
           </div>
-          <p className='text-4xl font-medium'>0</p>
+          <p className='text-4xl font-medium'>{allUsers?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-blue-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -44,7 +54,7 @@ const Users = () => {
               <ImUsers />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{allUsers?.length}</p>
+          <p className='text-4xl font-medium'>{activeUsers?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -53,7 +63,7 @@ const Users = () => {
               <FaUsersSlash />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{blockedUsers.length}</p>
         </div>
       </div>
       <div className='overflow-x-scroll'>

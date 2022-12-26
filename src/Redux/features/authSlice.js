@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from "../../Firebase/config";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUser } from "../../Utils/functions";
 
 const auth = getAuth();
 const googleProvider = new GoogleAuthProvider();
@@ -24,9 +25,17 @@ const initialState = {
 
 export const login = createAsyncThunk(
   "auth/loginData",
-  (arg, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
     try {
-      const res = signInWithPopup(auth, googleProvider);
+      const res = await signInWithPopup(auth, googleProvider);
+      console.log(res);
+      const fullName = res._tokenResponse.fullName;
+      const firstName = res._tokenResponse.firstName;
+      const lastName = res._tokenResponse.lastName;
+      const date = (new Date()).toDateString()
+      const data = { uid: res.user.uid, photoURL: res.user.photoURL, email: res.user.email, emailVerified: res.user.emailVerified, phoneNumber: res.user.phoneNumber, displayName: res.user.displayName, metadata: { _createdAt: date, _updatedAt: date }, fullName, firstName, lastName, blocked: false, }
+      // const data = { ...res.user, proactiveRefresh: '', auth: '', AuthImpl: '',  fullName, firstName, lastName }
+      await createUser(data)
       return res;
     } catch (error) {
       rejectWithValue(error.message);
@@ -49,7 +58,7 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, { payload }) => {
       const user = payload.user;
-      console.log({user});
+      console.log({ user });
       const newToken = user.stsTokenManager.accessToken;
       state.token = newToken;
       state.isLoggedIn = true;

@@ -8,6 +8,7 @@ import Shared from "../Components/Shared";
 import { category } from "../Utils/category";
 import {
   getAllFeaturedProducts,
+  getAllProducts,
   getAllTrendingProducts,
 } from "../Utils/functions";
 import { featured, trending } from "../Utils/products";
@@ -16,21 +17,25 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+  const [allProducts, setAllProducts] = useState([]);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
 
-  const fetch = async () => {
-    const feat = await getAllFeaturedProducts();
-    const trend = await getAllTrendingProducts();
-    setTrendingProduct(trend);
-    setFeaturedProduct(feat);
-
-    console.log(feat, trend);
-  };
-
+  
   useEffect(() => {
+    const fetch = async () => {
+      var limit = 100;
+      const res = await getAllProducts(limit);
+      const feat = await getAllFeaturedProducts(limit);
+      const trend = await getAllTrendingProducts(limit);
+      res.data && setAllProducts(res.data);
+      trend.data && setTrendingProduct(trend.data);
+      feat.data && setFeaturedProduct(feat.data);
+  
+    };
     fetch();
   }, []);
+  console.log({allProducts, featuredProduct, trendingProduct});
 
   return (
     <>

@@ -73,6 +73,21 @@ export const getUsers = async (docLimit) => {
   return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
 };
 
+export const getUserById = async (uid) => {
+  if (uid) {
+    try {
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      return docSnap.exists()
+    } catch (error) {
+      console.log("getProductsByCategory error by trycatch:", error);
+      return true;
+    }
+  } else {
+    return true;
+  }
+};
+
 export const getProductsByCategory = async (category, docLimit) => {
   if (category) {
     try {
@@ -169,11 +184,12 @@ export const getOrderById = async (orderId) => {
 };
 
 export const getAllFeaturedProducts = async (docLimit) => {
+
   try {
     const productsRef = collection(db, "products");
     let q = query(
       productsRef,
-      where("featured", "==", "on"),
+      where("featured", "===", "on"),
       orderBy("title", "desc"),
       limit(parseInt(docLimit))
     );
@@ -185,10 +201,10 @@ export const getAllFeaturedProducts = async (docLimit) => {
       ...doc.data(),
       productId: doc.id,
     }));
+    console.log(data);
     // console.log(data, q, "this is...", d);
-    const lastVisibleItem =
-      documentSnapshots?.docs[documentSnapshots.docs.length - 1];
-    return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
+    const lastVisibleItem = documentSnapshots?.docs[documentSnapshots.docs.length - 1];
+    return { data: data ? data : [], lastVisibleItem: JSON.stringify(lastVisibleItem) };
   } catch (error) {
     console.log("getProductsByCategory error by trycatch:", error);
     return null;
@@ -217,6 +233,21 @@ export const getAllTrendingProducts = async (docLimit) => {
   } catch (error) {
     console.log("getProductsByCategory error by trycatch:", error);
     return null;
+  }
+};
+
+export const createUser = async (data) => {
+  if (data) {
+    console.log(data);
+    const user = await getUserById(data.uid)
+    console.log({ user });
+    if (!user) {
+      // await addDoc(collection(db, "users"), data);
+      // window.location.reload();
+      return "success";
+    }
+  } else {
+    return "authError";
   }
 };
 
@@ -292,7 +323,6 @@ export const deleteOrder = async (orderId) => {
         console.log("An error occured durring order delete: ", error);
       });
       alert("order deleted!");
-      window.location.reload();
       return "success";
     } else {
       return "";
@@ -406,4 +436,22 @@ export const uploadImage = async (isLoggedIn, image, setUrl) => {
   }
 
   return "success";
+};
+
+export const updateUserStatus = async (uid, userStatus) => {
+  if (userStatus) {
+    if (window.confirm(`Do you want to ${userStatus === true ? "BLOCK" : 'UNBLOCK'} this user?`)) {
+      const docRef = doc(db, "users", uid);
+      const data = { blocked: userStatus };
+
+      const res = await updateDoc(docRef, data).catch((error) => {
+        console.log(error);
+      });
+      return { msg: "success", res };
+    }
+    return { msg: "" };
+  } else {
+    alert("No status set!");
+    return { msg: "authError" };
+  }
 };
