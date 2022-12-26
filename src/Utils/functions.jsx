@@ -189,7 +189,7 @@ export const getAllFeaturedProducts = async (docLimit) => {
     const productsRef = collection(db, "products");
     let q = query(
       productsRef,
-      where("featured", "===", "on"),
+      where("featured", "==", "on"),
       orderBy("title", "desc"),
       limit(parseInt(docLimit))
     );
