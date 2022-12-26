@@ -13,7 +13,7 @@ const Orders = () => {
       const limit = 20;
       const res = await getUsersOrders(uid, limit);
       setUsersOrders(res.data);
-      // dispatch(setOrders(res.data));
+      // dispatch(setOrders(res.data));//
       // setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
