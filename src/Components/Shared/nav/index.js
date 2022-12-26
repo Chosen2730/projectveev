@@ -33,12 +33,6 @@ const Nav = () => {
   return (
     <div className='p-4 relative'>
       <div className='flex items-center justify-between bg-white uppercase py-4'>
-        {/* <i
-          className='bg-black rounded-md md:hidden text-white p-3 text-xl shadow-md items-center justify-center text-center'
-          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-        >
-          {isSideBarOpen ? <IoMdClose /> : <RiMenu4Fill />}
-        </i> */}
         <Link to='/'>
           <img src={logo} alt='logo' className='w-24 md:hidden' />
         </Link>
