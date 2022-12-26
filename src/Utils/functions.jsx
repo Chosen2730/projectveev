@@ -184,11 +184,12 @@ export const getOrderById = async (orderId) => {
 };
 
 export const getAllFeaturedProducts = async (docLimit) => {
+
   try {
     const productsRef = collection(db, "products");
     let q = query(
       productsRef,
-      where("featured", "==", "on"),
+      where("featured", "===", "on"),
       orderBy("title", "desc"),
       limit(parseInt(docLimit))
     );
@@ -200,10 +201,10 @@ export const getAllFeaturedProducts = async (docLimit) => {
       ...doc.data(),
       productId: doc.id,
     }));
+    console.log(data);
     // console.log(data, q, "this is...", d);
-    const lastVisibleItem =
-      documentSnapshots?.docs[documentSnapshots.docs.length - 1];
-    return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
+    const lastVisibleItem = documentSnapshots?.docs[documentSnapshots.docs.length - 1];
+    return { data: data ? data : [], lastVisibleItem: JSON.stringify(lastVisibleItem) };
   } catch (error) {
     console.log("getProductsByCategory error by trycatch:", error);
     return null;

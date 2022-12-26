@@ -19,18 +19,19 @@ const Home = () => {
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
 
-  const fetch = async () => {
-    const feat = await getAllFeaturedProducts();
-    const trend = await getAllTrendingProducts();
-    setTrendingProduct(trend);
-    setFeaturedProduct(feat);
-
-    console.log(feat, trend);
-  };
-
+  
   useEffect(() => {
+    const fetch = async () => {
+      var limit = 100;
+      const feat = await getAllFeaturedProducts(limit);
+      const trend = await getAllTrendingProducts(limit);
+      setTrendingProduct(trend.data);
+      setFeaturedProduct(feat.data);
+  
+    };
     fetch();
   }, []);
+  console.log({featuredProduct, trendingProduct});
 
   return (
     <>

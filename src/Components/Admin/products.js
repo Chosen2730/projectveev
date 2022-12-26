@@ -133,8 +133,8 @@ const Products = () => {
       status,
       featured,
       trending,
-      _createdAt: new Date().getTime(),
-      _updatedAt: new Date().getTime(),
+      _createdAt: (new Date()).toDateString(),
+      _updatedAt: (new Date()).toDateString(),
     };
     console.log(data);
     const addProductRef = await addProduct(isLoggedIn, data, image);
