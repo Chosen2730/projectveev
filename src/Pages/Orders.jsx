@@ -21,7 +21,6 @@ const Orders = () => {
 
   console.log({usersOrders});
 
-
   const orderHeader = ["Items", "Date", "Price", "Quantity", "Delivery Status"];
   return (
     <div>
