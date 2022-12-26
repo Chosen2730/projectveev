@@ -11,12 +11,17 @@ const initialState = {
   qty: 1,
   cartItems: [],
   totalAmount: 0,
+  allProducts: [],
 };
 
 const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
+    setAllProducts: (state, { payload }) => {
+      // console.log(payload);
+      state.allProducts = payload;
+    },
     hideFilter: (state) => {
       state.filterShown = !state.filterShown;
     },
@@ -39,16 +44,16 @@ const productSlice = createSlice({
     },
     removeItem: (state, { payload }) => {
       const { id } = payload;
-      const r = state.cartItems = state.cartItems.filter(
+      const r = (state.cartItems = state.cartItems.filter(
         // (item) => state.cartItems.indexOf(item) !== id
         (item) => {
-          const res = parseInt(item.productId) !== parseInt(id)
-          return res
+          const res = parseInt(item.productId) !== parseInt(id);
+          return res;
         }
-      );
+      ));
 
       console.log(r);
-      state.cartItems = r
+      state.cartItems = r;
     },
     getTotalAmount: (state) => {
       let total = state.cartItems.reduce((acc, crr) => {
@@ -60,6 +65,12 @@ const productSlice = createSlice({
   },
   extraReducers: {},
 });
-export const { hideFilter, addToCart, updateQty, removeItem, getTotalAmount } =
-  productSlice.actions;
+export const {
+  hideFilter,
+  addToCart,
+  updateQty,
+  removeItem,
+  getTotalAmount,
+  setAllProducts,
+} = productSlice.actions;
 export default productSlice.reducer;

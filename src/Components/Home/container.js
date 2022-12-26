@@ -16,7 +16,7 @@ const Container = ({ name, data }) => {
         <div className='h-[2px] w-full bg-gray-700' />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        {data?.slice(0, 3).map(({ img, item, price, oldPrice }, i) => {
+        {data?.slice(0, 3).map(({ imageUrl, item, price, oldPrice }, i) => {
           return (
             <div
               className='flex flex-col items-center justify-center relative'
@@ -24,16 +24,16 @@ const Container = ({ name, data }) => {
             >
               <img
                 className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
-                src={img}
+                src={imageUrl}
                 alt={item}
               />
               <div className='my-3 text-center'>
                 <h2 className='uppercase font-medium text-sm'>{item}</h2>
                 <Currency className='font-bold my text-lg' amount={price} />
-                <Currency
+                {/* <Currency
                   className='font-medium line-through text-gray-500 text-sm'
                   amount={oldPrice}
-                />
+                /> */}
               </div>
               <Link to={`/product/${i}`} className='modal_buttons link'>
                 <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />

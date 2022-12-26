@@ -8,7 +8,8 @@ import { arr } from "../../Redux/features/productSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { filterShown } = useSelector((state) => state.product);
+  const { filterShown, allProducts } = useSelector((state) => state.product);
+  console.log(allProducts);
   return (
     <div className='flex justify-center max-w-7xl mx-auto my-4 gap-8 p-2'>
       {filterShown && <SideFilter />}
@@ -23,7 +24,7 @@ const Products = () => {
           </h1>
           <MdFilterList className='text-2xl' />
         </div>
-        <ProductContainer data={arr} />
+        <ProductContainer data={allProducts} />
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ const SideFilter = () => {
   const [selectedPriceIndex, setSelectedPriceIndex] = useState(null);
   const [selectedStatusIndex, setSelectedStatusIndex] = useState(null);
   return (
-    <div className='w-[25%] hidden lg:block'>
+    <div className='w-[25%] hidden lg:hidden'>
       <div className='flex gap-2 items-center'>
         <MdFilterList className='text-2xl' />
         <h1 className='font-bold'>Filter by:</h1>

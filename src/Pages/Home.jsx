@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Slide from "../Components/Home/categorySlide";
 import Container from "../Components/Home/container";
 import Hero from "../Components/Home/hero";
 import Subscribe from "../Components/Home/subscribe";
 import Testimonial from "../Components/Home/testimonial";
 import Shared from "../Components/Shared";
+import { setAllProducts } from "../Redux/features/productSlice";
 import { category } from "../Utils/category";
 import {
   getAllFeaturedProducts,
@@ -17,33 +19,33 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-  const [allProducts, setAllProducts] = useState([]);
+  // const [allProducts, setAllProducts] = useState([]);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
-
-  
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetch = async () => {
       var limit = 100;
       const res = await getAllProducts(limit);
-      const feat = await getAllFeaturedProducts(limit);
-      const trend = await getAllTrendingProducts(limit);
-      res.data && setAllProducts(res.data);
-      trend.data && setTrendingProduct(trend.data);
-      feat.data && setFeaturedProduct(feat.data);
-  
+      // const feat = await getAllFeaturedProducts(limit);
+      // const trend = await getAllTrendingProducts(limit);
+      // res.data && setAllProducts(res.data);
+      dispatch(setAllProducts(res?.data));
+      const feat = res?.data?.filter((product) => product.featured === "on");
+      const trend = res?.data?.filter((product) => product.trending === "on");
+      setTrendingProduct(trend);
+      setFeaturedProduct(feat);
     };
     fetch();
   }, []);
-  console.log({allProducts, featuredProduct, trendingProduct});
 
   return (
     <>
       <Hero />
       <div className='max-w-6xl mx-auto p-8'>
         <Slide data={category} />
-        <Container name='new & featured' data={featured} />
-        <Container name='trending' data={trending} />
+        <Container name='new & featured' data={featuredProduct} />
+        <Container name='trending' data={trendingProduct} />
         <Testimonial />
         <Subscribe />
       </div>
