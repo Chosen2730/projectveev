@@ -14,11 +14,17 @@ import { useEffect } from "react";
 
 const Product = () => {
   const navigate = useNavigate();
-  const { productId } = useParams();
-  const { desc, img, oldPrice, price, item } = arr[productId];
+  const { qty, allProducts } = useSelector((state) => state.product);
+  const { productId: id } = useParams();
+  const singleProduct = allProducts.find((product) => product.productId === id);
+  console.log(singleProduct);
+
+  const { desc, imageUrl, price, title, discountValue } = singleProduct;
+  const discount = (parseInt(discountValue || 0) / 100) * price;
+  const newPrice = price - discount;
+
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
   const dispatch = useDispatch();
-  const { qty } = useSelector((state) => state.product);
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -31,11 +37,11 @@ const Product = () => {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-5'>
         <img
           className='h-[650px] xl:h-[500px] w-full object-cover'
-          src={img}
-          alt={item}
+          src={imageUrl}
+          alt={title}
         />
         <div>
-          <h2 className='font-bold text-2xl uppercase'>{item}</h2>
+          <h2 className='font-bold text-2xl uppercase'>{title}</h2>
           <div className='flex text-4xl my-2'>
             <AiFillStar />
             <AiFillStar />
@@ -43,16 +49,12 @@ const Product = () => {
             <AiFillStar />
           </div>
           <div className='my-3'>
-            <Currency className='font-bold my text-lg' amount={price} />
+            <Currency className='font-bold my text-lg' amount={newPrice} />
             <Currency
               className='font-medium line-through text-gray-500 text-xs'
-              amount={oldPrice}
+              amount={price}
             />
-            <h2 className='my-2 text-sm'>
-              It is a 2 in 1 OFF SHOULDER MIDI LENGTH DRESS WITH SIDE INNER
-              POCKETS AND 2 MIX OF FABRICS. It can be worn as an offshoulder or
-              as a round neckline. The price doesn’t include the belt.
-            </h2>
+            <h2 className='my-2 text-sm'>{desc}</h2>
           </div>
           <div className='my-5'>
             <h2 className='uppercase text-sm'>
@@ -112,7 +114,9 @@ const Product = () => {
             </div>
             <button
               className='font-medium flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition'
-              onClick={() => dispatch(addToCart({ navigate, productId, qty }))}
+              onClick={() =>
+                dispatch(addToCart({ navigate, id, qty, newPrice }))
+              }
             >
               Add to Cart
               <FaOpencart className='text-2xl' />

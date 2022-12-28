@@ -5,20 +5,14 @@ import Container from "../Components/Home/container";
 import Hero from "../Components/Home/hero";
 import Subscribe from "../Components/Home/subscribe";
 import Testimonial from "../Components/Home/testimonial";
-import Shared from "../Components/Shared";
-import { setAllProducts } from "../Redux/features/productSlice";
+import { setAllProduct } from "../Redux/features/productSlice";
 import { category } from "../Utils/category";
-import {
-  getAllFeaturedProducts,
-  getAllProducts,
-  getAllTrendingProducts,
-} from "../Utils/functions";
+import { getAllProducts } from "../Utils/functions";
 
 const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-  const [allProducts, setAllProducts] = useState([]);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
   const dispatch = useDispatch();
@@ -29,7 +23,8 @@ const Home = () => {
       // const feat = await getAllFeaturedProducts(limit);
       // const trend = await getAllTrendingProducts(limit);
       // res.data && setAllProducts(res.data);
-      setAllProducts(res?.data);
+      // setAllProducts(res?.data);
+      dispatch(setAllProduct(res.data));
       const feat = res?.data?.filter((product) => product.featured === "on");
       const trend = res?.data?.filter((product) => product.trending === "on");
       setTrendingProduct(trend);

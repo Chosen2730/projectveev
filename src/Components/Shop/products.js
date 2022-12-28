@@ -2,24 +2,19 @@ import React, { useEffect, useState } from "react";
 import { MdFilterList } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import SideFilter from "./SideFilter";
-import { hideFilter } from "../../Redux/features/productSlice";
+import { hideFilter, setAllProduct } from "../../Redux/features/productSlice";
 import ProductContainer from "./productContainer";
-import {
-  getAllFeaturedProducts,
-  getAllProducts,
-  getAllTrendingProducts,
-} from "../../Utils/functions";
+import { getAllProducts } from "../../Utils/functions";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { filterShown } = useSelector((state) => state.product);
-  const [allProducts, setAllProducts] = useState([]);
+  const { filterShown, allProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
     const fetch = async () => {
       var limit = 100;
       const res = await getAllProducts(limit);
-      setAllProducts(res?.data);
+      dispatch(setAllProduct(res?.data));
     };
     fetch();
   }, []);
