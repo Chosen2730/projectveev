@@ -13,13 +13,12 @@ import {
   getAllProducts,
   getAllTrendingProducts,
 } from "../Utils/functions";
-import { featured, trending } from "../Utils/products";
 
 const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-  // const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const Home = () => {
       // const feat = await getAllFeaturedProducts(limit);
       // const trend = await getAllTrendingProducts(limit);
       // res.data && setAllProducts(res.data);
-      dispatch(setAllProducts(res?.data));
+      setAllProducts(res?.data);
       const feat = res?.data?.filter((product) => product.featured === "on");
       const trend = res?.data?.filter((product) => product.trending === "on");
       setTrendingProduct(trend);
