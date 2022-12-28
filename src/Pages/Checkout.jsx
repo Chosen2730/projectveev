@@ -263,15 +263,19 @@ const Checkout = () => {
       <div className='md:w-[35%]'>
         <h1 className='uppercase font-medium text-xl'>Order summary</h1>
         <div className='border-b-2'>
-          {cartItems.map(({ img, item, itemTotal, qty }, id) => {
+          {cartItems.map(({ imageUrl, title, itemTotal, qty }, id) => {
             return (
               <div
                 key={id}
                 className='flex my-4 items-center gap-4 p-4 bg-gray-50 rounded-md shadow-xl shadow-gray-100 relative'
               >
-                <img className='w-20 h-20 object-cover' src={img} alt={item} />
+                <img
+                  className='w-20 h-20 object-cover'
+                  src={imageUrl}
+                  alt={title}
+                />
                 <div>
-                  <h2 className='text-sm'>{item}</h2>
+                  <h2 className='text-sm'>{title}</h2>
                   <span className='my-4'>Qty: {qty}</span>
                   <h2 className='font-medium'>Subtotal: </h2>
                   <Currency
