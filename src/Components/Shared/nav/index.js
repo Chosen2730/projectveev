@@ -86,7 +86,12 @@ const Nav = () => {
                     <h1 className='capitalize'>My Orders</h1>
                   </div>
                 </Link>
-                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'>
+                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'
+                  onClick={() => {
+                    setIsDropDown(false);
+                    dispatch(logout());
+                  }}
+                >
                   <i className='text-lg'>
                     <AiOutlineLogout />
                   </i>

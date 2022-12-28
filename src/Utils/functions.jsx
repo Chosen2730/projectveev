@@ -23,7 +23,7 @@ import {
 import { db } from "../Firebase/config";
 
 export const getAllProducts = async (_startAt, docLimit) => {
-  console.log(_startAt);
+  // console.log(_startAt);
   const productsRef = collection(db, "products");
   let q = query(productsRef, orderBy("title"), startAt(3), limit(docLimit));
   const documentSnapshots = await getDocs(q).catch((error) => {
@@ -129,24 +129,30 @@ export const getUsersOrders = async (uid, docLimit) => {
   if (uid) {
     try {
       const productsRef = collection(db, "orders");
-      let q;
-      if (docLimit) {
-        q = query(
-          productsRef,
-          where("uid", "==", uid),
-          orderBy("updatedAt", "desc"),
-          limit(parseInt(docLimit))
-        );
-      } else {
-        q = query(
-          productsRef,
-          where("uid", "==", uid),
-          orderBy("updatedAt", "desc")
-        );
-      }
+      // var q;
+      // if (docLimit) {
+      //   q = query(
+      //     productsRef,
+      //     where("uid", "==", uid),
+      //     orderBy("updatedAt", "desc"),
+      //     limit(parseInt(docLimit))
+      //   );
+      // } else {
+      //   q = query(
+      //     productsRef,
+      //     where("uid", "==", uid),
+      //     orderBy("updatedAt", "desc")
+      //   );
+      // }
+      var q = query(
+        productsRef,
+        where("uid", "==", uid),
+        orderBy("updatedAt", "desc")
+      );
       const documentSnapshots = await getDocs(q).catch((error) => {
-        console.log("getProductsByCategory error:", error);
+        console.log("getUsersOrders error:", error);
       });
+      console.log(documentSnapshots);
       let data = documentSnapshots?.docs.map((doc) => ({
         ...doc.data(),
         productId: doc.id,
@@ -245,8 +251,8 @@ export const createUser = async (data) => {
     const user = await getUserById(data.uid);
     console.log({ user });
     if (!user) {
-      // await addDoc(collection(db, "users"), data);
-      // window.location.reload();
+      await addDoc(collection(db, "users"), data);
+      window.location.reload();
       return "success";
     }
   } else {
@@ -309,7 +315,7 @@ export const addProduct = async (isLoggedIn, data, image) => {
 
 export const addOrder = async (isLoggedIn, data) => {
   if (isLoggedIn) {
-    const orderData = { ...data, createdAt: new Date().getTime() };
+    const orderData = { ...data, createdAt: (new Date()).toDateString(), updatedAt: (new Date()).toDateString() };
     const res = (await addDoc(collection(db, "orders"), orderData)).id;
     // window.location.reload()
     return { msg: "success", res };
