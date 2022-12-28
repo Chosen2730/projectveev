@@ -17,22 +17,23 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState('paypal');
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-  const [currency, setCurrency] = useState(options.currency);
+  // const [currency, setCurrency] = useState(options.currency);
 
-  const onCurrencyChange = ({ target: { value } }) => {
-    setCurrency(value);
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: value,
-      },
-    });
-  }
+  // const onCurrencyChange = ({ target: { value } }) => {
+  //   setCurrency(value);
+  //   dispatch({
+  //     type: "resetOptions",
+  //     value: {
+  //       ...options,
+  //       currency: value,
+  //     },
+  //   });
+  // }
   
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
   const disPatcha = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.product);
@@ -45,7 +46,7 @@ const Checkout = () => {
 
   useEffect(() => {
     disPatcha(getTotalAmount());
-  }, [cartItems]);
+  }, [cartItems, disPatcha]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -55,7 +56,7 @@ const Checkout = () => {
         phone: phoneNumber,
       });
     }
-  }, [isLoggedIn]);
+  }, [email, isLoggedIn, name, phoneNumber]);
   const formatTotalAmount = (amount) => {
     return amount * 100;
   };
@@ -64,27 +65,27 @@ const Checkout = () => {
   const [informationDetails, setInformationDetails] = useState({});
   const [deliveryFee] = useState(500);
 
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: informationDetails.email,
-    amount: (totalAmount + deliveryFee) * 100,
-    metadata: {
-      name:
-        informationDetails?.first_name?.toUpperCase() +
-        " " +
-        informationDetails?.last_name?.toUpperCase(),
-      phone: informationDetails.tel,
-    },
-    publicKey: "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52",
-  };
-  const initializePayment = usePaystackPayment(config);
+  // const config = {
+  //   reference: new Date().getTime().toString(),
+  //   email: informationDetails.email,
+  //   amount: (totalAmount + deliveryFee) * 100,
+  //   metadata: {
+  //     name:
+  //       informationDetails?.first_name?.toUpperCase() +
+  //       " " +
+  //       informationDetails?.last_name?.toUpperCase(),
+  //     phone: informationDetails.tel,
+  //   },
+  //   publicKey: "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52",
+  // };
+  // const initializePayment = usePaystackPayment(config);
 
   const onCreateOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: "8.99",
+            value: totalAmount.toString(),
           },
         },
       ],
@@ -94,38 +95,19 @@ const Checkout = () => {
   const onApproveOrder = (data, actions) => {
     return actions.order.capture().then(async (details) => {
       const name = details.payer.name.given_name;
+      // console.log(details);
       console.log(`Transaction completed by ${name}`);
-      // if (user) {
-      //   const data = {
-      //     ...details,
-      //     uid,
-      //     cartItems,
-      //     orderStatus: "pending",
-      //     name,
-      //     email: informationDetails.email,
-      //     admin,
-      //     shippingAddress: informationDetails.address,
-      //     phone: informationDetails.tel,
-      //   };
-      //   console.log(data);
-      //   // await addOrder(isLoggedIn, data);
-
-      //   // cartItems.forEach((item) => {
-      //   //   // console.log(item);
-      //   //   if (item.productId) {
-      //   //     disPatcha(removeItem({ id: item.productId }));
-      //   //   }
-      //   //   alert("Thanks for doing business with us! Come back soon!!");
-      //   //   navigate("/cart");
-      //   // });
-      // }
+      const message = details.status && "Approved"
+      const status = details.status && "success"
+      const trxref = details.id
+      await handleSuccess(message,status,trxref);
     });
   }
 
-  const handleSuccess = async (ref) => {
+  const handleSuccess = async (message, status, trxref) => {
     if (user) {
       const data = {
-        ...ref,
+        message, status, trxref,
         uid,
         cartItems,
         orderStatus: "pending",
@@ -181,7 +163,10 @@ const Checkout = () => {
     text: "Pay Now",
     // onSuccess: handleSuccess,
     onSuccess: (ref) => {
-      handleSuccess(ref);
+    const message = ref.message
+    const status = ref.status
+    const trxref = ref.trxref
+      handleSuccess(message, status, trxref);
     },
     onClose: () => alert("Wait! You need those orders, don't go!!!!"),
   };
