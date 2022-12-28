@@ -3,9 +3,10 @@ import Currency from "../Configs/currency";
 import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = ({ name, data }) => {
+  const navigate = useNavigate();
   return (
     <div className='my-20'>
       <div className='flex gap-3 items-center my-6'>
@@ -16,35 +17,74 @@ const Container = ({ name, data }) => {
         <div className='h-[2px] w-full bg-gray-700' />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        {data?.slice(0, 3).map(({ imageUrl, item, price, oldPrice }, i) => {
-          return (
-            <div
-              className='flex flex-col items-center justify-center relative'
-              key={i}
-            >
-              <img
-                className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
-                src={imageUrl}
-                alt={item}
-              />
-              <div className='my-3 text-center'>
-                <h2 className='uppercase font-medium text-sm'>{item}</h2>
-                <Currency className='font-bold my text-lg' amount={price} />
-                {/* <Currency
-                  className='font-medium line-through text-gray-500 text-sm'
-                  amount={oldPrice}
-                /> */}
-              </div>
-              <Link to={`/product/${i}`} className='modal_buttons link'>
-                <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
-              </Link>
-              <button className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'>
-                Add to Cart
-                <FaOpencart className='text-2xl' />
-              </button>
-            </div>
-          );
-        })}
+        {data
+          ?.slice(0, 3)
+          .map(
+            ({
+              imageUrl,
+              discountValue,
+              title,
+              item,
+              price,
+              productId: id,
+            }) => {
+              let discount;
+              discount = (parseInt(discountValue) / 100) * price;
+              const newPrice = price - discount;
+              return (
+                <div
+                  className='flex flex-col items-center justify-center relative'
+                  key={id}
+                >
+                  <img
+                    className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
+                    src={imageUrl}
+                    alt={item}
+                  />
+                  <div className='my-3 text-center'>
+                    {discountValue ? (
+                      <div>
+                        <h2 className='uppercase font-medium text-sm'>
+                          {title}
+                        </h2>
+                        <Currency
+                          className='font-bold my text-lg'
+                          amount={newPrice}
+                        />
+
+                        <Currency
+                          className='font-medium line-through text-gray-500 text-sm'
+                          amount={price}
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        {" "}
+                        <h2 className='uppercase font-medium text-sm'>
+                          {title}
+                        </h2>
+                        <Currency
+                          className='font-bold my text-lg'
+                          amount={price}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <Link to={`/product/${id}`} className='modal_buttons link'>
+                    <AiFillEye className='absolute top-8 right-8 text-4xl cursor-pointer' />
+                  </Link>
+
+                  <button
+                    className='flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 absolute bottom-28 hover:scale-105 transition'
+                    onClick={() => navigate(`/product/${id}`)}
+                  >
+                    Shop Item
+                    <FaOpencart className='text-2xl' />
+                  </button>
+                </div>
+              );
+            }
+          )}
       </div>
       <div className='flex items-center justify-center mb-10'>
         <Link to='shop'>

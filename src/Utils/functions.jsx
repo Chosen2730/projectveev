@@ -78,7 +78,7 @@ export const getUserById = async (uid) => {
     try {
       const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
-      return docSnap.exists()
+      return docSnap.exists();
     } catch (error) {
       console.log("getProductsByCategory error by trycatch:", error);
       return true;
@@ -190,7 +190,6 @@ export const getOrderById = async (orderId) => {
 };
 
 export const getAllFeaturedProducts = async (docLimit) => {
-
   try {
     const productsRef = collection(db, "products");
     let q = query(
@@ -209,8 +208,12 @@ export const getAllFeaturedProducts = async (docLimit) => {
     }));
     console.log(data);
     // console.log(data, q, "this is...", d);
-    const lastVisibleItem = documentSnapshots?.docs[documentSnapshots.docs.length - 1];
-    return { data: data ? data : [], lastVisibleItem: JSON.stringify(lastVisibleItem) };
+    const lastVisibleItem =
+      documentSnapshots?.docs[documentSnapshots.docs.length - 1];
+    return {
+      data: data ? data : [],
+      lastVisibleItem: JSON.stringify(lastVisibleItem),
+    };
   } catch (error) {
     console.log("getProductsByCategory error by trycatch:", error);
     return null;
@@ -245,7 +248,7 @@ export const getAllTrendingProducts = async (docLimit) => {
 export const createUser = async (data) => {
   if (data) {
     console.log(data);
-    const user = await getUserById(data.uid)
+    const user = await getUserById(data.uid);
     console.log({ user });
     if (!user) {
       await addDoc(collection(db, "users"), data);
@@ -448,7 +451,11 @@ export const uploadImage = async (isLoggedIn, image, setUrl) => {
 
 export const updateUserStatus = async (uid, userStatus) => {
   if (userStatus) {
-    if (window.confirm(`Do you want to ${userStatus === true ? "BLOCK" : 'UNBLOCK'} this user?`)) {
+    if (
+      window.confirm(
+        `Do you want to ${userStatus === true ? "BLOCK" : "UNBLOCK"} this user?`
+      )
+    ) {
       const docRef = doc(db, "users", uid);
       const data = { blocked: userStatus };
 

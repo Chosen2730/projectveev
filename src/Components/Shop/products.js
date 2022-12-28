@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdFilterList } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import SideFilter from "./SideFilter";
-import { hideFilter } from "../../Redux/features/productSlice";
+import { hideFilter, setAllProduct } from "../../Redux/features/productSlice";
 import ProductContainer from "./productContainer";
-import { arr } from "../../Redux/features/productSlice";
+import { getAllProducts } from "../../Utils/functions";
 
 const Products = () => {
   const dispatch = useDispatch();
   const { filterShown, allProducts } = useSelector((state) => state.product);
-  console.log(allProducts);
+
+  useEffect(() => {
+    const fetch = async () => {
+      var limit = 100;
+      const res = await getAllProducts(limit);
+      dispatch(setAllProduct(res?.data));
+    };
+    fetch();
+  }, []);
   return (
     <div className='flex justify-center max-w-7xl mx-auto my-4 gap-8 p-2'>
       {filterShown && <SideFilter />}

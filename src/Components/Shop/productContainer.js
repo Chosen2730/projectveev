@@ -10,7 +10,9 @@ const ProductContainer = ({ data }) => {
     <div className='my-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {data?.map(({ imageUrl, title, price, discountValue }, i) => {
-          const oldPrice = (parseInt(discountValue) / 100) * price;
+          let discount;
+          discount = (parseInt(discountValue) / 100) * price;
+          const newPrice = price - discount;
           return (
             <div
               className='flex flex-col items-center justify-center relative'
@@ -22,13 +24,25 @@ const ProductContainer = ({ data }) => {
                 alt={title}
               />
               <div className='my-3 text-center'>
-                <h2 className='uppercase font-medium text-sm'>{title}</h2>
-                <Currency className='font-bold my text-lg' amount={price} />
-                {discountValue && (
-                  <Currency
-                    className='font-medium line-through text-gray-500 text-sm'
-                    amount={oldPrice}
-                  />
+                {discountValue ? (
+                  <div>
+                    <h2 className='uppercase font-medium text-sm'>{title}</h2>
+                    <Currency
+                      className='font-bold my text-lg'
+                      amount={newPrice}
+                    />
+
+                    <Currency
+                      className='font-medium line-through text-gray-500 text-sm'
+                      amount={price}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    {" "}
+                    <h2 className='uppercase font-medium text-sm'>{title}</h2>
+                    <Currency className='font-bold my text-lg' amount={price} />
+                  </div>
                 )}
               </div>
               <Link to={`/product/${i}`} className='modal_buttons link'>
