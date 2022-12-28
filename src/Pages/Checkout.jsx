@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTotalAmount } from "../Redux/features/productSlice";
-import { PaystackButton } from "react-paystack";
 import { addOrder } from "../Utils/functions";
 import { info } from "autoprefixer";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
@@ -9,16 +8,32 @@ import Information from "../Components/Checkout/information";
 import Payment from "../Components/Checkout/payment";
 import Shipping from "../Components/Checkout/shipping";
 import Currency from "../Components/Configs/currency";
-import { usePaystackPayment } from "react-paystack";
 import { removeItem } from "../Redux/features/productSlice";
 import { login } from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { PaystackButton, usePaystackPayment } from "react-paystack";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 const Checkout = () => {
+  const [paymentMethod, setPaymentMethod] = useState('paypal');
+  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+  const [currency, setCurrency] = useState(options.currency);
+
+  const onCurrencyChange = ({ target: { value } }) => {
+    setCurrency(value);
+    dispatch({
+      type: "resetOptions",
+      value: {
+        ...options,
+        currency: value,
+      },
+    });
+  }
+  
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-  const dispatch = useDispatch();
+  const disPatcha = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.product);
   const [userDetails, setUserDetails] = useState(Object);
@@ -29,7 +44,7 @@ const Checkout = () => {
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getTotalAmount());
+    disPatcha(getTotalAmount());
   }, [cartItems]);
 
   useEffect(() => {
@@ -64,9 +79,51 @@ const Checkout = () => {
   };
   const initializePayment = usePaystackPayment(config);
 
+  const onCreateOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: "8.99",
+          },
+        },
+      ],
+    });
+  }
+
+  const onApproveOrder = (data, actions) => {
+    return actions.order.capture().then(async (details) => {
+      const name = details.payer.name.given_name;
+      console.log(`Transaction completed by ${name}`);
+      // if (user) {
+      //   const data = {
+      //     ...details,
+      //     uid,
+      //     cartItems,
+      //     orderStatus: "pending",
+      //     name,
+      //     email: informationDetails.email,
+      //     admin,
+      //     shippingAddress: informationDetails.address,
+      //     phone: informationDetails.tel,
+      //   };
+      //   console.log(data);
+      //   // await addOrder(isLoggedIn, data);
+
+      //   // cartItems.forEach((item) => {
+      //   //   // console.log(item);
+      //   //   if (item.productId) {
+      //   //     disPatcha(removeItem({ id: item.productId }));
+      //   //   }
+      //   //   alert("Thanks for doing business with us! Come back soon!!");
+      //   //   navigate("/cart");
+      //   // });
+      // }
+    });
+  }
+
   const handleSuccess = async (ref) => {
     if (user) {
-      console.log(ref);
       const data = {
         ...ref,
         uid,
@@ -84,7 +141,7 @@ const Checkout = () => {
       cartItems.forEach((item) => {
         // console.log(item);
         if (item.productId) {
-          dispatch(removeItem({ id: item.productId }));
+          disPatcha(removeItem({ id: item.productId }));
         }
         alert("Thanks for doing business with us! Come back soon!!");
         navigate("/cart");
@@ -106,7 +163,7 @@ const Checkout = () => {
     //     initializePayment(onSuccess, onClose);
     //   } else {
     //     alert("You have to login to continue!");
-    //     dispatch(login());
+    //     disPatcha(login());
     //   }
     // }
   };
@@ -151,9 +208,8 @@ const Checkout = () => {
                     <AiOutlineArrowRight />
                   </i>
                   <h1
-                    className={`${
-                      selected === i ? "font-bold" : "font-normal"
-                    } uppercase cursor-pointer text-xs md:text-sm`}
+                    className={`${selected === i ? "font-bold" : "font-normal"
+                      } uppercase cursor-pointer text-xs md:text-sm`}
                     onClick={() => setSelected(i)}
                   >
                     {item}
@@ -200,10 +256,16 @@ const Checkout = () => {
             </button>
           ) : (
             <>
-              <PaystackButton
-                className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
-                {...componentProps}
-              />
+              {paymentMethod === 'paystack' ?
+                <PaystackButton
+                  className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
+                  {...componentProps}
+                />
+                  : <PayPalButtons
+                    style={{ layout: "vertical", label: "pay" }}
+                    createOrder={(data, actions) => onCreateOrder(data, actions)}
+                    onApprove={(data, actions) => onApproveOrder(data, actions)}
+                  />}
             </>
           )}
         </div>
