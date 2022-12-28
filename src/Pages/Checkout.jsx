@@ -15,7 +15,7 @@ import { PaystackButton, usePaystackPayment } from "react-paystack";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState('paypal');
+  const [paymentMethod, setPaymentMethod] = useState("paypal");
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   // const [currency, setCurrency] = useState(options.currency);
 
@@ -29,7 +29,7 @@ const Checkout = () => {
   //     },
   //   });
   // }
-  
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -90,24 +90,26 @@ const Checkout = () => {
         },
       ],
     });
-  }
+  };
 
   const onApproveOrder = (data, actions) => {
     return actions.order.capture().then(async (details) => {
       const name = details.payer.name.given_name;
       // console.log(details);
       console.log(`Transaction completed by ${name}`);
-      const message = details.status && "Approved"
-      const status = details.status && "success"
-      const trxref = details.id
-      await handleSuccess(message,status,trxref);
+      const message = details.status && "Approved";
+      const status = details.status && "success";
+      const trxref = details.id;
+      await handleSuccess(message, status, trxref);
     });
-  }
+  };
 
   const handleSuccess = async (message, status, trxref) => {
     if (user) {
       const data = {
-        message, status, trxref,
+        message,
+        status,
+        trxref,
         uid,
         cartItems,
         orderStatus: "pending",
@@ -163,9 +165,9 @@ const Checkout = () => {
     text: "Pay Now",
     // onSuccess: handleSuccess,
     onSuccess: (ref) => {
-    const message = ref.message
-    const status = ref.status
-    const trxref = ref.trxref
+      const message = ref.message;
+      const status = ref.status;
+      const trxref = ref.trxref;
       handleSuccess(message, status, trxref);
     },
     onClose: () => alert("Wait! You need those orders, don't go!!!!"),
@@ -193,8 +195,9 @@ const Checkout = () => {
                     <AiOutlineArrowRight />
                   </i>
                   <h1
-                    className={`${selected === i ? "font-bold" : "font-normal"
-                      } uppercase cursor-pointer text-xs md:text-sm`}
+                    className={`${
+                      selected === i ? "font-bold" : "font-normal"
+                    } uppercase cursor-pointer text-xs md:text-sm`}
                     onClick={() => setSelected(i)}
                   >
                     {item}
@@ -241,16 +244,18 @@ const Checkout = () => {
             </button>
           ) : (
             <>
-              {paymentMethod === 'paystack' ?
+              {paymentMethod === "paystack" ? (
                 <PaystackButton
                   className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
                   {...componentProps}
                 />
-                  : <PayPalButtons
-                    style={{ layout: "vertical", label: "pay" }}
-                    createOrder={(data, actions) => onCreateOrder(data, actions)}
-                    onApprove={(data, actions) => onApproveOrder(data, actions)}
-                  />}
+              ) : (
+                <PayPalButtons
+                  style={{ layout: "vertical", label: "pay" }}
+                  createOrder={(data, actions) => onCreateOrder(data, actions)}
+                  onApprove={(data, actions) => onApproveOrder(data, actions)}
+                />
+              )}
             </>
           )}
         </div>

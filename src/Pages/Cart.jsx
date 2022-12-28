@@ -30,7 +30,15 @@ const Cart = () => {
       <div className='flex flex-col md:flex-row gap-8'>
         <div className='md:w-[75%]'>
           {cartItems.map(
-            ({ img, item, price, oldPrice, productId, itemTotal, qty }, id) => {
+            ({
+              imageUrl,
+              item,
+              price,
+              productId,
+              itemTotal,
+              qty,
+              productId: id,
+            }) => {
               return (
                 <div
                   key={id}
@@ -42,7 +50,7 @@ const Cart = () => {
                   />
                   <img
                     className='w-24 h-28 object-cover'
-                    src={img}
+                    src={imageUrl}
                     alt={item}
                   />
                   <div>
@@ -51,10 +59,10 @@ const Cart = () => {
                       className='font-bold my text-sm md:text-lg'
                       amount={price}
                     />
-                    <Currency
+                    {/* <Currency
                       className='font-medium line-through text-gray-500 text-xs'
                       amount={oldPrice}
-                    />
+                    /> */}
                     <h2 className='my-3 font-medium'>
                       <span className='mr-4'>Qty: {qty}</span>
                       <span className='block sm:inline-block'>

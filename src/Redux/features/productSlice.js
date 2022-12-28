@@ -25,12 +25,12 @@ const productSlice = createSlice({
       state.filterShown = !state.filterShown;
     },
     addToCart: (state, { payload }) => {
-      const { id, navigate, qty } = payload;
+      const { id, navigate, qty, newPrice } = payload;
       const addedProduct = state.allProducts.find(
         (product) => product.productId === id
       );
-      const itemTotal = qty * addedProduct.price;
-      const cartProduct = { ...addedProduct, id, qty, itemTotal };
+      const itemTotal = qty * newPrice;
+      const cartProduct = { ...addedProduct, qty, itemTotal };
       state.qty = 1;
       state.cartItems.push(cartProduct);
       navigate("/cart");
