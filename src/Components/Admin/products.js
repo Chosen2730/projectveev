@@ -236,11 +236,15 @@ const Products = () => {
                       <AiOutlineDelete
                         className='bg text-red-500 cursor-pointer rounded-md'
                         onClick={async () => {
-                          await deleteProduct(
-                            isLoggedIn,
-                            productId,
-                            imageStoragePATH
-                          );
+                          if(window.confirm("do you want to delete this product?")){
+                            // ADD LOADING....
+                            await deleteProduct(
+                              isLoggedIn,
+                              productId,
+                              imageStoragePATH
+                            );
+                            // KILL LOADING....
+                          }
                         }}
                       />
                       <AiOutlineEdit
