@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, current, createAsyncThunk } from "@reduxjs/toolkit";
 import { getAllProducts } from "../../Utils/functions";
 import { featured, trending } from "../../Utils/products";
 
@@ -12,6 +12,8 @@ const initialState = {
   cartItems: [],
   totalAmount: 0,
   allProducts: [],
+  featuredProducts: [],
+  trendingProducts: [],
 };
 
 const productSlice = createSlice({
@@ -20,6 +22,10 @@ const productSlice = createSlice({
   reducers: {
     setAllProduct: (state, { payload }) => {
       state.allProducts = payload;
+      const feat = payload.filter((product) => product.featured === "on");
+      const trend = payload.filter((product) => product.trending === "on");
+      state.featuredProducts = feat;
+      state.trendingProducts = trend;
     },
     hideFilter: (state) => {
       state.filterShown = !state.filterShown;
@@ -43,25 +49,19 @@ const productSlice = createSlice({
         state.qty = qty - 1;
       }
     },
-    removeItem: (state, { payload }) => {
-      const { id } = payload;
-      const r = (state.cartItems = state.cartItems.filter(
-        // (item) => state.cartItems.indexOf(item) !== id
-        (item) => {
-          const res = parseInt(item.productId) !== parseInt(id);
-          return res;
-        }
-      ));
-
-      console.log(r);
-      state.cartItems = r;
-    },
     getTotalAmount: (state) => {
       let total = state.cartItems.reduce((acc, crr) => {
         acc += crr.itemTotal;
         return acc;
       }, 0);
       state.totalAmount = total;
+    },
+    removeItem: (state, { payload }) => {
+      const presentState = current(state);
+      const newItems = presentState.cartItems.filter(
+        (item) => item.productId !== payload
+      );
+      state.cartItems = newItems;
     },
   },
   extraReducers: {},

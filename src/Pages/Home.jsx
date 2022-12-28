@@ -5,7 +5,7 @@ import Container from "../Components/Home/container";
 import Hero from "../Components/Home/hero";
 import Subscribe from "../Components/Home/subscribe";
 import Testimonial from "../Components/Home/testimonial";
-import { setAllProduct } from "../Redux/features/productSlice";
+import { setAllProduct, setFeatProduct } from "../Redux/features/productSlice";
 import { category } from "../Utils/category";
 import { getAllProducts } from "../Utils/functions";
 
@@ -20,10 +20,6 @@ const Home = () => {
     const fetch = async () => {
       var limit = 100;
       const res = await getAllProducts(limit);
-      // const feat = await getAllFeaturedProducts(limit);
-      // const trend = await getAllTrendingProducts(limit);
-      // res.data && setAllProducts(res.data);
-      // setAllProducts(res?.data);
       dispatch(setAllProduct(res.data));
       const feat = res?.data?.filter((product) => product.featured === "on");
       const trend = res?.data?.filter((product) => product.trending === "on");

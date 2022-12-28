@@ -12,7 +12,9 @@ const Cart = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-  const { cartItems, totalAmount } = useSelector((state) => state.product);
+  const { cartItems, totalAmount, featuredProducts } = useSelector(
+    (state) => state.product
+  );
   useEffect(() => {
     dispatch(getTotalAmount());
   }, [cartItems]);
@@ -30,23 +32,27 @@ const Cart = () => {
       <div className='flex flex-col md:flex-row gap-8'>
         <div className='md:w-[75%]'>
           {cartItems.map(
-            ({
-              imageUrl,
-              item,
-              price,
-              productId,
-              itemTotal,
-              qty,
-              productId: id,
-            }) => {
+            (
+              {
+                imageUrl,
+                item,
+                price,
+                productId,
+                itemTotal,
+                qty,
+                productId: id,
+              },
+              i
+            ) => {
+              // const keyID = new Date().getTime().toString();
               return (
                 <div
-                  key={id}
+                  key={i}
                   className='flex my-4 items-center gap-4 p-8 py-10 bg-gray-50 rounded-md shadow-xl shadow-gray-100 relative'
                 >
                   <MdClose
                     className='absolute top-4 right-4 text-2xl p-1 bg-black text-white rounded-full'
-                    onClick={() => dispatch(removeItem({ id: productId }))}
+                    onClick={() => dispatch(removeItem(id))}
                   />
                   <img
                     className='w-24 h-28 object-cover'
@@ -97,7 +103,7 @@ const Cart = () => {
           </button>
         </div>
       </div>
-      <Container data={featured} name='related posts' />
+      <Container data={featuredProducts} name='related posts' />
     </div>
   );
 };

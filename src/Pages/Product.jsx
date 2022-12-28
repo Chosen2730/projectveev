@@ -14,7 +14,9 @@ import { useEffect } from "react";
 
 const Product = () => {
   const navigate = useNavigate();
-  const { qty, allProducts } = useSelector((state) => state.product);
+  const { qty, allProducts, featuredProducts } = useSelector(
+    (state) => state.product
+  );
   const { productId: id } = useParams();
   const singleProduct = allProducts.find((product) => product.productId === id);
   console.log(singleProduct);
@@ -128,7 +130,7 @@ const Product = () => {
           </div>
         </div>
       </div>
-      <Container data={featured} name='related posts' />
+      <Container data={featuredProducts} name='related posts' />
     </div>
   );
 };
