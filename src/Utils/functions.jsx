@@ -3,8 +3,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  startAt,
-  endAt,
   getDocs,
   limit,
   orderBy,
@@ -12,9 +10,10 @@ import {
   updateDoc,
   where,
   getDoc,
+  onSnapshot,
+  setDoc,
 } from "firebase/firestore";
 import {
-  deleteObject,
   getDownloadURL,
   getStorage,
   ref,
@@ -22,21 +21,10 @@ import {
 } from "firebase/storage";
 import { db } from "../Firebase/config";
 
-export const getAllProducts = async (_startAt, docLimit) => {
-  // console.log(_startAt);
-  const productsRef = collection(db, "products");
-  let q = query(productsRef, orderBy("title"), startAt(3), limit(docLimit));
-  const documentSnapshots = await getDocs(q).catch((error) => {
-    console.log("getAllProducts error:", error);
-  });
-  let data = documentSnapshots.docs.map((doc) => ({
-    ...doc.data(),
-    productId: doc.id,
-  }));
-  // const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-
-  // return { data, lastVisibleItem: JSON.stringify(lastVisible) }
-  return { data };
+export const getAllProducts = (snapshot, error) => {
+  const itemsColRef = collection(db, 'products');
+  const itemsQuery = query(itemsColRef, orderBy('_createdAt'))
+  return onSnapshot(itemsQuery, snapshot, error);
 };
 
 export const getOrders = async (docLimit) => {
@@ -260,59 +248,6 @@ export const createUser = async (data) => {
   }
 };
 
-export const addProduct = async (isLoggedIn, data, image) => {
-  if (isLoggedIn && image) {
-    var storagePATH = `products/${image.name}`;
-    const storage = getStorage();
-    const storageRef = ref(storage, storagePATH);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-
-    uploadTask.on(
-      "state_change",
-      async (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            // console.log('Upload is running');
-            break;
-          default:
-          // console.log('Upload is default');
-          // break;
-        }
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      async () => {
-        await getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-          if (url) {
-            const productData = {
-              ...data,
-              imageUrl: url,
-              imageStoragePATH: storagePATH,
-            };
-            await addDoc(collection(db, "products"), productData);
-            window.location.reload();
-            return "success";
-          } else {
-            return "error";
-          }
-        });
-      }
-    );
-  } else {
-    alert("You have to login to continue");
-    return "authError";
-  }
-  return "success final";
-};
-
 export const addOrder = async (isLoggedIn, data) => {
   if (isLoggedIn) {
     const orderData = { ...data, createdAt: (new Date()).toDateString(), updatedAt: (new Date()).toDateString() };
@@ -360,42 +295,28 @@ export const updateOrderStatus = async (id, orderStatus) => {
   }
 };
 
-export const updateProduct = async (isLoggedIn, data, image) => {
-  if (isLoggedIn && image) {
-    // const productData = { ...data, imageUrl: url, imageStoragePATH: storagePATH }
-    // await setDoc(collection(db, "products"), productData, { merge: true });
+// export const updateProduct = async (isLoggedIn, data, image) => {
+//   if (isLoggedIn && image) {
+//     // const productData = { ...data, imageUrl: url, imageStoragePATH: storagePATH }
+//     // await setDoc(collection(db, "products"), productData, { merge: true });
+//     return "success";
+//   } else {
+//     alert("You have to login to continue");
+//     return "authError";
+//   }
+//   // return 'success final'
+// };
+export const updateProduct = async (isLoggedIn, propt, value, productId) => {
+  if (isLoggedIn) {
+    const productData = { [propt]: value }
+    console.log(productData);
+    await updateDoc(doc(db, "products", productId), productData);
     return "success";
   } else {
     alert("You have to login to continue");
     return "authError";
   }
   // return 'success final'
-};
-
-export const deleteProduct = async (
-  isLoggedIn,
-  productId,
-  imageStoragePATH
-) => {
-  console.log(isLoggedIn, productId, imageStoragePATH);
-  if (isLoggedIn && productId) {
-    const storage = getStorage();
-    const desertRef = ref(storage, imageStoragePATH);
-    deleteObject(desertRef)
-      // .then(async () => {
-      // })
-      .catch((error) => {
-        console.log("An error occured durring product image delete: ", error);
-      });
-    await deleteDoc(doc(db, "products", productId));
-    // console.log('deleted');
-
-    window.location.reload()
-    return "success";
-  } else {
-    alert("You have to login to continue");
-    return "authError || itemId not specified!";
-  }
 };
 
 export const updateProductStatus = async (isLoggedIn, productId, value) => {

@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductModalShown } from "../../Redux/features/adminSlice";
 import { addProduct } from "../../Utils/functions";
+import { createProduct } from "../../Utils/createFunctions";
 const Form = () => {
   const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
   const statusList = ["Select", "In Stock", "Out of Stock"];
@@ -54,8 +55,8 @@ const Form = () => {
       _createdAt: new Date().getTime(),
       _updatedAt: new Date().getTime(),
     };
-    const addProductRef = await addProduct(isLoggedIn, data, image);
-    console.log(addProductRef);
+    const createProductRef = await createProduct(isLoggedIn, data, image);
+    console.log(createProductRef);
   };
 
   return (
