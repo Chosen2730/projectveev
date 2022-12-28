@@ -95,10 +95,9 @@ const Checkout = () => {
   const onApproveOrder = (data, actions) => {
     return actions.order.capture().then(async (details) => {
       const name = details.payer.name.given_name;
-      // console.log(details);
       console.log(`Transaction completed by ${name}`);
-      const message = details.status && "Approved";
-      const status = details.status && "success";
+      const message = details.status === "COMPLETED" && "Approved";
+      const status = details.status === "COMPLETED" && "success";
       const trxref = details.id;
       await handleSuccess(message, status, trxref);
     });

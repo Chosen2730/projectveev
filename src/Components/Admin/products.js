@@ -5,11 +5,8 @@ import Currency from "../Configs/currency";
 import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Form from "./form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteProduct,
-  getAllProducts,
-  updateProductStatus,
-} from "../../Utils/functions";
+import { getAllProducts, updateProduct, updateProductStatus } from "../../Utils/functions";
+import { deleteProduct } from "../../Utils/deleteFunctions";
 import upload from "../../images/upload.png";
 import Input from "../Form/input";
 import { IoClose } from "react-icons/io5";
@@ -17,7 +14,6 @@ import {
   setProductModalShown,
   setProducts,
 } from "../../Redux/features/adminSlice";
-import { addProduct } from "../../Utils/functions";
 import { FaUsers, FaUsersSlash } from "react-icons/fa";
 import { ImCart, ImUsers } from "react-icons/im";
 import { RiLuggageCartFill } from "react-icons/ri";
@@ -25,6 +21,7 @@ import { MdRemoveShoppingCart } from "react-icons/md";
 import { Navigate, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import Spinner from "../Configs/spinner";
+import { createProduct } from "../../Utils/createFunctions";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -57,29 +54,26 @@ const Products = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    const fetch = async () => {
-      console.log({ page });
-      const res = await getAllProducts(
-        page === 1 ? page - 1 : page * limit - 1,
-        limit
-      );
-      if (res) {
-        setAllProducts(res.data);
-        dispatch(setProducts(res.data));
-      } else {
-        setPage(page - 1);
-      }
-    };
-    fetch();
-  }, [limit, page]);
-  // console.log(allProducts);
+    const unsubscribe = getAllProducts(
+      (querySnapshot) => {
+        const updatedItems = querySnapshot.docs.map(docSnapshot => ({ productId: docSnapshot.id, ...docSnapshot.data() }));
+        setAllProducts(updatedItems);
+      },
+      (error) => setError('grocery-list-item-get-fail')
+    );
+    return unsubscribe;
+  }, []);
+  error && console.log(error);
 
   const updateStatus = (productId) => {
     var value = "In stock";
     updateProductStatus(isLoggedIn, productId, value);
+    // updateProduct(isLoggedIn, 'status', 'In Stock', productId)
   };
+
 
   const next = async () => setPage(page + 1);
   const prev = async () => setPage(page > 1 ? page - 1 : page);
@@ -98,6 +92,7 @@ const Products = () => {
       title: productToEdit.title,
     });
   };
+
   const handleInputChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value, image });
     console.log(currentItem);
@@ -137,10 +132,10 @@ const Products = () => {
       _updatedAt: (new Date()).toDateString(),
     };
     console.log(data);
-    const addProductRef = await addProduct(isLoggedIn, data, image);
+    const createProductRef = await createProduct(isLoggedIn, data, image);
     setIsLoading(false);
     dispatch(setProductModalShown());
-    console.log(addProductRef);
+    console.log(createProductRef);
     setIsLoading(false);
   };
   console.log(isLoading);
@@ -154,7 +149,7 @@ const Products = () => {
       uploadProduct();
     }
   };
-  console.log(allProducts);
+
   return (
     <div className='p-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
@@ -212,9 +207,10 @@ const Products = () => {
           <div className=''>
             {allProducts?.map(
               (
-                { productId, title, imageUrl, price, desc, imageStoragePATH },
+                { productId, title, imageUrl, price, desc, status, imageStoragePATH },
                 index
               ) => {
+                // console.log(productId);
                 return (
                   <div
                     key={index}
@@ -231,12 +227,12 @@ const Products = () => {
                     <h2 className='capitalize'>02/04/22</h2>
                     <h2 className='capitalize'>{desc.slice(0, 50)}...</h2>
                     <Currency amount={price} className='font-medium' />
-                    <h2 className='capitalize'>In stock</h2>
+                    <h2 className='capitalize'>{status}</h2>
                     <div className='flex justify-between gap-2 text-xl'>
                       <AiOutlineDelete
                         className='bg text-red-500 cursor-pointer rounded-md'
                         onClick={async () => {
-                          if(window.confirm("do you want to delete this product?")){
+                          if (window.confirm("do you want to delete this product?")) {
                             // ADD LOADING....
                             await deleteProduct(
                               isLoggedIn,
@@ -280,9 +276,8 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${
-          isProductModalShown ? "category" : "category hider"
-        } overflow`}
+        className={`${isProductModalShown ? "category" : "category hider"
+          } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
