@@ -62,7 +62,7 @@ const Products = () => {
         const updatedItems = querySnapshot.docs.map(docSnapshot => ({ productId: docSnapshot.id, ...docSnapshot.data() }));
         setAllProducts(updatedItems);
       },
-      (error) => setError('grocery-list-item-get-fail')
+      (error) => setError(error)
     );
     return unsubscribe;
   }, []);
