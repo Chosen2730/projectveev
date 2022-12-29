@@ -2,21 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTotalAmount } from "../Redux/features/productSlice";
 import { addOrder } from "../Utils/functions";
-import { info } from "autoprefixer";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import Information from "../Components/Checkout/information";
 import Payment from "../Components/Checkout/payment";
 import Shipping from "../Components/Checkout/shipping";
 import Currency from "../Components/Configs/currency";
 import { removeItem } from "../Redux/features/productSlice";
-import { login } from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
-import { PaystackButton, usePaystackPayment } from "react-paystack";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { PaystackButton } from "react-paystack";
+import { PayPalButtons } from "@paypal/react-paypal-js";
+import pay from "../images/pay.png";
+import paypal from "../images/paypal.png";
+import { BsPaypal } from "react-icons/bs";
+import { AiOutlineCreditCard } from "react-icons/ai";
 
 const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState("paypal");
-  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+  const [paymentMethod, setPaymentMethod] = useState("paystack");
+  // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   // const [currency, setCurrency] = useState(options.currency);
 
   // const onCurrencyChange = ({ target: { value } }) => {
@@ -194,9 +196,8 @@ const Checkout = () => {
                     <AiOutlineArrowRight />
                   </i>
                   <h1
-                    className={`${
-                      selected === i ? "font-bold" : "font-normal"
-                    } uppercase cursor-pointer text-xs md:text-sm`}
+                    className={`${selected === i ? "font-bold" : "font-normal"
+                      } uppercase cursor-pointer text-xs md:text-sm`}
                     onClick={() => setSelected(i)}
                   >
                     {item}
@@ -242,7 +243,54 @@ const Checkout = () => {
               Next
             </button>
           ) : (
-            <>
+            <div className="flex flex-col">
+              <div className="">
+                <h2 className='uppercase text-sm mt-8 font-bold'>Payment Method</h2>
+                <p className='text-sm my-3'>All transactions are secure and encrypted.</p>
+                <p className='text-sm my-3'>How do you want to place your order?</p>
+                <div className='flex flex-col md:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
+                    <img src={pay} className='w-72 p-2 ' alt='payment_method' id="paystackBtn" onClick={() => {
+                      document.getElementById('paystackBtn').classList.add("border", "border-black")
+                      document.getElementById('paypalBtn').classList.remove("border", "border-black")
+                      setPaymentMethod('paystack')
+                    }} />
+                    <img src={paypal} className='h-[32] w-[fit-content] p-2 ' alt='payment_method' id="paypalBtn" onClick={() => {
+                      document.getElementById('paypalBtn').classList.add("border", "border-black")
+                      document.getElementById('paystackBtn').classList.remove("border", "border-black")
+                      setPaymentMethod('paypal')
+                    }} />
+                </div>
+                {/* <div className='flex flex-col md:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
+                  <div className="form-check">
+                    <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked
+                      onChange={(e) => {
+                        console.log(e);
+                        setPaymentMethod('paystack')
+                      }}
+                    />
+                    <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
+                      <img src={pay} className='w-72' alt='payment_method' />
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                      onChange={(e) => {
+                        console.log(e);
+                        setPaymentMethod('paypal')
+                      }}
+                    />
+                    <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
+                      <img src={paypal} className='h-[32] w-[fit-content]' alt='payment_method' />
+                    </label>
+                  </div>
+                </div> */}
+                <p className='text-sm my-8'>
+                  Your personal data will be used to process your order, support your
+                  experience throughout this website, and for other purposes described in
+                  our Privacy Policy
+                </p>
+              </div>
+
               {paymentMethod === "paystack" ? (
                 <PaystackButton
                   className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
@@ -255,7 +303,7 @@ const Checkout = () => {
                   onApprove={(data, actions) => onApproveOrder(data, actions)}
                 />
               )}
-            </>
+            </div>
           )}
         </div>
       </div>

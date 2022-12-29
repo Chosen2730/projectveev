@@ -1,8 +1,5 @@
 import React from "react";
 import Currency from "../Configs/currency";
-import pay from "../../images/pay.png";
-import { BsPaypal } from "react-icons/bs";
-import { AiOutlineCreditCard } from "react-icons/ai";
 // import { PaystackButton } from 'react-paystack'
 
 const Payment = ({ informationDetails }) => {
@@ -39,32 +36,6 @@ const Payment = ({ informationDetails }) => {
         <h2 className='uppercase text-sm'>FTM Logistics</h2>
         <Currency className='font-medium' amount={3000} />
       </div>
-      <h2 className='uppercase text-sm mt-8 font-bold'>Payment Method</h2>
-      <p className='text-sm my-3'>All transactions are secure and encrypted.</p>
-      <p className='text-sm my-3'>How do you want to place your order?</p>
-      <div className='flex flex-col xl:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
-        <img src={pay} className='w-72' alt='payment_method' />
-        {/* <PaystackButton className="paystack-button" {...componentProps} /> */}
-        <div className='flex items-center gap-3'>
-          <button className='font-medium italic bg-sky-600 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
-            <i className='text-xl'>
-              <AiOutlineCreditCard />
-            </i>{" "}
-            Debit / Credit cards
-          </button>
-          <button className='font-medium italic bg-blue-800 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
-            <i className='text-xl'>
-              <BsPaypal />
-            </i>{" "}
-            Paypal
-          </button>
-        </div>
-      </div>
-      <p className='text-sm my-8'>
-        Your personal data will be used to process your order, support your
-        experience throughout this website, and for other purposes described in
-        our Privacy Policy
-      </p>
     </div>
   );
 };
