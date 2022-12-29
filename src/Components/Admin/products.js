@@ -110,7 +110,7 @@ const Products = () => {
       image2,
       image3,
     });
-    console.log(currentItem);
+    // console.log(currentItem);
   };
 
   useEffect(() => {
@@ -134,7 +134,9 @@ const Products = () => {
       featured,
       trending,
     } = currentItem;
-    const data = {
+    // console.log(currentItem);
+    var data = {};
+    data = {
       title,
       desc,
       price,
@@ -146,14 +148,21 @@ const Products = () => {
       _createdAt: new Date().toDateString(),
       _updatedAt: new Date().toDateString(),
     };
-    console.log(data);
+    if (category === "Fabrics") {
+      data = { ...data,
+        fabricName: currentItem.fabricName,
+        colors: currentItem.colors,
+        length: currentItem.length
+      }
+    }
+    console.log({data});
     const createProductRef = await createProduct(isLoggedIn, data, image);
     setIsLoading(false);
     dispatch(setProductModalShown());
-    console.log(createProductRef);
+    console.log({createProductRef});
     setIsLoading(false);
   };
-  console.log(isLoading);
+  // console.log(isLoading);
   const goToSingleProduct = (id) => {
     navigate(`/admin/product/${id}`);
   };
@@ -303,9 +312,8 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${
-          isProductModalShown ? "category" : "category hider"
-        } overflow`}
+        className={`${isProductModalShown ? "category" : "category hider"
+          } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
