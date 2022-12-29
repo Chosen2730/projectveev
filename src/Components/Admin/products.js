@@ -48,9 +48,7 @@ const Products = () => {
   const statusList = ["Select", "In Stock", "Out of Stock"];
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
   const { isProductModalShown } = useSelector((state) => state.admin);
-  const [image, setImage] = useState();
-  const [image2, setImage2] = useState();
-  const [image3, setImage3] = useState();
+  const [allImages, setAllImages] = useState([]);
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
   const [currentItem, setCurrentItem] = useState({
@@ -107,8 +105,6 @@ const Products = () => {
       ...currentItem,
       [e.target.name]: e.target.value,
       image,
-      image2,
-      image3,
     });
     console.log(currentItem);
   };
@@ -164,6 +160,8 @@ const Products = () => {
       uploadProduct();
     }
   };
+
+  const imageUploadHandler = (e) => {};
 
   return (
     <div className='p-4'>
@@ -440,65 +438,18 @@ const Products = () => {
                   id='image'
                   accept='image/*'
                   value={""}
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
+                  multiple
+                  onChange={imageUploadHandler}
                 />
                 " Browse to upload your file"
                 <h4>Image uploaded</h4>
               </label>
             </div>
-            <div className='preview_img grid place-items-center my-5'>
+            {/* <div className='preview_img grid place-items-center my-5'>
               {image && (
                 <img src={URL.createObjectURL(image)} alt='' width={100} />
               )}
-            </div>
-            <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  onChange={(e) => {
-                    setImage2(e.target.files[0]);
-                  }}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
-            </div>
-            <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image2)} alt='' width={100} />
-              )}
-            </div>
-            <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  onChange={(e) => {
-                    setImage3(e.target.files[0]);
-                  }}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
-            </div>
-            <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image3)} alt='' width={100} />
-              )}
-            </div>
+            </div> */}
           </div>
           <button
             className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
