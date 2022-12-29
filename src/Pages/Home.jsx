@@ -20,6 +20,7 @@ const Home = () => {
     const fetch = async () => {
       var limit = 100;
       const res = await getAllProducts(limit);
+      console.log(res);
       dispatch(setAllProduct(res.data));
       const feat = res?.data?.filter((product) => product.featured === "on");
       const trend = res?.data?.filter((product) => product.trending === "on");
