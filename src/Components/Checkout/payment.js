@@ -47,13 +47,13 @@ const Payment = ({ informationDetails }) => {
         {/* <PaystackButton className="paystack-button" {...componentProps} /> */}
         <div className='flex items-center gap-3'>
           <button className='font-medium italic bg-sky-600 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
-            <i>
+            <i className='text-xl'>
               <AiOutlineCreditCard />
             </i>{" "}
             Debit / Credit cards
           </button>
           <button className='font-medium italic bg-blue-800 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
-            <i>
+            <i className='text-xl'>
               <BsPaypal />
             </i>{" "}
             Paypal
