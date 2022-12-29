@@ -29,7 +29,7 @@ const SingleProduct = () => {
     status,
     title,
     trending,
-  } = product && product;
+  } = product || null;
   return (
     <div className='p-4'>
       <Link to='/admin' className='flex items-center gap-2 font-medium'>

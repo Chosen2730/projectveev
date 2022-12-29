@@ -1,6 +1,8 @@
 import React from "react";
 import Currency from "../Configs/currency";
 import pay from "../../images/pay.png";
+import { BsPaypal } from "react-icons/bs";
+import { AiOutlineCreditCard } from "react-icons/ai";
 // import { PaystackButton } from 'react-paystack'
 
 const Payment = ({ informationDetails }) => {
@@ -12,7 +14,7 @@ const Payment = ({ informationDetails }) => {
   //     phone: informationDetails.phone,
   //   },
   //   publicKey: 'pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52',
-    
+
   //   text: () => { return <h1>Place Order</h1> },
   //   onSuccess: () =>
   //     alert("Thanks for doing business with us! Come back soon!!"),
@@ -40,12 +42,23 @@ const Payment = ({ informationDetails }) => {
       <h2 className='uppercase text-sm mt-8 font-bold'>Payment Method</h2>
       <p className='text-sm my-3'>All transactions are secure and encrypted.</p>
       <p className='text-sm my-3'>How do you want to place your order?</p>
-      <div className='flex flex-col sm:flex-row sm:items-center my-10 gap-4'>
+      <div className='flex flex-col xl:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
         <img src={pay} className='w-72' alt='payment_method' />
         {/* <PaystackButton className="paystack-button" {...componentProps} /> */}
-        <h2 className='font-medium italic text-base'>
-          Pay with your Debit / Credit cards
-        </h2>
+        <div className='flex items-center gap-3'>
+          <button className='font-medium italic bg-sky-600 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
+            <i>
+              <AiOutlineCreditCard />
+            </i>{" "}
+            Debit / Credit cards
+          </button>
+          <button className='font-medium italic bg-blue-800 text-white p-5 rounded-md flex items-center gap-2 w-fit text-xs'>
+            <i>
+              <BsPaypal />
+            </i>{" "}
+            Paypal
+          </button>
+        </div>
       </div>
       <p className='text-sm my-8'>
         Your personal data will be used to process your order, support your

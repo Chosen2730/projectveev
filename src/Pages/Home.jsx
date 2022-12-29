@@ -15,20 +15,30 @@ const Home = () => {
   }, []);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetch = async () => {
-      var limit = 100;
-      const res = await getAllProducts(limit);
-      console.log(res);
-      dispatch(setAllProduct(res.data));
-      const feat = res?.data?.filter((product) => product.featured === "on");
-      const trend = res?.data?.filter((product) => product.trending === "on");
-      setTrendingProduct(trend);
-      setFeaturedProduct(feat);
-    };
-    fetch();
-  }, []);
+    const unsubscribe = getAllProducts(
+      (querySnapshot) => {
+        const updatedItems = querySnapshot.docs.map((docSnapshot) => ({
+          productId: docSnapshot.id,
+          ...docSnapshot.data(),
+        }));
+        dispatch(setAllProduct(updatedItems));
+        const feat = updatedItems?.filter(
+          (product) => product.featured === "on"
+        );
+        const trend = updatedItems?.filter(
+          (product) => product.trending === "on"
+        );
+        setTrendingProduct(trend);
+        setFeaturedProduct(feat);
+      },
+      (error) => setError(error)
+    );
+    return unsubscribe;
+  }, [dispatch]);
+  error && console.log(error);
 
   return (
     <>

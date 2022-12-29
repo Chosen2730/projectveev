@@ -5,7 +5,11 @@ import Currency from "../Configs/currency";
 import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Form from "./form";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, updateProduct, updateProductStatus } from "../../Utils/functions";
+import {
+  getAllProducts,
+  updateProduct,
+  updateProductStatus,
+} from "../../Utils/functions";
 import { deleteProduct } from "../../Utils/deleteFunctions";
 import upload from "../../images/upload.png";
 import Input from "../Form/input";
@@ -45,6 +49,8 @@ const Products = () => {
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
   const { isProductModalShown } = useSelector((state) => state.admin);
   const [image, setImage] = useState();
+  const [image2, setImage2] = useState();
+  const [image3, setImage3] = useState();
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
   const [currentItem, setCurrentItem] = useState({
@@ -54,15 +60,19 @@ const Products = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const unsubscribe = getAllProducts(
       (querySnapshot) => {
-        const updatedItems = querySnapshot.docs.map(docSnapshot => ({ productId: docSnapshot.id, ...docSnapshot.data() }));
+        const updatedItems = querySnapshot.docs.map((docSnapshot) => ({
+          productId: docSnapshot.id,
+          ...docSnapshot.data(),
+        }));
         setAllProducts(updatedItems);
+        dispatch(setProducts(updatedItems));
       },
-      (error) => setError('grocery-list-item-get-fail')
+      (error) => setError(error)
     );
     return unsubscribe;
   }, []);
@@ -73,7 +83,6 @@ const Products = () => {
     updateProductStatus(isLoggedIn, productId, value);
     // updateProduct(isLoggedIn, 'status', 'In Stock', productId)
   };
-
 
   const next = async () => setPage(page + 1);
   const prev = async () => setPage(page > 1 ? page - 1 : page);
@@ -94,7 +103,13 @@ const Products = () => {
   };
 
   const handleInputChange = (e) => {
-    setCurrentItem({ ...currentItem, [e.target.name]: e.target.value, image });
+    setCurrentItem({
+      ...currentItem,
+      [e.target.name]: e.target.value,
+      image,
+      image2,
+      image3,
+    });
     console.log(currentItem);
   };
 
@@ -128,8 +143,8 @@ const Products = () => {
       status,
       featured,
       trending,
-      _createdAt: (new Date()).toDateString(),
-      _updatedAt: (new Date()).toDateString(),
+      _createdAt: new Date().toDateString(),
+      _updatedAt: new Date().toDateString(),
     };
     console.log(data);
     const createProductRef = await createProduct(isLoggedIn, data, image);
@@ -207,7 +222,15 @@ const Products = () => {
           <div className=''>
             {allProducts?.map(
               (
-                { productId, title, imageUrl, price, desc, status, imageStoragePATH },
+                {
+                  productId,
+                  title,
+                  imageUrl,
+                  price,
+                  desc,
+                  status,
+                  imageStoragePATH,
+                },
                 index
               ) => {
                 // console.log(productId);
@@ -232,7 +255,11 @@ const Products = () => {
                       <AiOutlineDelete
                         className='bg text-red-500 cursor-pointer rounded-md'
                         onClick={async () => {
-                          if (window.confirm("do you want to delete this product?")) {
+                          if (
+                            window.confirm(
+                              "do you want to delete this product?"
+                            )
+                          ) {
                             // ADD LOADING....
                             await deleteProduct(
                               isLoggedIn,
@@ -276,8 +303,9 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${isProductModalShown ? "category" : "category hider"
-          } overflow`}
+        className={`${
+          isProductModalShown ? "category" : "category hider"
+        } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
@@ -413,7 +441,6 @@ const Products = () => {
                   accept='image/*'
                   value={""}
                   onChange={(e) => {
-                    console.log(e.target.files[0]);
                     setImage(e.target.files[0]);
                   }}
                 />
@@ -424,6 +451,52 @@ const Products = () => {
             <div className='preview_img grid place-items-center my-5'>
               {image && (
                 <img src={URL.createObjectURL(image)} alt='' width={100} />
+              )}
+            </div>
+            <div className='bg-gray-300 m-2 p-4 rounded-md'>
+              <label htmlFor='image' className='cursor-pointer text-sm'>
+                <img src={upload} className='mx-auto my-3 w-10' alt='' />
+                <input
+                  type='file'
+                  placeholder='Browse to upload your file'
+                  className='hidden'
+                  id='image'
+                  accept='image/*'
+                  value={""}
+                  onChange={(e) => {
+                    setImage2(e.target.files[0]);
+                  }}
+                />
+                " Browse to upload your file"
+                <h4>Image uploaded</h4>
+              </label>
+            </div>
+            <div className='preview_img grid place-items-center my-5'>
+              {image && (
+                <img src={URL.createObjectURL(image2)} alt='' width={100} />
+              )}
+            </div>
+            <div className='bg-gray-300 m-2 p-4 rounded-md'>
+              <label htmlFor='image' className='cursor-pointer text-sm'>
+                <img src={upload} className='mx-auto my-3 w-10' alt='' />
+                <input
+                  type='file'
+                  placeholder='Browse to upload your file'
+                  className='hidden'
+                  id='image'
+                  accept='image/*'
+                  value={""}
+                  onChange={(e) => {
+                    setImage3(e.target.files[0]);
+                  }}
+                />
+                " Browse to upload your file"
+                <h4>Image uploaded</h4>
+              </label>
+            </div>
+            <div className='preview_img grid place-items-center my-5'>
+              {image && (
+                <img src={URL.createObjectURL(image3)} alt='' width={100} />
               )}
             </div>
           </div>

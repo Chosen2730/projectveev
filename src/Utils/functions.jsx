@@ -183,7 +183,7 @@ export const getAllFeaturedProducts = async (docLimit) => {
     let q = query(
       productsRef,
       where("featured", "==", "on"),
-      orderBy("title", "desc"),
+      orderBy("createdAt", "desc"),
       limit(parseInt(docLimit))
     );
     const documentSnapshots = await getDocs(q).catch((error) => {
@@ -214,7 +214,7 @@ export const getAllTrendingProducts = async (docLimit) => {
     let q = query(
       productsRef,
       where("trending", "==", "on"),
-      orderBy("title", "desc"),
+      orderBy("createdAt", "desc"),
       limit(parseInt(docLimit))
     );
     const documentSnapshots = await getDocs(q).catch((error) => {

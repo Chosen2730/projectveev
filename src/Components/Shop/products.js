@@ -9,15 +9,22 @@ import { getAllProducts } from "../../Utils/functions";
 const Products = () => {
   const dispatch = useDispatch();
   const { filterShown, allProducts } = useSelector((state) => state.product);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetch = async () => {
-      var limit = 100;
-      const res = await getAllProducts(limit);
-      dispatch(setAllProduct(res?.data));
-    };
-    fetch();
-  }, []);
+    const unsubscribe = getAllProducts(
+      (querySnapshot) => {
+        const updatedItems = querySnapshot.docs.map((docSnapshot) => ({
+          productId: docSnapshot.id,
+          ...docSnapshot.data(),
+        }));
+        dispatch(setAllProduct(updatedItems));
+      },
+      (error) => setError(error)
+    );
+    return unsubscribe;
+  }, [dispatch]);
+
   return (
     <div className='flex justify-center max-w-7xl mx-auto my-4 gap-8 p-2'>
       {filterShown && <SideFilter />}
