@@ -326,7 +326,9 @@ export const updateProductStatus = async (isLoggedIn, productId, value) => {
   return "success";
 };
 
-export const uploadImage = async (isLoggedIn, image, setUrl) => {
+export const uploadImage = async (isLoggedIn, image) => {
+  var imageURL = '';
+  var progress = 0;
   var storagePATH = `products/${image.name}`;
   const storage = getStorage();
   if (isLoggedIn) {
@@ -339,7 +341,7 @@ export const uploadImage = async (isLoggedIn, image, setUrl) => {
     uploadTask.on(
       "state_change",
       (snapshot) => {
-        const progress = Math.round(
+        progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         console.log("Upload is " + progress + "% done");
@@ -351,17 +353,18 @@ export const uploadImage = async (isLoggedIn, image, setUrl) => {
             console.log("Upload is running");
             break;
           default:
-            console.log("Upload is default");
+            // console.log("Upload is default");
           // break;
         }
       },
       (error) => {
         console.log(error.message);
       },
-      () => {
+      (e) => {
+        console.log(e);
         getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
           console.log("File available at", url);
-          setUrl(url);
+          imageURL = url;
         });
       }
     );

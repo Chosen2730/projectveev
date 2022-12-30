@@ -26,6 +26,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import Spinner from "../Configs/spinner";
 import { createProduct } from "../../Utils/createFunctions";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const Products = () => {
       (error) => setError(error)
     );
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
   error && console.log(error);
 
   const updateStatus = (productId) => {
@@ -121,6 +122,8 @@ const Products = () => {
     }
   }, [currentItem]);
 
+  const [imageURL, setImageURL] = useState('')
+  const [progress, setProgress] = useState(0)
   const uploadProduct = async (e) => {
     setIsLoading(true);
     // e.preventDefault();
@@ -149,18 +152,87 @@ const Products = () => {
       _updatedAt: new Date().toDateString(),
     };
     if (category === "Fabrics") {
-      data = { ...data,
+      data = {
+        ...data,
         fabricName: currentItem.fabricName,
         colors: currentItem.colors,
         length: currentItem.length
       }
     }
-    console.log({data});
-    const createProductRef = await createProduct(isLoggedIn, data, image);
-    setIsLoading(false);
-    dispatch(setProductModalShown());
-    console.log({createProductRef});
-    setIsLoading(false);
+    console.log({ data });
+
+
+
+
+
+
+    var storagePATH = `products/${image.name}`;
+    const storage = getStorage();
+    if (isLoggedIn) {
+      // const metadata = 'image/jpeg';
+      // var file = new File([image], fileName, { type: contentType });
+
+      const storageRef = ref(storage, storagePATH);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      uploadTask.on(
+        "state_change",
+        (snapshot) => {
+          setProgress(Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          ));
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+            // console.log("Upload is default");
+            // break;
+          }
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        async (e) => {
+          console.log(e);
+          // const a = await getDownloadURL(uploadTask.snapshot.ref).then(url => {
+          //   console.log("File available at", url);
+          //   setImageURL(url);
+          // });
+          const a = await getDownloadURL(uploadTask.snapshot.ref)
+          console.log(a);
+          setImageURL(a)
+        }
+      );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if (imageURL) {
+      console.log(imageURL);
+      const createProductRef = await createProduct(isLoggedIn, data, image);
+      setIsLoading(false);
+      dispatch(setProductModalShown());
+      console.log({ createProductRef });
+      setIsLoading(false);
+    }
   };
   // console.log(isLoading);
   const goToSingleProduct = (id) => {
