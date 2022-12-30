@@ -104,7 +104,7 @@ const Products = () => {
     setCurrentItem({
       ...currentItem,
       [e.target.name]: e.target.value,
-      image,
+      allImages,
     });
     // console.log(currentItem);
   };
@@ -145,17 +145,18 @@ const Products = () => {
       _updatedAt: new Date().toDateString(),
     };
     if (category === "Fabrics") {
-      data = { ...data,
+      data = {
+        ...data,
         fabricName: currentItem.fabricName,
         colors: currentItem.colors,
-        length: currentItem.length
-      }
+        length: currentItem.length,
+      };
     }
-    console.log({data});
-    const createProductRef = await createProduct(isLoggedIn, data, image);
+    console.log({ data });
+    const createProductRef = await createProduct(isLoggedIn, data, allImages);
     setIsLoading(false);
     dispatch(setProductModalShown());
-    console.log({createProductRef});
+    console.log({ createProductRef });
     setIsLoading(false);
   };
   // console.log(isLoading);
@@ -170,7 +171,10 @@ const Products = () => {
     }
   };
 
-  const imageUploadHandler = (e) => {};
+  const imageUploadHandler = (e) => {
+    setAllImages(e.target.files);
+    console.log(allImages);
+  };
 
   return (
     <div className='p-4'>
@@ -310,8 +314,9 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${isProductModalShown ? "category" : "category hider"
-          } overflow`}
+        className={`${
+          isProductModalShown ? "category" : "category hider"
+        } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
@@ -437,27 +442,30 @@ const Products = () => {
               .jpeg
             </p>
             <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  multiple
-                  onChange={imageUploadHandler}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
+              <label htmlFor='image' className='cursor-pointer text-sm'></label>
+              <input
+                type='file'
+                placeholder='Browse to upload your file'
+                id='image'
+                accept='image/*'
+                multiple
+                onChange={imageUploadHandler}
+              />
             </div>
-            {/* <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image)} alt='' width={100} />
-              )}
-            </div> */}
+            <div className='preview_img grid place-items-center my-5 grid-cols-5'>
+              {allImages &&
+                Array.from(allImages).map((image, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={URL.createObjectURL(image)}
+                      alt=''
+                      width={100}
+                      className='w-20 h-20 object-contain'
+                    />
+                  );
+                })}
+            </div>
           </div>
           <button
             className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
