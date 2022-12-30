@@ -49,9 +49,7 @@ const Products = () => {
   const statusList = ["Select", "In Stock", "Out of Stock"];
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
   const { isProductModalShown } = useSelector((state) => state.admin);
-  const [image, setImage] = useState();
-  const [image2, setImage2] = useState();
-  const [image3, setImage3] = useState();
+  const [allImages, setAllImages] = useState([]);
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
   const [currentItem, setCurrentItem] = useState({
@@ -107,9 +105,7 @@ const Products = () => {
     setCurrentItem({
       ...currentItem,
       [e.target.name]: e.target.value,
-      image,
-      image2,
-      image3,
+      allImages,
     });
     // console.log(currentItem);
   };
@@ -156,83 +152,15 @@ const Products = () => {
         ...data,
         fabricName: currentItem.fabricName,
         colors: currentItem.colors,
-        length: currentItem.length
-      }
+        length: currentItem.length,
+      };
     }
     console.log({ data });
-
-
-
-
-
-
-    var storagePATH = `products/${image.name}`;
-    const storage = getStorage();
-    if (isLoggedIn) {
-      // const metadata = 'image/jpeg';
-      // var file = new File([image], fileName, { type: contentType });
-
-      const storageRef = ref(storage, storagePATH);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-
-      uploadTask.on(
-        "state_change",
-        (snapshot) => {
-          setProgress(Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          ));
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-            // console.log("Upload is default");
-            // break;
-          }
-        },
-        (error) => {
-          console.log(error.message);
-        },
-        async (e) => {
-          console.log(e);
-          // const a = await getDownloadURL(uploadTask.snapshot.ref).then(url => {
-          //   console.log("File available at", url);
-          //   setImageURL(url);
-          // });
-          const a = await getDownloadURL(uploadTask.snapshot.ref)
-          console.log(a);
-          setImageURL(a)
-        }
-      );
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if (imageURL) {
-      console.log(imageURL);
-      const createProductRef = await createProduct(isLoggedIn, data, image);
-      setIsLoading(false);
-      dispatch(setProductModalShown());
-      console.log({ createProductRef });
-      setIsLoading(false);
-    }
+    const createProductRef = await createProduct(isLoggedIn, data, allImages);
+    setIsLoading(false);
+    dispatch(setProductModalShown());
+    console.log({ createProductRef });
+    setIsLoading(false);
   };
   // console.log(isLoading);
   const goToSingleProduct = (id) => {
@@ -244,6 +172,11 @@ const Products = () => {
     } else {
       uploadProduct();
     }
+  };
+
+  const imageUploadHandler = (e) => {
+    setAllImages(e.target.files);
+    console.log(allImages);
   };
 
   return (
@@ -384,8 +317,9 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${isProductModalShown ? "category" : "category hider"
-          } overflow`}
+        className={`${
+          isProductModalShown ? "category" : "category hider"
+        } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
@@ -511,73 +445,29 @@ const Products = () => {
               .jpeg
             </p>
             <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
+              <label htmlFor='image' className='cursor-pointer text-sm'></label>
+              <input
+                type='file'
+                placeholder='Browse to upload your file'
+                id='image'
+                accept='image/*'
+                multiple
+                onChange={imageUploadHandler}
+              />
             </div>
-            <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image)} alt='' width={100} />
-              )}
-            </div>
-            <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  onChange={(e) => {
-                    setImage2(e.target.files[0]);
-                  }}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
-            </div>
-            <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image2)} alt='' width={100} />
-              )}
-            </div>
-            <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='image' className='cursor-pointer text-sm'>
-                <img src={upload} className='mx-auto my-3 w-10' alt='' />
-                <input
-                  type='file'
-                  placeholder='Browse to upload your file'
-                  className='hidden'
-                  id='image'
-                  accept='image/*'
-                  value={""}
-                  onChange={(e) => {
-                    setImage3(e.target.files[0]);
-                  }}
-                />
-                " Browse to upload your file"
-                <h4>Image uploaded</h4>
-              </label>
-            </div>
-            <div className='preview_img grid place-items-center my-5'>
-              {image && (
-                <img src={URL.createObjectURL(image3)} alt='' width={100} />
-              )}
+            <div className='preview_img grid place-items-center my-5 grid-cols-5'>
+              {allImages &&
+                Array.from(allImages).map((image, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={URL.createObjectURL(image)}
+                      alt=''
+                      width={100}
+                      className='w-20 h-20 object-contain'
+                    />
+                  );
+                })}
             </div>
           </div>
           <button

@@ -196,8 +196,9 @@ const Checkout = () => {
                     <AiOutlineArrowRight />
                   </i>
                   <h1
-                    className={`${selected === i ? "font-bold" : "font-normal"
-                      } uppercase cursor-pointer text-xs md:text-sm`}
+                    className={`${
+                      selected === i ? "font-bold" : "font-normal"
+                    } uppercase cursor-pointer text-xs md:text-sm`}
                     onClick={() => setSelected(i)}
                   >
                     {item}
@@ -243,51 +244,67 @@ const Checkout = () => {
               Next
             </button>
           ) : (
-            <div className="flex flex-col">
-              <div className="">
-                <h2 className='uppercase text-sm mt-8 font-bold'>Payment Method</h2>
-                <p className='text-sm my-3'>All transactions are secure and encrypted.</p>
-                <p className='text-sm my-3'>How do you want to place your order?</p>
-                <div className='flex flex-col md:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
-                    <img src={pay} className='w-72 p-2 ' alt='payment_method' id="paystackBtn" onClick={() => {
-                      document.getElementById('paystackBtn').classList.add("border", "border-black")
-                      document.getElementById('paypalBtn').classList.remove("border", "border-black")
-                      setPaymentMethod('paystack')
-                    }} />
-                    <img src={paypal} className='h-[32] w-[fit-content] p-2 ' alt='payment_method' id="paypalBtn" onClick={() => {
-                      document.getElementById('paypalBtn').classList.add("border", "border-black")
-                      document.getElementById('paystackBtn').classList.remove("border", "border-black")
-                      setPaymentMethod('paypal')
-                    }} />
+            <div className='flex flex-col'>
+              <div className=''>
+                <h2 className='uppercase text-sm mt-8 font-bold'>
+                  Payment Method
+                </h2>
+                <p className='text-sm my-3'>
+                  All transactions are secure and encrypted.
+                </p>
+                <p className='text-sm my-3'>
+                  How do you want to place your order?
+                </p>
+                <div className='flex flex-col lg:flex-row sm:items-center my-10 gap-4 border p-3'>
+                  <img
+                    src={pay}
+                    className='w-72 p-2 '
+                    alt='payment_method'
+                    id='paystackBtn'
+                    onClick={() => {
+                      document
+                        .getElementById("paystackBtn")
+                        .classList.add("border", "border-black");
+                      document
+                        .getElementById("paypalBtn")
+                        .classList.remove("border", "border-black");
+                      setPaymentMethod("paystack");
+                    }}
+                  />
+                  {/* <img
+                    src={paypal}
+                    className='h-[32] w-[fit-content] p-2 '
+                    alt='payment_method'
+                    id='paypalBtn'
+                    onClick={() => {
+                      document
+                        .getElementById("paypalBtn")
+                        .classList.add("border", "border-black");
+                      document
+                        .getElementById("paystackBtn")
+                        .classList.remove("border", "border-black");
+                      setPaymentMethod("paypal");
+                    }}
+                  /> */}
+                  <div>
+                    <h2 className='md:text-center'>Select Payment Method</h2>
+                    <div className='flex items-center gap-4 rounded-md border p-4 my-4'>
+                      <div className='flex gap-2 items-center'>
+                        <h2>Debit/Credit Card</h2>
+                        <input type='checkbox' />
+                      </div>
+                      <div className='flex gap-2 items-center'>
+                        <h2>Paypal</h2>
+                        <input type='checkbox' />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                {/* <div className='flex flex-col md:flex-row sm:items-center my-10 gap-4 border justify-between p-3'>
-                  <div className="form-check">
-                    <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked
-                      onChange={(e) => {
-                        console.log(e);
-                        setPaymentMethod('paystack')
-                      }}
-                    />
-                    <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
-                      <img src={pay} className='w-72' alt='payment_method' />
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                      onChange={(e) => {
-                        console.log(e);
-                        setPaymentMethod('paypal')
-                      }}
-                    />
-                    <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
-                      <img src={paypal} className='h-[32] w-[fit-content]' alt='payment_method' />
-                    </label>
-                  </div>
-                </div> */}
+
                 <p className='text-sm my-8'>
-                  Your personal data will be used to process your order, support your
-                  experience throughout this website, and for other purposes described in
-                  our Privacy Policy
+                  Your personal data will be used to process your order, support
+                  your experience throughout this website, and for other
+                  purposes described in our Privacy Policy
                 </p>
               </div>
 
