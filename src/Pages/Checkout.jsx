@@ -271,31 +271,27 @@ const Checkout = () => {
                       setPaymentMethod("paystack");
                     }}
                   />
-                  {/* <img
-                    src={paypal}
-                    className='h-[32] w-[fit-content] p-2 '
-                    alt='payment_method'
-                    id='paypalBtn'
-                    onClick={() => {
-                      document
-                        .getElementById("paypalBtn")
-                        .classList.add("border", "border-black");
-                      document
-                        .getElementById("paystackBtn")
-                        .classList.remove("border", "border-black");
-                      setPaymentMethod("paypal");
-                    }}
-                  /> */}
                   <div>
                     <h2 className='md:text-center'>Select Payment Method</h2>
-                    <div className='flex items-center gap-4 rounded-md border p-4 my-4'>
-                      <div className='flex gap-2 items-center'>
-                        <h2>Debit/Credit Card</h2>
-                        <input type='checkbox' />
-                      </div>
-                      <div className='flex gap-2 items-center'>
-                        <h2>Paypal</h2>
-                        <input type='checkbox' />
+                    <div className='flex my-4 items-center gap-4'>
+                      <button
+                        id='paypalBtn'
+                        onClick={() => {
+                          document
+                            .getElementById("paypalBtn")
+                            .classList.add("border", "border-black");
+                          document
+                            .getElementById("paystackBtn")
+                            .classList.remove("border", "border-black");
+                          setPaymentMethod("paypal");
+                        }}
+                        className='flex items-center gap-2 bg-blue-800 p-4 rounded-md text-white w-fit h-fit hover:scale-95 hover:bg-gray-600 cursor-pointer'
+                      >
+                        <BsPaypal className='text-xl' /> PayPal
+                      </button>
+                      <div className='flex items-center gap-2 bg-black p-4 rounded-md text-white w-fit h-fit hover:scale-95 hover:bg-gray-600 cursor-pointer'>
+                        <AiOutlineCreditCard className='text-xl' />
+                        <PaystackButton className='' {...componentProps} />
                       </div>
                     </div>
                   </div>
@@ -309,10 +305,7 @@ const Checkout = () => {
               </div>
 
               {paymentMethod === "paystack" ? (
-                <PaystackButton
-                  className='bg-black p-4 rounded-md text-white w-full hover:scale-95 hover:bg-gray-600'
-                  {...componentProps}
-                />
+                ""
               ) : (
                 <PayPalButtons
                   style={{ layout: "vertical", label: "pay" }}

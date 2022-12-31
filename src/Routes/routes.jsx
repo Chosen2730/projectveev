@@ -15,6 +15,7 @@ import SingleProduct from "../Pages/Admin/singleProduct";
 import AdminIndex from "../Pages/Admin/";
 import SingleOrder from "../Pages/Admin/singleOrder";
 import Orders from "../Pages/Orders";
+import Privacy from "../Pages/Privacy";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
@@ -24,7 +25,8 @@ const AppRoute = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/events' element={<Events />} />
+        <Route path='/contact' element={<Events />} />
+        <Route path='/privacy-policy' element={<Privacy />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/product/:productId/' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
