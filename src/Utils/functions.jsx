@@ -307,7 +307,7 @@ export const updateOrderStatus = async (id, orderStatus) => {
 //   }
 //   // return 'success final'
 // };
-export const updateProduct = async (isLoggedIn, propt, value, productId) => {
+export const updateSpecificPropOnProduct = async (isLoggedIn, propt, value, productId) => {
   if (isLoggedIn) {
     const productData = { [propt]: value }
     console.log(productData);

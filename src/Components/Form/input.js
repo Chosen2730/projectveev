@@ -47,6 +47,7 @@ const Input = ({
           name={id}
           id=''
           onChange={setItem}
+          value={value}
           required
         >
           {data.map((item, id) => {
@@ -62,6 +63,7 @@ const Input = ({
         <input
           name={id}
           type='checkbox'
+          checked={value === 'on'}
           onChange={setItem}
           onClick={setCheck}
         />

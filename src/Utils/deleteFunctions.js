@@ -5,18 +5,19 @@ import { db } from "../Firebase/config";
 export const deleteProduct = async (
     isLoggedIn,
     productId,
-    imageStoragePATH
+    imagesURL
 ) => {
-    console.log(isLoggedIn, productId, imageStoragePATH);
+    console.log(isLoggedIn, productId, imagesURL);
     if (isLoggedIn && productId) {
         const storage = getStorage();
-        const desertRef = ref(storage, imageStoragePATH);
-        deleteObject(desertRef)
-            // .then(async () => {
-            // })
-            .catch((error) => {
-                console.log("An error occured durring product image delete: ", error);
-            });
+        imagesURL.forEach(image => {
+            deleteObject(ref(storage, image.storagePath))
+                .then(async () => {
+                })
+                .catch((error) => {
+                    console.log("An error occured durring product image delete: ", error);
+                });
+        });
         await deleteDoc(doc(db, "products", productId));
         // console.log('deleted');
 
