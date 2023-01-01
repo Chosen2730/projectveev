@@ -118,8 +118,6 @@ const Products = () => {
     }
   }, [currentItem]);
 
-  const [imageURL, setImageURL] = useState('')
-  const [progress, setProgress] = useState(0)
   const uploadProduct = async (e) => {
     setIsLoading(true);
     // e.preventDefault();
@@ -155,7 +153,7 @@ const Products = () => {
         length: currentItem.length,
       };
     }
-    console.log({ data });
+    // console.log({ data });
     const createProductRef = await createProduct(isLoggedIn, data, allImages);
     setIsLoading(false);
     dispatch(setProductModalShown());
@@ -175,9 +173,17 @@ const Products = () => {
   };
 
   const imageUploadHandler = (e) => {
-    setAllImages(e.target.files);
-    console.log(allImages);
+    const newImage = Array.prototype.slice.call(e.target.files);
+    const uploaded = [...allImages];
+    newImage.some(file => {
+      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+        uploaded.push(file);
+      }
+      return 0;
+    })
+    setAllImages(uploaded);
   };
+  // console.log(allImages);
 
   return (
     <div className='p-4'>

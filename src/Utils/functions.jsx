@@ -17,6 +17,7 @@ import {
   getDownloadURL,
   getStorage,
   ref,
+  uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
 import { db } from "../Firebase/config";
@@ -326,52 +327,69 @@ export const updateProductStatus = async (isLoggedIn, productId, value) => {
   return "success";
 };
 
-export const uploadImage = async (isLoggedIn, image) => {
-  var imageURL = '';
-  var progress = 0;
-  var storagePATH = `products/${image.name}`;
-  const storage = getStorage();
-  if (isLoggedIn) {
-    // const metadata = 'image/jpeg';
-    // var file = new File([image], fileName, { type: contentType });
+// export const uploadImage = async (isLoggedIn, image) => {
+//   var imageURL = '';
+//   var progress = 0;
+//   var storagePATH = `products/${image.name}`;
+//   const storage = getStorage();
+//   if (isLoggedIn) {
+//     // const metadata = 'image/jpeg';
+//     // var file = new File([image], fileName, { type: contentType });
 
-    const storageRef = ref(storage, storagePATH);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+//     const storageRef = ref(storage, storagePATH);
+//     const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on(
-      "state_change",
-      (snapshot) => {
-        progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            // console.log("Upload is default");
-          // break;
-        }
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      (e) => {
-        console.log(e);
-        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-          console.log("File available at", url);
-          imageURL = url;
-        });
-      }
-    );
-  }
+//     uploadTask.on(
+//       "state_change",
+//       (snapshot) => {
+//         progress = Math.round(
+//           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//         );
+//         console.log("Upload is " + progress + "% done");
+//         switch (snapshot.state) {
+//           case "paused":
+//             console.log("Upload is paused");
+//             break;
+//           case "running":
+//             console.log("Upload is running");
+//             break;
+//           default:
+//             // console.log("Upload is default");
+//           // break;
+//         }
+//       },
+//       (error) => {
+//         console.log(error.message);
+//       },
+//       (e) => {
+//         console.log(e);
+//         getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+//           console.log("File available at", url);
+//           imageURL = url;
+//         });
+//       }
+//     );
+//   }
 
-  return "success";
-};
+//   return "success";
+// };
+
+
+export const uploadImage = async (file) => {
+    try {
+        const storage = getStorage()
+      const storageRef = ref(storage, `products/${file.name}`)
+        const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
+        const downloadURL = await getDownloadURL(storageRef, s);
+        console.log(downloadURL);
+      const fullPath = s.metadata.fullPath
+      return { downloadURL, fullPath };
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 
 export const updateUserStatus = async (uid, userStatus) => {
   if (userStatus) {
