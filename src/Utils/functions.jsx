@@ -375,18 +375,18 @@ export const updateProductStatus = async (isLoggedIn, productId, value) => {
 // };
 
 
-export const uploadImage = async (file) => {
+export const uploadImage = async (file, productId) => {
     try {
         const storage = getStorage()
-      const storageRef = ref(storage, `products/${file.name}`)
+      const storageRef = ref(storage, `products/${productId}/${file.name}`)
         const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
         const downloadURL = await getDownloadURL(storageRef, s);
-        console.log(downloadURL);
+        // console.log(downloadURL);
       const fullPath = s.metadata.fullPath
       return { downloadURL, fullPath };
     } catch (error) {
         console.log(error);
-        return null;
+        return error;
     }
 }
 
