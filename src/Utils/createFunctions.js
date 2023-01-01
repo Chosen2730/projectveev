@@ -18,7 +18,8 @@ export const createProduct = async (isLoggedIn, data, allImages) => {
     await allImages.reduce(async (ref, imageFile) => {
         await ref;
         const res = await uploadImage(imageFile)
-        const data = { storagePath: res.fullPath, url: res.downloadURL }
+        var timestamp = new Date().getUTCMilliseconds();
+        const data = { storagePath: res.fullPath, url: res.downloadURL, id: timestamp }
         imageURLS.push(data);
     }, Promise.resolve())
 
