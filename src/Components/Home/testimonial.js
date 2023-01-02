@@ -1,9 +1,10 @@
 import React from "react";
 import { MdArrowUpward, MdOutlineArrowDownward } from "react-icons/md";
+import Swiper from "../../Utils/swiper";
 
 const Testimonial = () => {
   return (
-    <div>
+    <div className='max-w-2xl mx-auto'>
       <p className='text-center md:w-3/4 mx-auto text-sm'>
         Trendy Clothing & Accessories at VEEV CLOTHIERS - An Online Dress
         Boutique REPIIT is a UNISEX clothing store with new trendy and
@@ -23,7 +24,7 @@ const Testimonial = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi .
           </p>
         </div>
-        <div className='hidden md:flex flex-col gap-8 justify-between items-center w-[10%]'>
+        {/* <div className='hidden md:flex flex-col gap-8 justify-between items-center w-[10%]'>
           <MdArrowUpward className='rounded-full border-black text-3xl p-1 border-2 ' />
           <div className='flex flex-col items-center justify-center gap-2'>
             <div className='h-2 w-2 bg-gray-400 rounded-full' />
@@ -33,8 +34,8 @@ const Testimonial = () => {
             <div className='h-2 w-2 bg-gray-400 rounded-full' />
           </div>
           <MdOutlineArrowDownward className='rounded-full border-black text-3xl p-1 border-2 ' />
-        </div>
-        <div className='w-full flex flex-col gap-12'>
+        </div> */}
+        {/* <div className='w-full flex flex-col gap-12'>
           <div className='rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-6'>
             <img
               src='https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg'
@@ -59,8 +60,9 @@ const Testimonial = () => {
               libero illo.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
+      <Swiper />
     </div>
   );
 };

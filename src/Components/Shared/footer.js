@@ -4,6 +4,7 @@ import logo from "../../images/logo2.png";
 import fb from "../../images/fb.png";
 import tw from "../../images/tw.png";
 import ig from "../../images/ig.png";
+import wt from "../../images/wt.png";
 
 const Footer = () => {
   return (
@@ -47,6 +48,12 @@ const Footer = () => {
       <p className='font-medium text-xs my-4 text-center'>
         © {new Date().getFullYear()} VEEV CLOTHEIRS - All Right reserved!
       </p>
+      <a href='https://wa.me/message/GCZSV3CRNB6SI1' target={"__blank"}>
+        <div className='flex gap-2 items-center bg-black rounded-full px-8 p-4 text-white fixed bottom-10 right-4 text-sm capitalize'>
+          <h2>Chat with us</h2>
+          <img src={wt} alt='whatsapp' className='w-12' />
+        </div>
+      </a>
     </footer>
   );
 };
