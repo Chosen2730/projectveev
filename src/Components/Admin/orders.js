@@ -25,13 +25,18 @@ const Orders = () => {
     const fetch = async () => {
       const res = await getOrders(limit);
       setAllOrders(res.data);
-      // dispatch(setOrders(res.data));
-      // setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
   }, [limit]);
 
   console.log({ allOrders });
+  const cancelled = allOrders.filter(
+    (order) => order.orderStatus === "cancelled"
+  );
+  const delivered = allOrders.filter(
+    (order) => order.orderStatus === "delivered"
+  );
+  const pending = allOrders.filter((order) => order.orderStatus === "pending");
   const orderHeader = [
     "Name",
     "Date",
@@ -61,7 +66,7 @@ const Orders = () => {
               <MdPendingActions />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{pending?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-green-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -70,7 +75,7 @@ const Orders = () => {
               <MdOutlineDownloadDone />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{delivered?.length}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -93,41 +98,60 @@ const Orders = () => {
               );
             })}
           </div>
-          {!allOrders.length > 0 && <div className="uppercase font-bold">No data yet!</div>}
+          {!allOrders.length > 0 && (
+            <div className='uppercase font-bold'>No data yet!</div>
+          )}
           <div className=''>
-            {allOrders?.map(({ cartItems, message, name, orderId }, index) => {
-              const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
-              var totalPrice;
-              if (prices && prices.length>0){
-                totalPrice = prices?.reduce((sum, price) => sum + price);
-              }
-              return (
-                <div
-                  key={index}
-                  className='grid grid-cols-7 gap-2 my-5 border-b rounded-md p-5'
-                >
-                  <h2>{name}</h2>
-                  <h2>02/11/22</h2>
-                  <h2>{cartItems?.length}</h2>
-                  <h2>{message}</h2>
-                  <Currency amount={totalPrice ? totalPrice : 0} />
-                  <h2>Pending</h2>
-                  <div className='flex gap-4 text-xl'>
-                    {/* <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' /> */}
-                    <h2 className='text-sm italic text-red-700 cursor-pointer' onClick={() => { deleteOrder(orderId) }}>
-                      delete
-                    </h2>
+            {allOrders?.map(
+              ({ cartItems, message, name, orderId, orderStatus }, index) => {
+                const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
+                var totalPrice;
+                if (prices && prices.length > 0) {
+                  totalPrice = prices?.reduce((sum, price) => sum + price);
+                }
+                return (
+                  <div
+                    key={index}
+                    className='grid grid-cols-7 gap-2 my-5 border-b rounded-md p-5'
+                  >
+                    <h2>{name}</h2>
+                    <h2>02/11/22</h2>
+                    <h2>{cartItems?.length}</h2>
+                    <h2>{message}</h2>
+                    <Currency amount={totalPrice ? totalPrice : 0} />
                     <h2
-                      className='text-sm italic text-blue-700 cursor-pointer'
-                      onClick={() => navigate(`/admin/order/${orderId}`)}
+                      className={`${
+                        orderStatus === "pending"
+                          ? "text-gray-600"
+                          : orderStatus === "delivered"
+                          ? "text-green-400"
+                          : "text-red-600"
+                      } capitalize`}
                     >
-                      details
+                      {orderStatus}
                     </h2>
-                    {/* <AiOutlineEye className='bg-g text-gray-500 cursor-pointer rounded-md' /> */}
+                    <div className='flex gap-4 text-xl'>
+                      {/* <AiOutlineDelete className='bg text-red-500 cursor-pointer rounded-md' /> */}
+                      <h2
+                        className='text-sm italic text-red-700 cursor-pointer'
+                        onClick={() => {
+                          deleteOrder(orderId);
+                        }}
+                      >
+                        delete
+                      </h2>
+                      <h2
+                        className='text-sm italic text-blue-700 cursor-pointer'
+                        onClick={() => navigate(`/admin/order/${orderId}`)}
+                      >
+                        details
+                      </h2>
+                      {/* <AiOutlineEye className='bg-g text-gray-500 cursor-pointer rounded-md' /> */}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </div>
       </div>

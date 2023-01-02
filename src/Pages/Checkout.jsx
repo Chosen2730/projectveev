@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTotalAmount } from "../Redux/features/productSlice";
+import { clearCart, getTotalAmount } from "../Redux/features/productSlice";
 import { addOrder } from "../Utils/functions";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import Information from "../Components/Checkout/information";
@@ -18,20 +18,6 @@ import { AiOutlineCreditCard } from "react-icons/ai";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("paystack");
-  // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-  // const [currency, setCurrency] = useState(options.currency);
-
-  // const onCurrencyChange = ({ target: { value } }) => {
-  //   setCurrency(value);
-  //   dispatch({
-  //     type: "resetOptions",
-  //     value: {
-  //       ...options,
-  //       currency: value,
-  //     },
-  //   });
-  // }
-
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -45,6 +31,7 @@ const Checkout = () => {
     user,
     user: { uid, name, admin, email, phoneNumber },
   } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     disPatcha(getTotalAmount());
@@ -66,21 +53,6 @@ const Checkout = () => {
   const [selected, setSelected] = useState(0);
   const [informationDetails, setInformationDetails] = useState({});
   const [deliveryFee] = useState(500);
-
-  // const config = {
-  //   reference: new Date().getTime().toString(),
-  //   email: informationDetails.email,
-  //   amount: (totalAmount + deliveryFee) * 100,
-  //   metadata: {
-  //     name:
-  //       informationDetails?.first_name?.toUpperCase() +
-  //       " " +
-  //       informationDetails?.last_name?.toUpperCase(),
-  //     phone: informationDetails.tel,
-  //   },
-  //   publicKey: "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52",
-  // };
-  // const initializePayment = usePaystackPayment(config);
 
   const onCreateOrder = (data, actions) => {
     return actions.order.create({
@@ -141,19 +113,9 @@ const Checkout = () => {
         return 2;
       } else return newState;
     });
-    // if (selected < stages.length - 1) {
-    // } else {
-    //   if (isLoggedIn) {
-    //     // If paymentOption == PayStack
-    //     initializePayment(onSuccess, onClose);
-    //   } else {
-    //     alert("You have to login to continue!");
-    //     disPatcha(login());
-    //   }
-    // }
   };
 
-  const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52"; // generate your key and save in env var (after everything is set) this is just a test key anyways.....
+  const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52";
 
   const componentProps = {
     email: userDetails.email,
@@ -170,6 +132,8 @@ const Checkout = () => {
       const status = ref.status;
       const trxref = ref.trxref;
       handleSuccess(message, status, trxref);
+      navigate("/orders");
+      dispatch(clearCart());
     },
     onClose: () => alert("Wait! You need those orders, don't go!!!!"),
   };
@@ -178,7 +142,6 @@ const Checkout = () => {
       ...informationDetails,
       [e.target.name]: e.target.value,
     });
-    // console.log(informationDetails);
   };
   return (
     <div className='flex flex-col md:flex-row gap-8 p-4 md:p-8'>

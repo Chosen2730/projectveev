@@ -23,8 +23,8 @@ import {
 import { db } from "../Firebase/config";
 
 export const getAllProducts = (snapshot, error) => {
-  const itemsColRef = collection(db, 'products');
-  const itemsQuery = query(itemsColRef, orderBy('_createdAt'))
+  const itemsColRef = collection(db, "products");
+  const itemsQuery = query(itemsColRef, orderBy("_createdAt"));
   return onSnapshot(itemsQuery, snapshot, error);
 };
 
@@ -251,7 +251,11 @@ export const createUser = async (data) => {
 
 export const addOrder = async (isLoggedIn, data) => {
   if (isLoggedIn) {
-    const orderData = { ...data, createdAt: (new Date()).toDateString(), updatedAt: (new Date()).toDateString() };
+    const orderData = {
+      ...data,
+      createdAt: new Date().toDateString(),
+      updatedAt: new Date().toDateString(),
+    };
     const res = (await addDoc(collection(db, "orders"), orderData)).id;
     // window.location.reload()
     return { msg: "success", res };
@@ -268,6 +272,7 @@ export const deleteOrder = async (orderId) => {
         console.log("An error occured durring order delete: ", error);
       });
       alert("order deleted!");
+      window.location.reload();
       return "success";
     } else {
       return "";
@@ -307,9 +312,14 @@ export const updateOrderStatus = async (id, orderStatus) => {
 //   }
 //   // return 'success final'
 // };
-export const updateSpecificPropOnProduct = async (isLoggedIn, propt, value, productId) => {
+export const updateSpecificPropOnProduct = async (
+  isLoggedIn,
+  propt,
+  value,
+  productId
+) => {
   if (isLoggedIn) {
-    const productData = { [propt]: value }
+    const productData = { [propt]: value };
     console.log(productData);
     await updateDoc(doc(db, "products", productId), productData);
     return "success";
@@ -374,22 +384,20 @@ export const updateProductStatus = async (isLoggedIn, productId, value) => {
 //   return "success";
 // };
 
-
 export const uploadImage = async (file, productId) => {
-    try {
-        const storage = getStorage()
-      const storageRef = ref(storage, `products/${productId}/${file.name}`)
-        const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
-        const downloadURL = await getDownloadURL(storageRef, s);
-        // console.log(downloadURL);
-      const fullPath = s.metadata.fullPath
-      return { downloadURL, fullPath };
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
-}
-
+  try {
+    const storage = getStorage();
+    const storageRef = ref(storage, `products/${productId}/${file.name}`);
+    const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
+    const downloadURL = await getDownloadURL(storageRef, s);
+    // console.log(downloadURL);
+    const fullPath = s.metadata.fullPath;
+    return { downloadURL, fullPath };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const updateUserStatus = async (uid, userStatus) => {
   if (userStatus) {

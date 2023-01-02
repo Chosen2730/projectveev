@@ -34,7 +34,7 @@ const Cart = () => {
           {cartItems.map(
             (
               {
-                imageUrl,
+                imageURLS,
                 item,
                 price,
                 productId,
@@ -44,7 +44,7 @@ const Cart = () => {
               },
               i
             ) => {
-              // const keyID = new Date().getTime().toString();
+              const imageUrl = (imageURLS && imageURLS[0].url) || "";
               return (
                 <div
                   key={i}

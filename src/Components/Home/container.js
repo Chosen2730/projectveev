@@ -21,7 +21,7 @@ const Container = ({ name, data }) => {
           ?.slice(0, 3)
           .map(
             ({
-              imageUrl,
+              imageURLS,
               discountValue,
               title,
               item,
@@ -31,6 +31,7 @@ const Container = ({ name, data }) => {
               let discount;
               discount = (parseInt(discountValue) / 100) * price;
               const newPrice = price - discount;
+              const imageUrl = (imageURLS && imageURLS[0].url) || "";
               return (
                 <div
                   className='flex flex-col items-center justify-center relative'

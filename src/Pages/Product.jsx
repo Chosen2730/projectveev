@@ -19,17 +19,30 @@ const Product = () => {
   );
   const { productId: id } = useParams();
   const singleProduct = allProducts.find((product) => product.productId === id);
-  console.log(singleProduct);
-
-  const { desc, imageUrl, price, title, discountValue } = singleProduct;
+  const { desc, imageURLS, price, title, discountValue } = singleProduct;
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
 
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const imageUrl = (imageURLS && imageURLS[activeIndex].url) || "";
   const dispatch = useDispatch();
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveIndex((n) => {
+        const newIndex = n + 1;
+        if (newIndex > imageURLS.length - 1) {
+          return 0;
+        } else return newIndex;
+      });
+    }, 3000);
+    return () => clearInterval(t);
+  }, [activeIndex]);
+
   return (
     <div className='mx-auto max-w-6xl p-4'>
       <Link to='/shop'>
@@ -37,11 +50,28 @@ const Product = () => {
       </Link>
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-5'>
-        <img
-          className='h-[650px] xl:h-[500px] w-full object-cover'
-          src={imageUrl}
-          alt={title}
-        />
+        <div>
+          <img
+            className='h-[500px] w-full object-cover'
+            src={imageUrl}
+            alt={title}
+          />
+          <div className='grid grid-cols-3 gap-4 my-3'>
+            {imageURLS?.slice(0, 3).map(({ url }, i) => {
+              return (
+                <img
+                  onClick={() => setActiveIndex(i)}
+                  className={`${
+                    activeIndex === i ? "border-4 border-green-500" : ""
+                  } w-full h-32 rounded-md transition`}
+                  key={i}
+                  src={url}
+                  alt='image'
+                />
+              );
+            })}
+          </div>
+        </div>
         <div>
           <h2 className='font-bold text-2xl uppercase'>{title}</h2>
           <div className='flex text-4xl my-2'>

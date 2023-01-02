@@ -27,7 +27,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import Spinner from "../Configs/spinner";
 import { createProduct } from "../../Utils/createFunctions";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { updateProduct } from "../../Utils/updateFunctions";
 
 const Products = () => {
@@ -50,7 +55,9 @@ const Products = () => {
   const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
   const statusList = ["Select", "In Stock", "Out of Stock"];
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
-  const { isProductModalShown, isProductEditModalShown } = useSelector((state) => state.admin);
+  const { isProductModalShown, isProductEditModalShown } = useSelector(
+    (state) => state.admin
+  );
   const [allImages, setAllImages] = useState([]);
   const [discount, setDiscount] = useState(false);
   const [fabricInput, setFabricInput] = useState(false);
@@ -100,7 +107,7 @@ const Products = () => {
     );
     setCurrentItemToEdit({
       ...productToEdit,
-      updatedAt: (new Date()).toDateString(),
+      updatedAt: new Date().toDateString(),
     });
   };
 
@@ -175,23 +182,22 @@ const Products = () => {
   const imageUploadHandler = (e) => {
     const newImage = Array.prototype.slice.call(e.target.files);
     const uploaded = [...allImages];
-    newImage.some(file => {
+    newImage.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
       }
       return 0;
-    })
+    });
     setAllImages(uploaded);
-
   };
 
   const handleDeleteImage = async (image) => {
-    const filteredImages = allImages.filter(item => item.id !== image.id)
-    setAllImages(filteredImages)
-    document.getElementById('imagePicker').value = ""
+    const filteredImages = allImages.filter((item) => item.id !== image.id);
+    setAllImages(filteredImages);
+    document.getElementById("imagePicker").value = "";
     // console.log(allImages);
-  }
-  // console.log(allImages);
+  };
+  console.log(allProducts);
 
   return (
     <div className='p-4'>
@@ -230,7 +236,10 @@ const Products = () => {
         </h2>
         <button
           className='flex items-center justify-center text-white p-4 px-8 rounded-md bg-black gap-2 hover:scale-105 transition w-fit'
-          onClick={() => { setIsEditing(false); dispatch(setProductModalShown()) }}
+          onClick={() => {
+            setIsEditing(false);
+            dispatch(setProductModalShown());
+          }}
         >
           Upload Product
           <IoMdAdd className='text-2xl' />
@@ -249,18 +258,7 @@ const Products = () => {
           </div>
           <div className=''>
             {allProducts?.map(
-              (
-                {
-                  productId,
-                  title,
-                  imageURLS,
-                  price,
-                  desc,
-                  status,
-                },
-                index
-              ) => {
-
+              ({ productId, title, imageURLS, price, desc, status }, index) => {
                 return (
                   <div
                     key={index}
@@ -330,8 +328,9 @@ const Products = () => {
 
       {/* <Form /> */}
       <div
-        className={`${isProductModalShown ? "category" : "category hider"
-          } overflow`}
+        className={`${
+          isProductModalShown ? "category" : "category hider"
+        } overflow`}
       >
         <div className='bg-white shadow-md rounded-md p-4 overflow'>
           <IoClose
@@ -458,18 +457,24 @@ const Products = () => {
             <div className='preview_img grid place-items-center my-5 grid-cols-5'>
               {allImages &&
                 Array.from(allImages).map((image, i) => {
-                  return (<div className="relative">
-                    <img
-                      key={i}
-                      src={URL.createObjectURL(image)}
-                      alt=''
-                      width={100}
-                      className='w-20 h-20 object-contain'
-                    />
-                    <div className="absolute top-0 -right-2 font-bold text-red-700 cursor-pointer" onClick={() => {
-                      handleDeleteImage(image)
-                    }}>x</div>
-                  </div>
+                  return (
+                    <div className='relative'>
+                      <img
+                        key={i}
+                        src={URL.createObjectURL(image)}
+                        alt=''
+                        width={100}
+                        className='w-20 h-20 object-contain'
+                      />
+                      <div
+                        className='absolute top-0 -right-2 font-bold text-red-700 cursor-pointer'
+                        onClick={() => {
+                          handleDeleteImage(image);
+                        }}
+                      >
+                        x
+                      </div>
+                    </div>
                   );
                 })}
             </div>
@@ -478,7 +483,10 @@ const Products = () => {
               .jpeg
             </p>
             <div className='bg-gray-300 m-2 p-4 rounded-md'>
-              <label htmlFor='imagePicker' className='cursor-pointer text-sm'></label>
+              <label
+                htmlFor='imagePicker'
+                className='cursor-pointer text-sm'
+              ></label>
               <input
                 type='file'
                 placeholder='Browse to upload your file'
@@ -504,30 +512,59 @@ const Products = () => {
         </div>
       </div>
 
-      {isProductEditModalShown && <EditForm
-        dispatch={dispatch} isProductEditModalShown={isProductEditModalShown} setProductEditModalShown={setProductEditModalShown}
-        isEditing={isEditing} setIsEditing={setIsEditing} setCurrentItemToEdit={setCurrentItemToEdit} currentItemToEdit={currentItemToEdit}
-        category={category} fabricInput={fabricInput} setFabricInput={setFabricInput} statusList={statusList} discount={discount} setDiscount={setDiscount} discountValues={discountValues} isLoading={isLoading} setIsLoading={setIsLoading}
-      />}
+      {isProductEditModalShown && (
+        <EditForm
+          dispatch={dispatch}
+          isProductEditModalShown={isProductEditModalShown}
+          setProductEditModalShown={setProductEditModalShown}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          setCurrentItemToEdit={setCurrentItemToEdit}
+          currentItemToEdit={currentItemToEdit}
+          category={category}
+          fabricInput={fabricInput}
+          setFabricInput={setFabricInput}
+          statusList={statusList}
+          discount={discount}
+          setDiscount={setDiscount}
+          discountValues={discountValues}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+      )}
     </div>
   );
 };
 
 export default Products;
 
-
 const EditForm = (props) => {
-  const { dispatch, isProductEditModalShown, setProductEditModalShown,
-    isEditing, setIsEditing, setCurrentItemToEdit, currentItemToEdit,
-    category, fabricInput, setFabricInput, statusList, discount, setDiscount, discountValues, isLoading, setIsLoading } = props || undefined;
-  const [allImages, setAllImages] = useState([])
+  const {
+    dispatch,
+    isProductEditModalShown,
+    setProductEditModalShown,
+    isEditing,
+    setIsEditing,
+    setCurrentItemToEdit,
+    currentItemToEdit,
+    category,
+    fabricInput,
+    setFabricInput,
+    statusList,
+    discount,
+    setDiscount,
+    discountValues,
+    isLoading,
+    setIsLoading,
+  } = props || undefined;
+  const [allImages, setAllImages] = useState([]);
 
   useEffect(() => {
     if (!currentItemToEdit?.productId) {
-      dispatch(setProductEditModalShown())
+      dispatch(setProductEditModalShown());
       return;
     }
-  }, [currentItemToEdit?.productId, dispatch, setProductEditModalShown])
+  }, [currentItemToEdit?.productId, dispatch, setProductEditModalShown]);
 
   useEffect(() => {
     if (currentItemToEdit.category === "Fabrics") {
@@ -547,36 +584,43 @@ const EditForm = (props) => {
   };
 
   const imageUploadHandler = async (e) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const newImage = Array.prototype.slice.call(e.target.files);
     const uploaded = [];
-    newImage.some(file => {
+    newImage.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
       }
-      return 0
-    })
+      return 0;
+    });
 
     const newImageURLS = [...currentItemToEdit.imageURLS];
     await uploaded.reduce(async (ref, imageFile) => {
       await ref;
-      const res = await uploadImage(imageFile, currentItemToEdit.id)
+      const res = await uploadImage(imageFile, currentItemToEdit.id);
       var timestamp = (Date.now() + Math.random()).toFixed(); // new Date().getUTCMilliseconds();
-      const d = { storagePath: res.fullPath, url: res.downloadURL, id: timestamp }
+      const d = {
+        storagePath: res.fullPath,
+        url: res.downloadURL,
+        id: timestamp,
+      };
       newImageURLS.push(d);
-    }, Promise.resolve())
-    await updateProduct(currentItemToEdit.productId, { ...currentItemToEdit, imageURLS: newImageURLS })
+    }, Promise.resolve());
+    await updateProduct(currentItemToEdit.productId, {
+      ...currentItemToEdit,
+      imageURLS: newImageURLS,
+    });
     setCurrentItemToEdit({ ...currentItemToEdit, imageURLS: newImageURLS });
-    document.getElementById('editImagePicker').value = ""
-    setIsLoading(false)
+    document.getElementById("editImagePicker").value = "";
+    setIsLoading(false);
   };
 
   const handleSubmitEdit = async () => {
     setIsLoading(true);
     // console.log(currentItemToEdit.productId, currentItemToEdit);
-    await updateProduct(currentItemToEdit.productId, currentItemToEdit)
+    await updateProduct(currentItemToEdit.productId, currentItemToEdit);
     setIsLoading(false);
-    dispatch(setProductEditModalShown())
+    dispatch(setProductEditModalShown());
   };
 
   const handleDeleteImage = async (image) => {
@@ -585,187 +629,211 @@ const EditForm = (props) => {
       return;
     }
 
-    const filteredImageURLS = currentItemToEdit.imageURLS.filter(item => item.id !== image.id)
-    console.log({ filteredImageURLS }, { ...currentItemToEdit, imageURLS: filteredImageURLS });
-    await updateProduct(currentItemToEdit.productId, { ...currentItemToEdit, imageURLS: filteredImageURLS })
-    setCurrentItemToEdit({ ...currentItemToEdit, imageURLS: filteredImageURLS })
-    await deleteImage(image.storagePath)
+    const filteredImageURLS = currentItemToEdit.imageURLS.filter(
+      (item) => item.id !== image.id
+    );
+    console.log(
+      { filteredImageURLS },
+      { ...currentItemToEdit, imageURLS: filteredImageURLS }
+    );
+    await updateProduct(currentItemToEdit.productId, {
+      ...currentItemToEdit,
+      imageURLS: filteredImageURLS,
+    });
+    setCurrentItemToEdit({
+      ...currentItemToEdit,
+      imageURLS: filteredImageURLS,
+    });
+    await deleteImage(image.storagePath);
     // console.log(currentItemToEdit);
-  }
+  };
 
-  return (<>
-    {/* <Form /> */}
-    <div
-      className={`${isProductEditModalShown ? "category" : "category hider"
+  return (
+    <>
+      {/* <Form /> */}
+      <div
+        className={`${
+          isProductEditModalShown ? "category" : "category hider"
         } overflow`}
-    >
-      <div className='bg-white shadow-md rounded-md p-4 overflow'>
-        <IoClose
-          className='bg-black text-white text-4xl p-2 ml-auto rounded-md'
-          onClick={() => {
-            dispatch(setProductEditModalShown());
-            setCurrentItemToEdit({});
-            setIsEditing(false);
-          }}
-        />
-        <h1 className='text-center text-xl sm:text-2xl font-semibold my-3'>
-          {isEditing ? "Update Product" : "Upload Product"}
-        </h1>
+      >
+        <div className='bg-white shadow-md rounded-md p-4 overflow'>
+          <IoClose
+            className='bg-black text-white text-4xl p-2 ml-auto rounded-md'
+            onClick={() => {
+              dispatch(setProductEditModalShown());
+              setCurrentItemToEdit({});
+              setIsEditing(false);
+            }}
+          />
+          <h1 className='text-center text-xl sm:text-2xl font-semibold my-3'>
+            {isEditing ? "Update Product" : "Upload Product"}
+          </h1>
 
-        {/* ====================FORM================ */}
-        <>
-          <Input
-            type='text'
-            input
-            id='title'
-            title='Name of Product'
-            setItem={handleInputChange}
-            value={currentItemToEdit.title || ""}
-          />
-          <Input
-            textarea
-            id='desc'
-            title='Product Description'
-            setItem={handleInputChange}
-            value={currentItemToEdit.desc || ""}
-          />
-          <Input
-            dropdown
-            data={category}
-            id='category'
-            title='Select Category'
-            setItem={handleInputChange}
-            value={currentItemToEdit.category || ""}
-          />
-          {fabricInput && (
-            <div>
-              <Input
-                type='text'
-                input
-                id='fabricName'
-                title='Fabric Name'
-                setItem={handleInputChange}
-                value={currentItemToEdit.fabricName || ""}
-              />
-              <Input
-                type='text'
-                input
-                id='length'
-                title='Length'
-                setItem={handleInputChange}
-                value={currentItemToEdit.length || ""}
-              />
-              <Input
-                type='text'
-                input
-                id='colors'
-                title='Colors'
-                setItem={handleInputChange}
-                value={currentItemToEdit.colors || ""}
-              />
-            </div>
-          )}
-          <Input
-            dropdown
-            data={statusList}
-            id='status'
-            title='Product Status'
-            setItem={handleInputChange}
-            value={currentItemToEdit.status || "In stock"}
-          />
-          <div className='rounded-md border p-4 bg-gray-100'>
-            <h2>Market Status</h2>
-            <div className='flex gap-2 items-center'>
-              <Input
-                value={currentItemToEdit.featured || ""}
-                check
-                id='featured'
-                title='Featured'
-                setItem={handleInputChange}
-              />
-              <Input
-                value={currentItemToEdit.trending || ""}
-                check
-                id='trending'
-                title='Trending'
-                setItem={handleInputChange}
-              />
-            </div>
-          </div>
-          <Input
-            type='number'
-            input
-            id='price'
-            title='Price'
-            setItem={handleInputChange}
-            value={currentItemToEdit.price || ""}
-          />
-          <Input
-            setCheck={() => setDiscount(!discount)}
-            check
-            id='discount'
-            title='Discount (%)'
-            setItem={handleInputChange}
-            value={currentItemToEdit.discount || ""}
-          />
-          {discount && (
+          {/* ====================FORM================ */}
+          <>
+            <Input
+              type='text'
+              input
+              id='title'
+              title='Name of Product'
+              setItem={handleInputChange}
+              value={currentItemToEdit.title || ""}
+            />
+            <Input
+              textarea
+              id='desc'
+              title='Product Description'
+              setItem={handleInputChange}
+              value={currentItemToEdit.desc || ""}
+            />
             <Input
               dropdown
-              data={discountValues}
-              id='discountValue'
+              data={category}
+              id='category'
+              title='Select Category'
               setItem={handleInputChange}
-              value={currentItemToEdit.discountValue || ""}
+              value={currentItemToEdit.category || ""}
             />
-          )}
-        </>
-        <div className='text-center bg-gray-100 my-2 p-4'>
-          <h2 className='font-semibold text-sm'>Upload Image</h2>
-          <div className='preview_img grid place-items-center my-5 grid-cols-5'>
-            {currentItemToEdit?.imageURLS &&
-              Array.from(currentItemToEdit?.imageURLS).map((image, i) => {
-                // console.log(image);
-                return (<div key={i} className="relative">
-                  <img
-                    src={image?.url}
-                    alt=''
-                    width={100}
-                    className='w-20 h-20 object-contain'
-                  />
-                  <div className="absolute top-0 -right-2 font-bold text-red-700 cursor-pointer" onClick={() => {
-                    handleDeleteImage(image)
-                  }}>x</div>
-                </div>);
-              })}
-          </div>
-          <p className='text-sm my-2'>
-            Upload the picture of the product. Accepted format : .jpg, .png,
-            .jpeg
-          </p>
-          <div className='bg-gray-300 m-2 p-4 rounded-md'>
-            <label htmlFor='editImagePicker' className='cursor-pointer text-sm'></label>
-            <input
-              type='file'
-              placeholder='Browse to upload your file'
-              id='editImagePicker'
-              accept='image/*'
-              multiple
-              onChange={imageUploadHandler}
+            {fabricInput && (
+              <div>
+                <Input
+                  type='text'
+                  input
+                  id='fabricName'
+                  title='Fabric Name'
+                  setItem={handleInputChange}
+                  value={currentItemToEdit.fabricName || ""}
+                />
+                <Input
+                  type='text'
+                  input
+                  id='length'
+                  title='Length'
+                  setItem={handleInputChange}
+                  value={currentItemToEdit.length || ""}
+                />
+                <Input
+                  type='text'
+                  input
+                  id='colors'
+                  title='Colors'
+                  setItem={handleInputChange}
+                  value={currentItemToEdit.colors || ""}
+                />
+              </div>
+            )}
+            <Input
+              dropdown
+              data={statusList}
+              id='status'
+              title='Product Status'
+              setItem={handleInputChange}
+              value={currentItemToEdit.status || "In stock"}
             />
+            <div className='rounded-md border p-4 bg-gray-100'>
+              <h2>Market Status</h2>
+              <div className='flex gap-2 items-center'>
+                <Input
+                  value={currentItemToEdit.featured || ""}
+                  check
+                  id='featured'
+                  title='Featured'
+                  setItem={handleInputChange}
+                />
+                <Input
+                  value={currentItemToEdit.trending || ""}
+                  check
+                  id='trending'
+                  title='Trending'
+                  setItem={handleInputChange}
+                />
+              </div>
+            </div>
+            <Input
+              type='number'
+              input
+              id='price'
+              title='Price'
+              setItem={handleInputChange}
+              value={currentItemToEdit.price || ""}
+            />
+            <Input
+              setCheck={() => setDiscount(!discount)}
+              check
+              id='discount'
+              title='Discount (%)'
+              setItem={handleInputChange}
+              value={currentItemToEdit.discount || ""}
+            />
+            {discount && (
+              <Input
+                dropdown
+                data={discountValues}
+                id='discountValue'
+                setItem={handleInputChange}
+                value={currentItemToEdit.discountValue || ""}
+              />
+            )}
+          </>
+          <div className='text-center bg-gray-100 my-2 p-4'>
+            <h2 className='font-semibold text-sm'>Upload Image</h2>
+            <div className='preview_img grid place-items-center my-5 grid-cols-5'>
+              {currentItemToEdit?.imageURLS &&
+                Array.from(currentItemToEdit?.imageURLS).map((image, i) => {
+                  // console.log(image);
+                  return (
+                    <div key={i} className='relative'>
+                      <img
+                        src={image?.url}
+                        alt=''
+                        width={100}
+                        className='w-20 h-20 object-contain'
+                      />
+                      <div
+                        className='absolute top-0 -right-2 font-bold text-red-700 cursor-pointer'
+                        onClick={() => {
+                          handleDeleteImage(image);
+                        }}
+                      >
+                        x
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <p className='text-sm my-2'>
+              Upload the picture of the product. Accepted format : .jpg, .png,
+              .jpeg
+            </p>
+            <div className='bg-gray-300 m-2 p-4 rounded-md'>
+              <label
+                htmlFor='editImagePicker'
+                className='cursor-pointer text-sm'
+              ></label>
+              <input
+                type='file'
+                placeholder='Browse to upload your file'
+                id='editImagePicker'
+                accept='image/*'
+                multiple
+                onChange={imageUploadHandler}
+              />
+            </div>
           </div>
+          <button
+            className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
+            onClick={handleSubmitEdit}
+          >
+            {isLoading ? (
+              <Spinner loaderText={isEditing ? "Updating" : "Uploading"} />
+            ) : isEditing ? (
+              "Update"
+            ) : (
+              "Upload"
+            )}
+          </button>
         </div>
-        <button
-          className='bg-black text-white rounded-md text-sm md:text-base py-4 px-8 font-normal tracking-wider w-full my-2'
-          onClick={handleSubmitEdit}
-        >
-          {isLoading ? (
-            <Spinner loaderText={isEditing ? "Updating" : "Uploading"} />
-          ) : isEditing ? (
-            "Update"
-          ) : (
-            "Upload"
-          )}
-        </button>
       </div>
-    </div>
-  </>)
-}
+    </>
+  );
+};

@@ -11,10 +11,11 @@ const ProductContainer = ({ data }) => {
     <div className='my-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {data?.map(
-          ({ imageUrl, title, price, discountValue, productId: id }) => {
+          ({ imageURLS, title, price, discountValue, productId: id }) => {
             let discount;
             discount = (parseInt(discountValue) / 100) * price;
             const newPrice = price - discount;
+            const imageUrl = (imageURLS && imageURLS[0].url) || "";
             return (
               <div
                 className='flex flex-col items-center justify-center relative'

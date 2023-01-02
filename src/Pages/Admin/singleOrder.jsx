@@ -22,14 +22,22 @@ const SingleOrder = () => {
   }, [allOrders, orderID]);
 
   console.log(order, allOrders);
-  const { name, email, phone, shippingAddress, message, trxref, cartItems } =
-    order || null;
+  const {
+    name,
+    email,
+    phone,
+    shippingAddress,
+    message,
+    trxref,
+    cartItems,
+    orderStatus: status,
+  } = order || null;
   const prices = cartItems?.map((cartItem) => cartItem.itemTotal);
   const totalPrice = prices?.reduce((sum, price) => sum + price);
 
   const handleUpdateOrderStatus = async () => {
     const ref = await updateOrderStatus(orderID, orderStatus);
-    console.log(ref);
+    alert("Delivery Status updated");
   };
 
   return (
@@ -101,8 +109,22 @@ const SingleOrder = () => {
           <h2 className=''>Grand Total</h2>
           <Currency className='font-bold' amount={totalPrice} />{" "}
         </div>
-        <div className='flex gap-4 justify-between border-b py-4 items-center'>
+        <div className='flex gap-4 justify-between border-b py-4 p-4'>
           <h2 className=''>Order Status</h2>
+          <h2
+            className={`${
+              status === "pending"
+                ? "bg-gray-600"
+                : status === "delivered"
+                ? "bg-green-600"
+                : "bg-red-600"
+            } rounded-2xl p-2 px-6 text-white capitalize`}
+          >
+            {status}
+          </h2>
+        </div>
+        <div className='flex gap-4 justify-between border-b py-4 items-center'>
+          <h2 className=''>Change order Status</h2>
           <select
             name='orderStatus'
             className='p-4 px-10 bg-gray-300 rounded-md'
@@ -111,9 +133,10 @@ const SingleOrder = () => {
               setOrderStatus(e.target.value);
             }}
           >
+            <option value=''>Select</option>
             <option value='pending'>Pending</option>
             <option value='delivered'>Delivered</option>
-            <option value='bancelled'>Cancelled</option>
+            <option value='cancelled'>Cancelled</option>
           </select>
         </div>
         <button
