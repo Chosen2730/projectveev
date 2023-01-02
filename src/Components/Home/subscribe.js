@@ -5,7 +5,7 @@ const Subscribe = () => {
   return (
     <div className='max-w-md mx-auto'>
       <p className='text-sm text-center'>
-        Hear the lastest. (new products, exclusive offers and other suprises)
+        Recieve the lastest, new products, exclusive offers and other suprises
       </p>
 
       <form

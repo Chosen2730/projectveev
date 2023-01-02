@@ -19,7 +19,16 @@ const Product = () => {
   );
   const { productId: id } = useParams();
   const singleProduct = allProducts.find((product) => product.productId === id);
-  const { desc, imageURLS, price, title, discountValue } = singleProduct;
+  const {
+    desc,
+    imageURLS,
+    price,
+    title,
+    discountValue,
+    fabricName,
+    length,
+    colors,
+  } = singleProduct;
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
 
@@ -42,6 +51,7 @@ const Product = () => {
     }, 3000);
     return () => clearInterval(t);
   }, [activeIndex]);
+  console.log(singleProduct);
 
   return (
     <div className='mx-auto max-w-6xl p-4'>
@@ -63,7 +73,7 @@ const Product = () => {
                   onClick={() => setActiveIndex(i)}
                   className={`${
                     activeIndex === i ? "border-4 border-green-500" : ""
-                  } w-full h-32 rounded-md transition`}
+                  } w-full h-32 rounded-md transition object-cover`}
                   key={i}
                   src={url}
                   alt='image'
@@ -88,19 +98,21 @@ const Product = () => {
             />
             <h2 className='my-2 text-sm'>{desc}</h2>
           </div>
-          <div className='my-5'>
-            <h2 className='uppercase text-sm'>
-              <span className='font-bold capitalize'>Fabric name:</span> ORANGE
-              WINTER ANKARA
-            </h2>
-            <h2 className='text-sm capitalize'>
-              <span className='font-bold'>Length:</span> 45 inches
-            </h2>
-            <h2 className='text-sm uppercase my-2'>
-              <span className='font-bold capitalize'>Colors:</span> Orange,
-              white
-            </h2>
-          </div>
+          {fabricName && (
+            <div className='my-5'>
+              <h2 className='uppercase text-sm'>
+                <span className='font-bold capitalize'>Fabric name:</span>{" "}
+                {fabricName}
+              </h2>
+              <h2 className='text-sm capitalize'>
+                <span className='font-bold'>Length:</span> {length}
+              </h2>
+              <h2 className='text-sm uppercase my-2'>
+                <span className='font-bold capitalize'>Colors:</span> {colors}
+              </h2>
+            </div>
+          )}
+
           <div className='my-3'>
             <h2 className='uppercase font-bold text-sm'>Size</h2>
             <div className='flex gap-4 my-2'>
