@@ -40,7 +40,7 @@ const Footer = () => {
             <Link to=''>Delivery Information</Link>
             <Link to=''>Order and Return Policy</Link>
             <Link to='privacy-policy'>Privacy Policy</Link>
-            <Link to=''>Terms and Conditions</Link>
+            <Link to='terms'>Terms and Conditions</Link>
           </div>
         </div>
       </div>
