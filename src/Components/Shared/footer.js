@@ -49,7 +49,7 @@ const Footer = () => {
         © {new Date().getFullYear()} VEEV CLOTHEIRS - All Right reserved!
       </p>
       <a href='https://wa.me/message/GCZSV3CRNB6SI1' target={"__blank"}>
-        <div className='flex gap-2 items-center z-50 bg-black rounded-full px-8 p-4 text-white fixed bottom-24 right-4 text-sm capitalize'>
+        <div className='flex gap-2 items-center cat2-bg-grad z-50 rounded-full px-8 p-4 text-white fixed bottom-24 right-4 text-sm capitalize'>
           <h2>Chat with us</h2>
           <img src={wt} alt='whatsapp' className='w-8 md:w-12' />
         </div>

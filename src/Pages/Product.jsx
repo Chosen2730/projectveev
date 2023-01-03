@@ -51,7 +51,6 @@ const Product = () => {
     }, 3000);
     return () => clearInterval(t);
   }, [activeIndex]);
-  console.log(singleProduct);
 
   return (
     <div className='mx-auto max-w-6xl p-4'>
