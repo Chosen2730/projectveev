@@ -39,7 +39,7 @@ const Footer = () => {
           <h2 className='uppercase'>Information</h2>
           <div className='flex flex-col gap-2 my-4 text-xs'>
             <Link to=''>Delivery Information</Link>
-            <Link to=''>Order and Return Policy</Link>
+            <Link to='return-policy'>Order and Return Policy</Link>
             <Link to='privacy-policy'>Privacy Policy</Link>
             <Link to='terms'>Terms and Conditions</Link>
           </div>
@@ -49,9 +49,9 @@ const Footer = () => {
         © {new Date().getFullYear()} VEEV CLOTHEIRS - All Right reserved!
       </p>
       <a href='https://wa.me/message/GCZSV3CRNB6SI1' target={"__blank"}>
-        <div className='flex gap-2 items-center cat2-bg-grad z-50 rounded-full px-8 p-4 text-white fixed bottom-24 right-4 text-sm capitalize'>
+        <div className='flex gap-2 items-center cat2-bg-grad z-50 rounded-full px-5 p-3 text-white fixed bottom-24 right-4 text-sm capitalize'>
           <h2>Chat with us</h2>
-          <img src={wt} alt='whatsapp' className='w-8 md:w-12' />
+          <img src={wt} alt='whatsapp' className='w-8' />
         </div>
       </a>
     </footer>
