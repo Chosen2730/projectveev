@@ -19,7 +19,7 @@ const Nav = () => {
     { item: "Home", url: "/" },
     { item: "Shop", url: "/shop" },
     { item: "About Us", url: "/about" },
-    { item: "Events", url: "/events" },
+    { item: "Contact Us", url: "/contact" },
   ];
   const dispatch = useDispatch();
   const {
@@ -86,7 +86,8 @@ const Nav = () => {
                     <h1 className='capitalize'>My Orders</h1>
                   </div>
                 </Link>
-                <div className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'
+                <div
+                  className='flex text-xs gap-2 py-2 border-t-2 border-t-gray-100 items-center my-4 text-red-500 cursor-pointer'
                   onClick={() => {
                     setIsDropDown(false);
                     dispatch(logout());

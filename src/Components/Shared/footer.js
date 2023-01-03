@@ -38,7 +38,7 @@ const Footer = () => {
         <div>
           <h2 className='uppercase'>Information</h2>
           <div className='flex flex-col gap-2 my-4 text-xs'>
-            <Link to=''>Delivery Information</Link>
+            {/* <Link to=''>Delivery Information</Link> */}
             <Link to='return-policy'>Order and Return Policy</Link>
             <Link to='privacy-policy'>Privacy Policy</Link>
             <Link to='terms'>Terms and Conditions</Link>

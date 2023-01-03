@@ -18,6 +18,7 @@ import Orders from "../Pages/Orders";
 import Privacy from "../Pages/Privacy";
 import Terms from "../Pages/Terms";
 import Return from "../Pages/Return";
+import Contact from "../Pages/Contact";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
@@ -27,10 +28,10 @@ const AppRoute = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Events />} />
         <Route path='/privacy-policy' element={<Privacy />} />
         <Route path='/terms' element={<Terms />} />
         <Route path='/return-policy' element={<Return />} />
+        <Route path='/contact' element={<Contact />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/product/:productId/' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
