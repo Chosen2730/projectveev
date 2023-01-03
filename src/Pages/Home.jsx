@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Slide from "../Components/Home/categorySlide";
 import Container from "../Components/Home/container";
 import Hero from "../Components/Home/hero";
+import AboutHero from "../Components/About/hero";
 import Subscribe from "../Components/Home/subscribe";
 import Testimonial from "../Components/Home/testimonial";
 import { setAllProduct, setFeatProduct } from "../Redux/features/productSlice";
@@ -45,6 +46,7 @@ const Home = () => {
       <Hero />
       <div className='max-w-6xl mx-auto p-8'>
         <Slide data={category} />
+        <AboutHero />
         <Container name='new & featured' data={featuredProduct} />
         <Container name='trending' data={trendingProduct} />
         <Testimonial />
