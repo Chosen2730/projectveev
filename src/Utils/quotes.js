@@ -7,13 +7,12 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Pagination, Autoplay } from "swiper";
-import pat from "../images/pat.jpg";
-import tosin from "../images/tosin.jpg";
 
 export default function Slider() {
   const quotes = [
-    "Hurrya!! You get up to 10% off website launch sales",
+    "Up to 10% off website launch sales ",
     "Get a decent and classic dress styled from us",
+    "Measurement guide on all custom wear orders",
   ];
   return (
     <>
