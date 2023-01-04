@@ -9,6 +9,8 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper";
 import pat from "../images/pat.jpg";
 import tosin from "../images/tosin.jpg";
+import victor from "../images/victor.jpg";
+import omo from "../images/omo.jpg";
 
 export default function Slider() {
   const testimonial = [
@@ -24,8 +26,13 @@ export default function Slider() {
         "The Agbada I bought for my husband get swag o. I love it, He loves it, the fabrics,  the colours,  and the embroidery are lovely. Thank you so much more grace, I'll definitely buy more..",
       img: pat,
     },
-    // { name: "", content: "" },
-    // { name: "", content: "" },
+    { name: "Akokwu Victor", content: "Quality always", img: victor },
+    {
+      name: "Okeoghene Omoluwabi",
+      content:
+        "A growing brand with particular interest in customer satisfaction. When a business is built on integrity and what drives it is ensuring that the customers get premium quality, then you can be sure to go to sleep when dealing with VeeV clothiers.",
+      img: omo,
+    },
     // { name: "", content: "" },
   ];
   return (
@@ -48,7 +55,8 @@ export default function Slider() {
                   className='w-32 rounded-full h-32 object-cover'
                   alt={name}
                 />
-                <p className='text-xs text-center capitalize font-medium my-2'>
+                <p className='uppercase text-sm font-bold mt-3'>{name}</p>
+                <p className='text-sm text-center capitalize font-medium'>
                   {content}
                 </p>
               </div>

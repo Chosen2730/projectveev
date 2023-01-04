@@ -46,7 +46,7 @@ const Privacy = () => {
           </li>
           <li className='my-4 list-disc'>
             <strong>Disclosure for a business purpose:</strong> shared with our
-            processor Shopify.
+            processor Veev Clothiers.
           </li>
         </div>
         <h2 className='text-base mt-5 my-3 uppercase font-bold'>
@@ -72,7 +72,7 @@ const Privacy = () => {
           </li>
           <li className='my-4 list-disc'>
             <strong>Disclosure for a business purpose:</strong> shared with our
-            processor Shopify.
+            processor Veev Clothiers.
           </li>
         </div>
         <h2 className='text-base mt-5 my-3 uppercase font-bold'>
@@ -117,9 +117,9 @@ const Privacy = () => {
         </p>
         <div className='ml-4'>
           <li className='list-disc'>
-            We use Shopify to power our online store. You can read more about
-            how Shopify uses your Personal Information here:
-            https://www.shopify.com/legal/privacy.
+            We use Veev Clothiers to power our online store. You can read more
+            about how Veev Clothiers uses your Personal Information here:
+            https://www.Veev Clothiers.com/legal/privacy.
           </li>
           <li className='list-disc'>
             We may share your Personal Information to comply with applicable
@@ -241,9 +241,9 @@ const Privacy = () => {
           otherwise significantly affects you. <br />
           <br /> We do not engage in fully automated decision-making that has a
           legal or otherwise significant effect using customer data. <br />
-          <br /> Our processor Shopify uses limited automated decision-making to
-          prevent fraud that does not have a legal or otherwise significant
-          effect on you. <br />
+          <br /> Our processor Veev Clothiers uses limited automated
+          decision-making to prevent fraud that does not have a legal or
+          otherwise significant effect on you. <br />
           <br /> Services that include elements of automated decision-making
           include:
         </p>
@@ -269,9 +269,9 @@ const Privacy = () => {
           <br /> Your Personal Information will be initially processed in
           Ireland and then will be transferred outside of Europe for storage and
           further processing, including to Canada and the United States. For
-          more information on how data transfers comply with the GDPR, see
-          Shopify’s GDPR Whitepaper:
-          https://help.shopify.com/en/manual/your-account/privacy/GDPR.
+          more information on how data transfers comply with the GDPR, see Veev
+          Clothiers’s GDPR Whitepaper: https://help.Veev
+          Clothiers.com/en/manual/your-account/privacy/GDPR.
         </p>
         <h2 className='font-bold'>CCPA</h2>
         <p className='my-2'>

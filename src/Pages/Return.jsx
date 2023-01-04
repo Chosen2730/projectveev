@@ -33,26 +33,27 @@ const Return = () => {
         <h2 className='my-4 text-uppercase font-bold'>Refunds</h2>
         <p className='my-3'>
           This can only be considered on a normal price purchase; sale items
-          cannot be refunded, has the price has been slash already. You are open
-          to refund if you got a wrong order and at the point of return, we
+          cannot be refunded, as the price has been slashed already. You are
+          open to refund if you got a wrong order and at the point of return, we
           found out that the item is out of stock.
         </p>
         <h2 className='my-4 text-uppercase font-bold'>Exchanges</h2>
         <p className='my-3'>
           This can be done for the same item or within the price range, you can
-          reach out to us via  info@veevclothiers.com. and send your item to us;
+          reach out to us via  info@veevclothiers.com and send your item to us.
           <br />
           <br />
           <strong>Nigeria Address:</strong> 3rd floor, Glory house, 30 adatan
           road opposite St. Peter & Paul Cathedral, Isale Ake Abeokuta. Ogun
           State, Nigeria. <br />
-          <br /> <strong>Canada Address:</strong> Calgary, Alberta Canada.
+          <br />
+          {/* <strong>Canada Address:</strong> Calgary, Alberta Canada. */}
         </p>
         <p className='my-3'>
-          Fee are non-refundable. During the refund process, the cost of return
-          shipping will not be included. We will advise you use a reliable
-          source for the items you are returning as we can’t guarantee receiving
-          your items.
+          Delivery Fee are non-refundable. During the refund process, the cost
+          of return shipping will not be included. We will advise you use a
+          reliable source for the items you are returning as we can’t guarantee
+          receiving your items.
         </p>
       </div>
     </div>

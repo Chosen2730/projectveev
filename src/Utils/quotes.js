@@ -11,8 +11,9 @@ import { Pagination, Autoplay } from "swiper";
 export default function Slider() {
   const quotes = [
     "Up to 10% off website launch sales ",
-    "Get a decent and classic dress styled from us",
+    "Get beautiful and unique outfits from us",
     "Measurement guide on all custom wear orders",
+    "Affordable luxury for Men|Women|Kids",
   ];
   return (
     <>

@@ -113,7 +113,16 @@ const Product = () => {
           )}
 
           <div className='my-3'>
-            <h2 className='uppercase font-bold text-sm'>Size</h2>
+            <div className='flex justify-between'>
+              <h2 className='uppercase font-bold text-sm'>Size</h2>
+              <a
+                href='https://drive.google.com/file/d/1xPT6NCIRGX02R9W79ftzesYNXptzEtLE/view'
+                target={"__blank"}
+                className='text-sm italic'
+              >
+                Check Size Chart
+              </a>
+            </div>
             <div className='flex gap-4 my-2'>
               {sizes.slice(sizes.length - 4, sizes.length).map((item, i) => (
                 <div
@@ -164,7 +173,12 @@ const Product = () => {
               Add to Cart
               <FaOpencart className='text-2xl' />
             </button>
-            <button className='font-medium flex items-center justify-center border-black border p-4 px-8 rounded-full gap-2 hover:scale-105 transition'>
+            <button
+              className='font-medium flex items-center justify-center border-black border p-4 px-8 rounded-full gap-2 hover:scale-105 transition'
+              onClick={() =>
+                dispatch(addToCart({ navigate, id, qty, newPrice }))
+              }
+            >
               Buy Now
               <MdAttachMoney className='text-2xl' />
             </button>

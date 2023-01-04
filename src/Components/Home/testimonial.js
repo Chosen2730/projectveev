@@ -8,9 +8,10 @@ const Testimonial = () => {
       <p className='text-center md:w-3/4 mx-auto text-sm'>
         Trendy Clothing & Accessories at VEEV CLOTHIERS - An Online Dress
         Boutique REPIIT is a UNISEX clothing store with new trendy and
-        affordable arrivals dropping 2-3 times weekly. Shop the latest trends in
+        affordable arrivals dropping 2-3 times weekly.
+        {/* Shop the latest trends in
         women's fashion dresses, tops, sweaters, skirts, jeans, accessories &
-        more.
+        more. */}
       </p>
       <div className='flex flex-col md:flex-row-reverse items-center my-10 gap-8'>
         <div className='w-full'>
