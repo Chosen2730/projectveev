@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { MdFilterList } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveCategory } from "../../Redux/features/productSlice";
 import { allCategory } from "../../Utils/category";
 
 const Header = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const dispatch = useDispatch();
+  const { activeCategory } = useSelector((state) => state.product);
   return (
     <section>
       <div className='bg-black text-white p-4 hidden md:flex items-center justify-center gap-8'>
@@ -11,11 +14,11 @@ const Header = () => {
           <h1
             key={i}
             className={`${
-              selectedIndex === i
+              activeCategory === i
                 ? "font-bold border-white"
                 : "border-b-transparent"
             } capitalize text-sm border-b-2 p-2 cursor-pointer transition`}
-            onClick={() => setSelectedIndex(i)}
+            onClick={() => dispatch(setActiveCategory(i))}
           >
             {item}
           </h1>

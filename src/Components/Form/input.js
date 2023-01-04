@@ -12,6 +12,7 @@ const Input = ({
   value,
   check,
   setCheck,
+  placeholder,
 }) => {
   return (
     <div className={`${check ? "flex gap-2 items-center" : "block"} my-4`}>
@@ -27,6 +28,7 @@ const Input = ({
           onChange={setItem}
           name={id}
           required
+          placeholder={placeholder}
         />
       )}
       {textarea && (
@@ -63,7 +65,7 @@ const Input = ({
         <input
           name={id}
           type='checkbox'
-          checked={value === 'on'}
+          checked={value === "on"}
           onChange={setItem}
           onClick={setCheck}
         />

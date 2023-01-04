@@ -25,7 +25,7 @@ const Contact = () => {
           opposite St. Peter & Paul Cathedral, Isale Ake Abeokuta. Ogun State,
           Nigeria. <br />
           <br />
-          <strong>Canada Address:</strong> Calgary, Alberta Canada. <br />
+          {/* <strong>Canada Address:</strong> Calgary, Alberta Canada. <br /> */}
           <br />
           Last updated: 30-10-2022
         </p>

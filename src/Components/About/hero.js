@@ -3,9 +3,16 @@ import about from "../../images/about.png";
 
 const Hero = () => {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-8 shadow-md rounded-md p-8'>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
       <div>
         <h2 className='text-xl font-bold'>ABOUT US </h2>
+        <p className='my-3'>
+          VEEV CLOTHIERS is a luxurious, yet affordable African fashion brand
+          caters for the fashion needs of both genders of all ages. We
+          specialize in the sale of quality Ready-to-wear outfits of various
+          designs, sale of fabric and bespoke tailoring (custom orders) for
+          special occasion needs.
+        </p>
         <p className='my-3'>
           We are a branded fashion company that specialises in
         </p>

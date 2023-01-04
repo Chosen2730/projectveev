@@ -1,6 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setActiveCategory } from "../../Redux/features/productSlice";
 
 const Slide = ({ data }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className='my-10 mx-auto md:-mt-28'>
       <div className='grid grid-flow-col overflow-x-scroll horScroll scroll gap-6 md:gap-2'>
@@ -15,9 +20,15 @@ const Slide = ({ data }) => {
                 className='w-40 h-52 md:w-80 md:h-[300px] object-cover rounded-3xl shadow-xl'
                 alt={title}
               />
-              <p className='md:-translate-y-20 -translate-y-16 text-xs md:text-base capitalize font-medium my-2 bg-black text-white p-3 md:px-10'>
+              <button
+                className='md:-translate-y-20 -translate-y-16 text-xs md:text-base capitalize font-medium my-2 bg-black text-white p-3 md:px-10'
+                onClick={() => {
+                  dispatch(setActiveCategory(i));
+                  navigate("/shop");
+                }}
+              >
                 {title}
-              </p>
+              </button>
             </div>
           );
         })}

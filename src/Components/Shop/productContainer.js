@@ -3,10 +3,24 @@ import Currency from "../Configs/currency";
 import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { addToCart } from "../../Redux/features/productSlice";
+import Spinner from "../Configs/spinner";
 
-const ProductContainer = ({ data }) => {
+const ProductContainer = ({ data, loading }) => {
   const navigate = useNavigate();
+  if (data?.length < 1) {
+    return (
+      <h1 className='text-base italic'>
+        No Product under this Category at the moment
+      </h1>
+    );
+  }
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-[300px] w-full'>
+        <Spinner loaderText='Loading' />
+      </div>
+    );
+  }
   return (
     <div className='my-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>

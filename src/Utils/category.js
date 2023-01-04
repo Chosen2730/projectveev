@@ -1,11 +1,15 @@
 export const category = [
   {
-    title: "men wears",
-    img: "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/52/962064/1.jpg?0297",
+    title: "Ready to wear",
+    img: "https://www.mrignayanikolkata.com/wp-content/uploads/2019/08/Untitled-1.jpg",
   },
   {
     title: "women wears",
     img: "https://www.buyandslay.com/wp-content/uploads/2022/06/image-3567.png",
+  },
+  {
+    title: "men wears",
+    img: "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/52/962064/1.jpg?0297",
   },
   {
     title: "kid wears",

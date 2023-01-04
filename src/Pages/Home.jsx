@@ -9,6 +9,7 @@ import Testimonial from "../Components/Home/testimonial";
 import { setAllProduct, setFeatProduct } from "../Redux/features/productSlice";
 import { category } from "../Utils/category";
 import { getAllProducts } from "../Utils/functions";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   useEffect(() => {
@@ -46,7 +47,14 @@ const Home = () => {
       <Hero />
       <div className='max-w-6xl mx-auto p-8'>
         <Slide data={category} />
-        <AboutHero />
+        <div className='shadow-md p-3 md:p-8'>
+          <AboutHero />
+          <Link to='/about'>
+            <button className='bg-black text-white px-6 py-3 rounded-xl'>
+              Read More
+            </button>
+          </Link>
+        </div>
         <Container name='new & featured' data={featuredProduct} />
         <Container name='trending' data={trendingProduct} />
         <Testimonial />

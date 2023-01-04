@@ -14,6 +14,7 @@ const initialState = {
   allProducts: [],
   featuredProducts: [],
   trendingProducts: [],
+  activeCategory: 0,
 };
 
 const productSlice = createSlice({
@@ -66,6 +67,9 @@ const productSlice = createSlice({
     clearCart: (state) => {
       state.cartItems = [];
     },
+    setActiveCategory: (state, { payload }) => {
+      state.activeCategory = payload;
+    },
   },
   extraReducers: {},
 });
@@ -77,5 +81,6 @@ export const {
   getTotalAmount,
   setAllProduct,
   clearCart,
+  setActiveCategory,
 } = productSlice.actions;
 export default productSlice.reducer;

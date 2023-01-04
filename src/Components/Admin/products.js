@@ -52,7 +52,15 @@ const Products = () => {
   const [limit] = useState(20);
   const [page, setPage] = useState(1);
 
-  const category = ["Select", "Men", "Women", "Kids", "Fabrics", "Custom"];
+  const category = [
+    "Select",
+    "Ready-To-Wear",
+    "Men",
+    "Women",
+    "Kids",
+    "Fabrics",
+    "Custom",
+  ];
   const statusList = ["Select", "In Stock", "Out of Stock"];
   const discountValues = ["Set Discount", 10, 25, 50, 75, 100];
   const { isProductModalShown, isProductEditModalShown } = useSelector(
