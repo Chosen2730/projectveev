@@ -9,9 +9,11 @@ const ProductContainer = ({ data, loading }) => {
   const navigate = useNavigate();
   if (data?.length < 1) {
     return (
-      <h1 className='text-base italic'>
-        No Product under this Category at the moment
-      </h1>
+      <div className='flex items-center justify-center h-[300px] w-full'>
+        <h1 className='text-base italic'>
+          No Product under this Category at the moment
+        </h1>
+      </div>
     );
   }
   if (loading) {
