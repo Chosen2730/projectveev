@@ -160,12 +160,40 @@ const CustomOrder = () => {
               })}
           </div>
         </div>
-        <div className='border my-4 p-4 rounded-md'>
+        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <Input
             id='quatity'
             type='number'
             title='Quantity'
             input
+            setItem={handleInputChange}
+          />
+          <Input
+            id='email'
+            type='email'
+            title='Email Address'
+            input
+            setItem={handleInputChange}
+          />
+          <Input
+            id='tel'
+            type='tel'
+            title='Tel No'
+            input
+            setItem={handleInputChange}
+          />
+          <Input
+            id='social'
+            type='text'
+            title='Active Social Media Handle (IG, Twitter, WhatsApp'
+            input
+            setItem={handleInputChange}
+          />
+          <Input
+            id='message'
+            type='text'
+            title='Short Notes'
+            textarea
             setItem={handleInputChange}
           />
         </div>

@@ -10,6 +10,7 @@ import { setAllProduct, setFeatProduct } from "../Redux/features/productSlice";
 import { category } from "../Utils/category";
 import { getAllProducts } from "../Utils/functions";
 import { Link } from "react-router-dom";
+import HeroSwiper from "../Utils/heroSwiper";
 
 const Home = () => {
   useEffect(() => {
@@ -45,7 +46,7 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <div className='max-w-6xl mx-auto p-8'>
+      <div className='max-w-6xl mx-auto p-8 relative z-10'>
         <Slide data={category} />
         <div className='shadow-md p-5 md:p-8'>
           <AboutHero />
@@ -59,6 +60,7 @@ const Home = () => {
         <Container name='trending' data={trendingProduct} />
         <Testimonial />
         <Subscribe />
+        <HeroSwiper />
       </div>
     </>
   );
