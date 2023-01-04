@@ -47,7 +47,7 @@ const CustomOrder = () => {
         <div className='border my-4 p-4 rounded-md'>
           <label
             htmlFor='imagePicker'
-            className='cursor-pointer font-bold block my-2'
+            className='cursor-pointer font-bold block my-2 text-lg'
           >
             Upload Fabric
           </label>
@@ -83,7 +83,7 @@ const CustomOrder = () => {
           </div>
         </div>
         <div className='border my-4 p-4 rounded-md'>
-          <h2 className='my-2 font-bold'>Measurement in Inches</h2>
+          <h2 className='my-2 font-bold text-lg'>Measurement in Inches</h2>
           <div className='grid grid-cols-2 md:grid-cols-5 gap-4'>
             <Input
               title='Top Length'
@@ -125,7 +125,7 @@ const CustomOrder = () => {
         <div className='border my-4 p-4 rounded-md'>
           <label
             htmlFor='imagePicker'
-            className='cursor-pointer font-bold block my-2'
+            className='cursor-pointer font-bold block my-2 text-lg'
           >
             Upload Styles
           </label>

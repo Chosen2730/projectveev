@@ -3,7 +3,7 @@ import about from "../../images/about.png";
 
 const Hero = () => {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-8 text-sm'>
       <div>
         <h2 className='text-xl font-bold'>ABOUT US </h2>
         <p className='my-3'>

@@ -15,10 +15,10 @@ const About = () => {
     },
   ];
   return (
-    <div className='max-w-4xl mx-auto p-4'>
+    <div className='max-w-4xl mx-auto p-6'>
       <Hero />
       <div className='my-10'>
-        <p className='text-base my-3'>
+        <p className='text-sm my-3'>
           Our products are made from varieties of different African prints that
           may sometimes be combined with other types of fabric to reflect our
           creativity and the beautiful possibilities of African fashion. We also
