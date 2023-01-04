@@ -60,7 +60,7 @@ const Home = () => {
         <Container name='trending' data={trendingProduct} />
         <Testimonial />
         <Subscribe />
-        <HeroSwiper />
+        {/* <HeroSwiper /> */}
       </div>
     </>
   );
