@@ -11,12 +11,14 @@ import { featured } from "../Utils/products";
 import { addToCart, updateQty } from "../Redux/features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { login } from "../Redux/features/authSlice";
 
 const Product = () => {
   const navigate = useNavigate();
   const { qty, allProducts, featuredProducts } = useSelector(
     (state) => state.product
   );
+  const { token } = useSelector((state) => state.auth);
   const { productId: id } = useParams();
   const singleProduct = allProducts.find((product) => product.productId === id);
   const {
@@ -51,7 +53,15 @@ const Product = () => {
     }, 3000);
     return () => clearInterval(t);
   }, [activeIndex]);
-
+  const addToCartHandler = (id, qty, newPrice) => {
+    if (token) {
+      dispatch(addToCart({ navigate, id, qty, newPrice }));
+    } else {
+      alert(
+        "You cannot perform this operation because you are not logged In, kindly click the top dropdown to login"
+      );
+    }
+  };
   return (
     <div className='mx-auto max-w-6xl p-4'>
       <Link to='/shop'>
@@ -116,7 +126,7 @@ const Product = () => {
             <div className='flex justify-between'>
               <h2 className='uppercase font-bold text-sm'>Size</h2>
               <a
-                href='https://drive.google.com/file/d/1xPT6NCIRGX02R9W79ftzesYNXptzEtLE/view'
+                href='https://drive.google.com/drive/folders/1yFoLdBQWoiTVZxlQ4qmxYMLugoIHHcfv?pli=1'
                 target={"__blank"}
                 className='text-sm italic'
               >
@@ -166,18 +176,14 @@ const Product = () => {
             </div>
             <button
               className='font-medium flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition'
-              onClick={() =>
-                dispatch(addToCart({ navigate, id, qty, newPrice }))
-              }
+              onClick={() => addToCartHandler(id, qty, newPrice)}
             >
               Add to Cart
               <FaOpencart className='text-2xl' />
             </button>
             <button
               className='font-medium flex items-center justify-center border-black border p-4 px-8 rounded-full gap-2 hover:scale-105 transition'
-              onClick={() =>
-                dispatch(addToCart({ navigate, id, qty, newPrice }))
-              }
+              onClick={() => addToCartHandler(id, qty, newPrice)}
             >
               Buy Now
               <MdAttachMoney className='text-2xl' />

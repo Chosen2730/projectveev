@@ -24,27 +24,75 @@ const CustomOrder = () => {
   const handleDeleteImage = () => {};
   return (
     <div>
-      <h2 className='uppercase text-xl font-bold'>Make Your Custom Orders</h2>
+      <h2 className='uppercase text-xl font-bold'>Custom Orders</h2>
       <p className='text-sm my-4'>
-        We don't have a style that appeals to you in our store? You can let
-        still order your preferred style and we will take care of it.
+        Our custom order page allows you to request a design that suits a
+        specific need. <br />
+        <br />
+        Our custom order page allows you to request a design that suits a
+        specific need. <br />
+        <br />
+        After submitting your request, a member of the team will reach out to
+        you for confirmations. This is to ensure that we satisfy your requests
+        excellently. <br />
+        <br />
+        You can send your preferred fabric to our physical store, or you select
+        from our stock. Pictures and videos of the final design will be sent to
+        you before delivery. This is to enable us make any necessary adjustments
+        if required.
+        <br />
+        <br /> Looking forward to receiving and creating custom designs for your
+        special events.
       </p>
-      <h2 className='font-medium'>Hints/Guides:</h2>
-      <div className='ml-4'>
-        <li className='list-disc my-3'>
-          You can choose from the list of available fabrics in our store,
-          screenshot and upload
-        </li>
-        <li className='list-disc my-3'>
-          You can upload your own fabrics and style (not more than three images)
-        </li>
-        <li className='list-disc my-3'>
-          Drop your active social media handles so we can connect with you after
-          your order is recieved
-        </li>
-      </div>
+      <h2 className='font-bold text-sm '>
+        Note: Changes cannot be made once production has commenced.
+      </h2>
+      <h2 className='my-3 text-sm'>
+        Kindly fill the form below to place your order or contact us via
+        info@veevclothiers.com or WhatsApp +2348067891075; +2349039878244
+      </h2>
       <form action='' className='text-sm'>
-        <div className='border my-4 p-4 rounded-md'>
+        <div>
+          <h2>Personal Information</h2>
+          <div className='grid grid-cols-2 gap-4'>
+            <Input
+              id='name'
+              type='name'
+              title='Name'
+              input
+              setItem={handleInputChange}
+            />
+            <Input
+              id='email'
+              type='email'
+              title='Email Address'
+              input
+              setItem={handleInputChange}
+            />
+            <Input
+              id='tel'
+              type='tel'
+              title='Tel No'
+              input
+              setItem={handleInputChange}
+            />
+            <Input
+              id='social'
+              type='text'
+              title='Active Social Media Handle'
+              input
+              setItem={handleInputChange}
+            />
+            <Input
+              id='text'
+              type='text'
+              title='What would you like to order? (Top, dressk 2-piece, etc.'
+              input
+              setItem={handleInputChange}
+            />
+          </div>
+        </div>
+        {/* <div className='border my-4 p-4 rounded-md'>
           <label
             htmlFor='imagePicker'
             className='cursor-pointer font-bold block my-2 text-lg'
@@ -81,41 +129,128 @@ const CustomOrder = () => {
                 );
               })}
           </div>
-        </div>
+        </div> */}
+
         <div className='border my-4 p-4 rounded-md'>
-          <h2 className='my-2 font-bold text-lg'>Measurement in Inches</h2>
-          <div className='grid grid-cols-2 md:grid-cols-5 gap-4'>
+          <div className='flex gap-4 justify-between items-center'>
+            <h2 className='my-2 font-bold text-lg'>Measurement in Inches</h2>
+            <a
+              href='https://drive.google.com/drive/folders/1yFoLdBQWoiTVZxlQ4qmxYMLugoIHHcfv?pli=1'
+              target={"__blank"}
+              className='text-sm italic underline text-blue-800 font-medium'
+            >
+              Check Size Chart
+            </a>
+          </div>
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+            <Input
+              title='Shoulder'
+              id='shoulder'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Upper Waist (women)'
+              id='upper_waist'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Lower Waist (women)'
+              id='lower_waist'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Waist'
+              id='waist'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Thigh'
+              id='thigh'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Dress Length'
+              id='dress_length'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Bust'
+              id='bust'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
             <Input
               title='Top Length'
-              id='top'
+              id='top_length'
               input
               type='number'
               setItem={handleInputChange}
             />
             <Input
-              title='Arm Length'
-              id='arm'
+              title='Cuff'
+              id='cuff'
               input
               type='number'
               setItem={handleInputChange}
             />
             <Input
-              title='Trouser/Skirt'
-              id='trouser-skirt'
+              title='Full Hip'
+              id='full_hip'
               input
               type='number'
               setItem={handleInputChange}
             />
             <Input
-              title='Back'
-              id='back'
+              title='Knee'
+              id='knee'
               input
               type='number'
               setItem={handleInputChange}
             />
             <Input
-              title='Neck'
-              id='neck'
+              title='Tommy (Men)'
+              id='tommy'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Sleeve Length'
+              id='sleeve_length'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Round Sleeve'
+              id='round_sleeve'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Skirt/Trouser Length'
+              id='skirt_trouser_length'
+              input
+              type='number'
+              setItem={handleInputChange}
+            />
+            <Input
+              title='Ankle'
+              id='ankle'
               input
               type='number'
               setItem={handleInputChange}
@@ -160,40 +295,19 @@ const CustomOrder = () => {
               })}
           </div>
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-          <Input
-            id='quatity'
-            type='number'
-            title='Quantity'
-            input
-            setItem={handleInputChange}
-          />
-          <Input
-            id='email'
-            type='email'
-            title='Email Address'
-            input
-            setItem={handleInputChange}
-          />
-          <Input
-            id='tel'
-            type='tel'
-            title='Tel No'
-            input
-            setItem={handleInputChange}
-          />
-          <Input
-            id='social'
-            type='text'
-            title='Active Social Media Handle (IG, Twitter, WhatsApp'
-            input
-            setItem={handleInputChange}
-          />
+        <div className='grid grid-cols-2 gap-4'>
           <Input
             id='message'
             type='text'
             title='Short Notes'
             textarea
+            setItem={handleInputChange}
+          />
+          <Input
+            id='quatity'
+            type='number'
+            title='Quantity'
+            input
             setItem={handleInputChange}
           />
         </div>

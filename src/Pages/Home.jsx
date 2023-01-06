@@ -48,19 +48,18 @@ const Home = () => {
       <Hero />
       <div className='max-w-6xl mx-auto p-8 relative z-10'>
         <Slide data={category} />
-        <div className='shadow-md p-5 md:p-8'>
+        {/* <div className='shadow-md p-5 md:p-8'>
           <AboutHero />
           <Link to='/about'>
             <button className='bg-black text-white px-6 py-3 rounded-xl my-4'>
               Read More
             </button>
           </Link>
-        </div>
+        </div> */}
         <Container name='new & featured' data={featuredProduct} />
         <Container name='trending' data={trendingProduct} />
         <Testimonial />
         <Subscribe />
-        {/* <HeroSwiper /> */}
       </div>
     </>
   );

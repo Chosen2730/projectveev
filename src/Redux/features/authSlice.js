@@ -14,7 +14,7 @@ const ADMINS = [
 
 const initialState = {
   isLoggedIn: false,
-  token: "",
+  token: null,
   user: {
     name: "",
     email: "",
@@ -32,10 +32,22 @@ export const login = createAsyncThunk(
       const fullName = res._tokenResponse.fullName;
       const firstName = res._tokenResponse.firstName;
       const lastName = res._tokenResponse.lastName;
-      const date = (new Date()).toDateString()
-      const data = { uid: res.user.uid, photoURL: res.user.photoURL, email: res.user.email, emailVerified: res.user.emailVerified, phoneNumber: res.user.phoneNumber, displayName: res.user.displayName, metadata: { _createdAt: date, _updatedAt: date }, fullName, firstName, lastName, blocked: false, }
+      const date = new Date().toDateString();
+      const data = {
+        uid: res.user.uid,
+        photoURL: res.user.photoURL,
+        email: res.user.email,
+        emailVerified: res.user.emailVerified,
+        phoneNumber: res.user.phoneNumber,
+        displayName: res.user.displayName,
+        metadata: { _createdAt: date, _updatedAt: date },
+        fullName,
+        firstName,
+        lastName,
+        blocked: false,
+      };
       // const data = { ...res.user, proactiveRefresh: '', auth: '', AuthImpl: '',  fullName, firstName, lastName }
-      await createUser(data)
+      await createUser(data);
       return res;
     } catch (error) {
       rejectWithValue(error.message);
@@ -50,6 +62,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = {};
+      state.token = null;
     },
   },
   extraReducers: {

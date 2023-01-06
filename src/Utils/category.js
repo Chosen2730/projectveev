@@ -30,7 +30,7 @@ export const allCategory = [
   "Men",
   "Kids",
   "Fabrics",
-  "Custom",
+  "Custom Orders",
 ];
 
 export const sizes = [

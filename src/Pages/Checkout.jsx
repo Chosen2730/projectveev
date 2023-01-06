@@ -12,12 +12,15 @@ import { useNavigate } from "react-router-dom";
 import { PaystackButton } from "react-paystack";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import pay from "../images/pay.png";
-import paypal from "../images/paypal.png";
 import { BsPaypal } from "react-icons/bs";
 import { AiOutlineCreditCard } from "react-icons/ai";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("paystack");
+  const stages = ["information", "shipping", "payment"];
+  const [selected, setSelected] = useState(0);
+  const [informationDetails, setInformationDetails] = useState({});
+  const [deliveryFee, setDeliveryFee] = useState(0);
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -26,6 +29,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.product);
   const [userDetails, setUserDetails] = useState(Object);
+  const grandTotal = totalAmount + deliveryFee;
   const {
     isLoggedIn,
     user,
@@ -49,10 +53,6 @@ const Checkout = () => {
   const formatTotalAmount = (amount) => {
     return amount * 100;
   };
-  const stages = ["information", "shipping", "payment"];
-  const [selected, setSelected] = useState(0);
-  const [informationDetails, setInformationDetails] = useState({});
-  const [deliveryFee] = useState(500);
 
   const onCreateOrder = (data, actions) => {
     return actions.order.create({
@@ -118,8 +118,8 @@ const Checkout = () => {
   const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52";
 
   const componentProps = {
-    email: userDetails.email,
-    amount: formatTotalAmount(totalAmount),
+    email: informationDetails.email,
+    amount: formatTotalAmount(grandTotal),
     metadata: {
       name: userDetails.name,
       phone: userDetails.phone,
@@ -137,12 +137,35 @@ const Checkout = () => {
     },
     onClose: () => alert("Wait! You need those orders, don't go!!!!"),
   };
+  const regions = [
+    { region: "Select", deliveryFee: 0 },
+    { region: "Abeokuta", deliveryFee: 1000 },
+    { region: "Ogun State", deliveryFee: 3000 },
+    { region: "Lagos State", deliveryFee: 3500 },
+    { region: "Ibadan", deliveryFee: 3500 },
+    { region: "SouthWest Nigeria", deliveryFee: 4000 },
+    { region: "Rivers State", deliveryFee: 4000 },
+    { region: "Delta State", deliveryFee: 4000 },
+    { region: "South East Nigeria", deliveryFee: 4000 },
+    { region: "Abuja", deliveryFee: 4500 },
+    { region: "USA", deliveryFee: 20000 },
+    { region: "Canada", deliveryFee: 20000 },
+    { region: "UK", deliveryFee: 15000 },
+  ];
   const handleInputChange = (e) => {
     setInformationDetails({
       ...informationDetails,
       [e.target.name]: e.target.value,
     });
   };
+  useEffect(() => {
+    regions.forEach((element) => {
+      if (element.region === informationDetails.region) {
+        setDeliveryFee(element.deliveryFee);
+      }
+    });
+  }, [informationDetails]);
+
   return (
     <div className='flex flex-col md:flex-row gap-8 p-4 md:p-8'>
       <div className='md:w-[65%]'>
@@ -176,18 +199,21 @@ const Checkout = () => {
             informationDetails={informationDetails}
             setInformationDetails={setInformationDetails}
             handleInputChange={handleInputChange}
+            regions={regions}
           />
         ) : selected === 1 ? (
           <Shipping
             informationDetails={informationDetails}
             setInformationDetails={setInformationDetails}
             handleInputChange={handleInputChange}
+            deliveryFee={deliveryFee}
           />
         ) : (
           <Payment
             informationDetails={informationDetails}
             setInformationDetails={setInformationDetails}
             handleInputChange={handleInputChange}
+            deliveryFee={deliveryFee}
           />
         )}
         <div className='flex items-center justify-between'>
@@ -318,6 +344,12 @@ const Checkout = () => {
             <h2 className='text-lg my-4'>Delivery Fee: </h2>
             <span className='text-lg font-medium'>
               <Currency className='inline-flex' amount={deliveryFee} />
+            </span>{" "}
+          </div>
+          <div className='flex justify-between items-center'>
+            <h2 className='text-lg my-4 font-bold'>Grand Total: </h2>
+            <span className='text-lg font-medium'>
+              <Currency className='inline-flex font-bold' amount={grandTotal} />
             </span>{" "}
           </div>
         </div>

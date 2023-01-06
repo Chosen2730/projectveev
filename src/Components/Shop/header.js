@@ -7,12 +7,13 @@ import { allCategory } from "../../Utils/category";
 const Header = () => {
   const dispatch = useDispatch();
   const { activeCategory } = useSelector((state) => state.product);
+
   const setItems = (id) => {
     dispatch(setActiveCategory(id));
   };
   return (
-    <section>
-      <div className='bg-black text-white p-4 hidden md:flex items-center justify-center gap-8'>
+    <section className='overflow-x-scroll'>
+      <div className='bg-black text-white p-4 flex items-center justify-center gap-8 min-w-[750px]'>
         {allCategory.map((item, i) => (
           <h1
             key={i}
@@ -27,7 +28,7 @@ const Header = () => {
           </h1>
         ))}
       </div>
-      <div className='p-4 flex items-center md:hidden bg-black '>
+      {/* <div className='p-4 flex items-center md:hidden bg-black '>
         <MdFilterList className='text-3xl text-white' />
         <div className='w-full flex items-center bg-black text-white gap-4'>
           <select
@@ -44,7 +45,7 @@ const Header = () => {
             ))}
           </select>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };

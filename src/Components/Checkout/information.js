@@ -1,7 +1,8 @@
 import React from "react";
 import Input from "../Form/input";
 
-const Information = ({ handleInputChange }) => {
+const Information = ({ handleInputChange, regions }) => {
+  const allRegions = regions.map((region) => region.region);
   return (
     <div>
       <div className='uppercase'>
@@ -40,8 +41,8 @@ const Information = ({ handleInputChange }) => {
             setItem={handleInputChange}
             type='name'
             dropdown
-            data={["Select", "Nigeria", "USA"]}
-            id='last_name'
+            data={allRegions}
+            id='region'
             title='Country/Region'
           />
         </div>

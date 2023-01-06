@@ -2,7 +2,7 @@ import React from "react";
 import Currency from "../Configs/currency";
 import Input from "../Form/input";
 
-const Shipping = ({ informationDetails, handleInputChange }) => {
+const Shipping = ({ informationDetails, handleInputChange, deliveryFee }) => {
   return (
     <div className='my-10'>
       <h2 className='font-medium uppercase text-base my-3'>Shipping</h2>
@@ -20,8 +20,8 @@ const Shipping = ({ informationDetails, handleInputChange }) => {
         Shipping Method
       </h2>
       <div className='flex justify-between gap-4 items-center p-8 border-2'>
-        <h2 className='uppercase text-sm'>FTM Logistics</h2>
-        <Currency className='font-medium' amount={3000} />
+        <h2 className='uppercase text-sm'>DHL Logistics</h2>
+        <Currency className='font-medium' amount={deliveryFee} />
       </div>
       <div className='p-8 border-2'>
         <Input

@@ -17,7 +17,7 @@ export default function Slider() {
   const images = [
     { img: men, text: "Up to 10% off website launch sales " },
     { img: women, text: "Get beautiful and unique outfits from us" },
-    { img: kid, text: "Measurement guide on all custom orders" },
+    { img: kid, text: "look stylish and classy in African Prints" },
     { img: fab, text: "Affordable luxury for Men|Women|Kids" },
   ];
   return (
