@@ -21,11 +21,12 @@ const Contact = () => {
           +1(587)-429-3786 Nigeria
           <br />
           <br />
+          <strong>IG & FB:</strong> @veevclothiers <br />
+          <br />
           <strong>Address: </strong> 3rd floor, Glory house, 30 adatan road
           opposite St. Peter & Paul Cathedral, Isale Ake Abeokuta. Ogun State,
           Nigeria. <br />
           <br />
-          {/* <strong>Canada Address:</strong> Calgary, Alberta Canada. <br /> */}
           <br />
           Last updated: 30-10-2022
         </p>

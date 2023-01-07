@@ -1,27 +1,33 @@
+import fabric from "../images/fabric.jpg";
+import ready from "../images/ready.jpg";
+import custom from "../images/custom.jpg";
+import women from "../images/women.jpg";
+import men from "../images/men.jpg";
+import kids from "../images/kids.jpg";
 export const category = [
   {
     title: "Ready to wear",
-    img: "https://www.mrignayanikolkata.com/wp-content/uploads/2019/08/Untitled-1.jpg",
+    img: ready,
   },
   {
     title: "women wears",
-    img: "https://www.buyandslay.com/wp-content/uploads/2022/06/image-3567.png",
+    img: women,
   },
   {
     title: "men wears",
-    img: "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/52/962064/1.jpg?0297",
+    img: men,
   },
   {
     title: "kid wears",
-    img: "https://i.pinimg.com/originals/68/77/65/687765becd76870ac47f0df2c5332965.jpg",
+    img: kids,
   },
   {
     title: "fabrics",
-    img: "https://cdn.shopify.com/s/files/1/1640/5095/articles/Stack_of_African_print_fabrics_600x.jpg?v=1580761049",
+    img: fabric,
   },
   {
-    title: "custom wears",
-    img: "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/72/2066921/1.jpg?0345",
+    title: "custom orders",
+    img: custom,
   },
 ];
 export const allCategory = [

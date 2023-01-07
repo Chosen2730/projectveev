@@ -33,7 +33,6 @@ export default function Slider() {
         "A growing brand with particular interest in customer satisfaction. When a business is built on integrity and what drives it is ensuring that the customers get premium quality, then you can be sure to go to sleep when dealing with VeeV clothiers.",
       img: omo,
     },
-    // { name: "", content: "" },
   ];
   return (
     <>

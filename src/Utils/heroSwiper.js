@@ -6,8 +6,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import men from "../images/men.png";
 import women from "../images/women.png";
-import kid from "../images/kid.jpg";
+import kid from "../images/kids.jpg";
 import fab from "../images/fab.jpg";
+import prints from "../images/prints.jpg";
+import women2 from "../images/women2.jpg";
 
 // import required modules
 import { Pagination, Autoplay } from "swiper";
@@ -18,7 +20,10 @@ export default function Slider() {
     { img: men, text: "Up to 10% off website launch sales " },
     { img: women, text: "Get beautiful and unique outfits from us" },
     { img: kid, text: "look stylish and classy in African Prints" },
-    { img: fab, text: "Affordable luxury for Men|Women|Kids" },
+    { img: fab, text: "Affordable luxury for Men | Women | Kids" },
+    { img: women2, text: "Owambe | Asoebi Bespoke Tailoring" },
+    { img: prints, text: "African Prints in beautiful designs" },
+    { img: women2, text: "Culture | Style | Class in African Prints" },
   ];
   return (
     <>

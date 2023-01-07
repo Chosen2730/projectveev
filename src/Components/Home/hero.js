@@ -1,12 +1,8 @@
 import React from "react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Swiper from "../../Utils/quotes";
 import HeroSwiper from "../../Utils/heroSwiper";
 
 const Hero = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
   return (
     <div className='relative h-[700px]'>
       <HeroSwiper />
