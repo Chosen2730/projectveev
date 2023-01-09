@@ -38,19 +38,21 @@ const Nav = () => {
         </Link>
         <div className='shadow-md shadow-gray-100 w-fit rounded-md ml-auto p-4 absolute top-2 right-5 bg-white z-50'>
           <div
-            className='font-medium flex gap-2 items-center text-xs cursor-pointer'
+            className='font-medium flex gap-8 items-center text-xs cursor-pointer'
             onClick={() => setIsDropDown(!isDropDown)}
           >
-            <img className='w-5 h-5' src={ngn} alt='' />
+            {/* <img className='w-5 h-5' src={ngn} alt='' />
             <h1 className='text-xs'>|</h1>
             <h1 className='text-xs'>Nigeria</h1>
             <h1 className='text-xs'>NGN</h1>
             <h1 className='text-xs'>|</h1>
+            */}
             <img
               src={imageUrl}
               alt=''
               className='w-7 h-7 object-cover rounded-full border-2 shadow-md  bg-black'
             />
+            <h2 className='text-xs'>Account</h2>
             <i className='cursor-pointer'>
               <BsChevronDown />
             </i>
