@@ -28,6 +28,12 @@ export const getAllProducts = (snapshot, error) => {
   return onSnapshot(itemsQuery, snapshot, error);
 };
 
+export const getAllCustomOrders = (snapshot, error) => {
+  const itemsColRef = collection(db, "customOrder");
+  const itemsQuery = query(itemsColRef, orderBy("_createdAt"));
+  return onSnapshot(itemsQuery, snapshot, error);
+};
+
 export const getOrders = async (docLimit) => {
   const productsRef = collection(db, "orders");
   // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
@@ -384,10 +390,10 @@ export const updateProductStatus = async (isLoggedIn, productId, value) => {
 //   return "success";
 // };
 
-export const uploadImage = async (file, productId) => {
+export const uploadImage = async (file, productId, folder) => {
   try {
     const storage = getStorage();
-    const storageRef = ref(storage, `products/${productId}/${file.name}`);
+    const storageRef = ref(storage, `${folder}/${productId}/${file.name}`);
     const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
     const downloadURL = await getDownloadURL(storageRef, s);
     // console.log(downloadURL);

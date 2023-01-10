@@ -1,27 +1,86 @@
 import Input from "../Form/input";
 import React from "react";
 import { useState } from "react";
+import { createCustomOrder } from "../../Utils/createFunctions";
+import Spinner from "../Configs/spinner";
 
 const CustomOrder = () => {
-  const [fabricImages, setFabricImages] = useState([]);
+  const defaultOrderItems = {
+    name: '',
+    email: '',
+    tel: '',
+    social: '',
+    text: '',
+    shoulder: '',
+    upper_waist: '',
+    lower_waist: '',
+    waist: '',
+    thigh: '',
+    dress_length: '',
+    bust: '',
+    top_length: '',
+    cuff: '',
+    full_hip: '',
+    knee: '',
+    tommy: '',
+    sleeve_length: '',
+    round_sleeve: '',
+    skirt_trouser_length: '',
+    ankle: '',
+    message: '',
+    quatity: '',
+    imageUrls: [],
+    _createdAt: new Date().toDateString(),
+    _updatedAt: new Date().toDateString(),
+  }
+  // const [fabricImages, setFabricImages] = useState([]);
   const [styleImages, setStyleImages] = useState([]);
-  const [orderItems, setOrderItems] = useState(Object);
-  const uploadFabric = (e) => {
-    setFabricImages(e.target.files);
-    console.log(fabricImages);
-  };
+  const [orderItems, setOrderItems] = useState(defaultOrderItems);
+  const [isLoading, setIsLoading] = useState(false);
+  // const uploadFabric = (e) => {
+  //   setFabricImages(e.target.files);
+  //   console.log(fabricImages);
+  // };
   const uploadStyles = (e) => {
-    setStyleImages(e.target.files);
+    const newImage = Array.prototype.slice.call(e.target.files);
+    const uploaded = [...styleImages];
+    newImage.some((file) => {
+      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+        uploaded.push(file);
+      }
+      return 0;
+    });
+    setStyleImages(uploaded);
+    // setStyleImages(e.target.files);
   };
+
   const handleInputChange = (e) => {
     setOrderItems({
       ...orderItems,
       [e.target.name]: e.target.value,
       // allImages,
     });
-    console.log(orderItems);
+    // console.log(orderItems);
   };
-  const handleDeleteImage = () => {};
+
+  const handleDeleteImage = (image) => {
+    const filteredImages = styleImages.filter((item) => item.name !== image.name);
+    setStyleImages(filteredImages);
+    console.log(filteredImages);
+    if (filteredImages.length < 1) {
+      document.getElementById("imagePicker").value = "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    console.log(orderItems);
+    await createCustomOrder(orderItems, styleImages)
+    setIsLoading(false);
+
+  }
+
   return (
     <div>
       <h2 className='uppercase text-xl font-bold'>Custom Orders</h2>
@@ -51,7 +110,8 @@ const CustomOrder = () => {
         Kindly fill the form below to place your order or contact us via
         info@veevclothiers.com or WhatsApp +2348067891075; +2349039878244
       </h2>
-      <form action='' className='text-sm'>
+
+      <form action='' className='text-sm' onSubmit={(e) => { alert('hello') }}>
         <div>
           <h2>Personal Information</h2>
           <div className='grid grid-cols-2 gap-4'>
@@ -92,7 +152,8 @@ const CustomOrder = () => {
             />
           </div>
         </div>
-        {/* <div className='border my-4 p-4 rounded-md'>
+        <>
+          {/* <div className='border my-4 p-4 rounded-md'>
           <label
             htmlFor='imagePicker'
             className='cursor-pointer font-bold block my-2 text-lg'
@@ -130,7 +191,7 @@ const CustomOrder = () => {
               })}
           </div>
         </div> */}
-
+        </>
         <div className='border my-4 p-4 rounded-md'>
           <div className='flex gap-4 justify-between items-center'>
             <h2 className='my-2 font-bold text-lg'>Measurement in Inches</h2>
@@ -311,8 +372,13 @@ const CustomOrder = () => {
             setItem={handleInputChange}
           />
         </div>
-        <button className='bg-black rounded-xl px-8 py-4 text-white'>
-          Submit
+        <button className='bg-black rounded-xl px-8 py-4 text-white' type="submit"
+          onClick={(e) => { handleSubmit(e) }}>
+          {isLoading ? (
+            <Spinner loaderText={"Submiting"} />
+          ) :
+            "Submit"
+          }
         </button>
       </form>
     </div>

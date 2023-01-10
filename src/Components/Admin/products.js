@@ -200,12 +200,20 @@ const Products = () => {
   };
 
   const handleDeleteImage = async (image) => {
-    const filteredImages = allImages.filter((item) => item.id !== image.id);
-    setAllImages(filteredImages);
-    document.getElementById("imagePicker").value = "";
+    console.log("image",image);
+    if(image?.name){
+      const filteredImages = allImages.filter((item) => item.name !== image.name);
+      setAllImages(filteredImages);
+      if (filteredImages.length < 1) {
+        document.getElementById("imagePicker").value = "";
+      } 
+    }else if(image.id){
+      const filteredImages = allImages.filter((item) => item.id !== image.id);
+      setAllImages(filteredImages);
+    }
     // console.log(allImages);
   };
-  console.log(allProducts);
+  // console.log(allProducts);
 
   return (
     <div className='p-4'>

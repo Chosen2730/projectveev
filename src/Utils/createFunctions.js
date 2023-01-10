@@ -39,7 +39,7 @@ export const createProduct = async (isLoggedIn, data, allImages) => {
     var imageURLS = []
     await allImages.reduce(async (ref, imageFile) => {
         await ref;
-        const res = await uploadImage(imageFile, id)
+        const res = await uploadImage(imageFile, id, "products")
         var timestamp = (Date.now() + Math.random()).toFixed(); // new Date().getUTCMilliseconds();
         const d = { storagePath: res.fullPath, url: res.downloadURL, id: timestamp }
         imageURLS.push(d);
@@ -53,6 +53,31 @@ export const createProduct = async (isLoggedIn, data, allImages) => {
             imageURLS
         };
         await addDoc(collection(db, "products"), productData);
+
+    }
+    return "success final";
+};
+
+export const createCustomOrder = async (data, allImages) => {
+    const id = Date.now();
+    var imageURLS = []
+    if(allImages.length>0){
+        await allImages.reduce(async (ref, imageFile) => {
+            await ref;
+            const res = await uploadImage(imageFile, id, "customOrder")
+            var timestamp = (Date.now() + Math.random()).toFixed(); // new Date().getUTCMilliseconds();
+            const d = { storagePath: res.fullPath, url: res.downloadURL, id: timestamp }
+            imageURLS.push(d);
+        }, Promise.resolve())
+    }
+
+    if (imageURLS.length === allImages.length) {
+        const productData = {
+            ...data,
+            id,
+            imageURLS
+        };
+        await addDoc(collection(db, "customOrder"), productData);
 
     }
     return "success final";
