@@ -5,12 +5,13 @@ import { MdArrowBack, MdAttachMoney } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Currency from "../Components/Configs/currency";
 import Container from "../Components/Home/container";
-import { arr } from "../Redux/features/productSlice";
 import { sizes } from "../Utils/category";
-import { featured } from "../Utils/products";
 import { addToCart, updateQty } from "../Redux/features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import tag from "../images/tag.png";
+import que from "../images/que.png";
+import del from "../images/del.png";
 import { login } from "../Redux/features/authSlice";
 
 const Product = () => {
@@ -34,7 +35,6 @@ const Product = () => {
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
 
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const imageUrl = (imageURLS && imageURLS[activeIndex].url) || "";
   const dispatch = useDispatch();
@@ -58,8 +58,9 @@ const Product = () => {
       dispatch(addToCart({ navigate, id, qty, newPrice }));
     } else {
       alert(
-        "You cannot perform this operation because you are not logged In, kindly click the top dropdown to login"
+        "You need to be logged in to perform this operation, you'll be redirected to login page"
       );
+      dispatch(login());
     }
   };
   return (
@@ -71,7 +72,7 @@ const Product = () => {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-5'>
         <div>
           <img
-            className='h-[500px] w-full object-cover'
+            className='h-[400px] w-full object-cover'
             src={imageUrl}
             alt={title}
           />
@@ -92,8 +93,8 @@ const Product = () => {
           </div>
         </div>
         <div>
-          <h2 className='font-bold text-2xl uppercase'>{title}</h2>
-          <div className='flex text-4xl my-2'>
+          <h2 className='font-bold text-lg uppercase'>{title}</h2>
+          <div className='flex text-xl my-2'>
             <AiFillStar />
             <AiFillStar />
             <AiFillStar />
@@ -125,38 +126,16 @@ const Product = () => {
           <div className='my-3'>
             <div className='flex justify-between'>
               <h2 className='uppercase font-bold text-sm'>Size</h2>
-              <a
-                href='https://drive.google.com/drive/folders/1yFoLdBQWoiTVZxlQ4qmxYMLugoIHHcfv?pli=1'
-                target={"__blank"}
-                className='text-sm italic'
-              >
-                Check Size Chart
-              </a>
             </div>
-            <div className='flex gap-4 my-2'>
-              {sizes.slice(sizes.length - 4, sizes.length).map((item, i) => (
-                <div
-                  key={i}
-                  className='flex flex-col items-center justify-center cursor-pointer'
-                  onClick={() => setSelectedSizeIndex(i)}
-                >
-                  <div
-                    className={`${
-                      selectedSizeIndex === i ? "bg-black" : "bg-gray-400"
-                    } w-8 h-8 rounded-full transition`}
-                  />
-                  <h1
-                    className={`${
-                      selectedSizeIndex === i
-                        ? "font-bold border-white"
-                        : "border-b-transparent"
-                    } text-xs border-b-2 py-2 cursor-pointer transition uppercase`}
-                  >
-                    {item}
-                  </h1>
-                </div>
-              ))}
-            </div>
+            <select
+              name=''
+              className='w-full bg-gray-200 shadow-md p-4 my-4 rounded-md '
+              id=''
+            >
+              {sizes.map((item, i) => {
+                return <option key={i}>{item}</option>;
+              })}
+            </select>
           </div>
           <div className='grid grid-cols-1 xl:flex gap-6'>
             <div className='flex gap-5 justify-center w-fit items-center border border-black'>
@@ -188,6 +167,28 @@ const Product = () => {
               Buy Now
               <MdAttachMoney className='text-2xl' />
             </button>
+          </div>
+          <div className='flex gap-2 my-5'>
+            <a
+              href='https://drive.google.com/drive/folders/1yFoLdBQWoiTVZxlQ4qmxYMLugoIHHcfv?pli=1'
+              target={"__blank"}
+              className='flex items-center gap-1'
+            >
+              <img src={tag} alt='' className='w-6' />
+              <h2 className='text-xs'>Size Guide</h2>
+            </a>
+            <Link to='/return-policy' className='flex items-center gap-1'>
+              <img src={del} alt='' className='w-6' />
+              <h2 className='text-xs'>Delivery and Return</h2>
+            </Link>
+            <a
+              href='https://wa.me/message/GCZSV3CRNB6SI1'
+              target={"__blank"}
+              className='flex items-center gap-1'
+            >
+              <img src={que} alt='' className='w-6' />
+              <h2 className='text-xs'>Ask a Question</h2>
+            </a>
           </div>
         </div>
       </div>

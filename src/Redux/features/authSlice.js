@@ -46,7 +46,6 @@ export const login = createAsyncThunk(
         lastName,
         blocked: false,
       };
-      // const data = { ...res.user, proactiveRefresh: '', auth: '', AuthImpl: '',  fullName, firstName, lastName }
       await createUser(data);
       return res;
     } catch (error) {

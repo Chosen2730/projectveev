@@ -200,14 +200,16 @@ const Products = () => {
   };
 
   const handleDeleteImage = async (image) => {
-    console.log("image",image);
-    if(image?.name){
-      const filteredImages = allImages.filter((item) => item.name !== image.name);
+    console.log("image", image);
+    if (image?.name) {
+      const filteredImages = allImages.filter(
+        (item) => item.name !== image.name
+      );
       setAllImages(filteredImages);
       if (filteredImages.length < 1) {
         document.getElementById("imagePicker").value = "";
-      } 
-    }else if(image.id){
+      }
+    } else if (image.id) {
       const filteredImages = allImages.filter((item) => item.id !== image.id);
       setAllImages(filteredImages);
     }
@@ -274,11 +276,22 @@ const Products = () => {
           </div>
           <div className=''>
             {allProducts?.map(
-              ({ productId, title, imageURLS, price, desc, status }, index) => {
+              (
+                {
+                  productId,
+                  title,
+                  imageURLS,
+                  price,
+                  desc,
+                  status,
+                  _createdAt,
+                },
+                index
+              ) => {
                 return (
                   <div
                     key={index}
-                    className='grid gridLayout px-5 py-2 text-xs items-center'
+                    className='grid gridLayout gap-3 px-5 py-2 text-xs items-center'
                   >
                     <div className='flex gap-2 items-center'>
                       <img
@@ -288,7 +301,7 @@ const Products = () => {
                       />
                       <h2 className='font-medium'>{title}</h2>
                     </div>
-                    <h2 className='capitalize'>02/04/22</h2>
+                    <h2 className='capitalize'>{_createdAt}</h2>
                     <h2 className='capitalize'>{desc.slice(0, 50)}...</h2>
                     <Currency amount={price} className='font-medium' />
                     <h2 className='capitalize'>{status}</h2>

@@ -38,7 +38,7 @@ const Products = () => {
     let products;
     if (activeCategory === 0) {
       products = allProducts.filter(
-        (product) => product.category === "Ready-To-Wear"
+        (product) => product.category !== "Fabrics"
       );
     } else if (activeCategory === 1) {
       products = allProducts.filter((product) => product.category === "Women");

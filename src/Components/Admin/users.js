@@ -7,7 +7,10 @@ import { getUsers, updateUserStatus } from "../../Utils/functions";
 import { ImUsers } from "react-icons/im";
 
 const Users = () => {
-  const { isLoggedIn, user: { uid } } = useSelector((state) => state.auth);
+  const {
+    isLoggedIn,
+    user: { uid },
+  } = useSelector((state) => state.auth);
 
   const [allUsers, setAllUsers] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
@@ -19,8 +22,8 @@ const Users = () => {
     const fetch = async () => {
       const res = await getUsers(limit);
       setAllUsers(res.data);
-      setActiveUsers(res.data.filter(user => user.blocked === false))
-      setBlockedUsers(res.data.filter(user => user.blocked === true))
+      setActiveUsers(res.data.filter((user) => user.blocked === false));
+      setBlockedUsers(res.data.filter((user) => user.blocked === true));
       setLastVisibleItem(res.lastVisibleItem);
     };
     fetch();
@@ -29,13 +32,13 @@ const Users = () => {
 
   const updateStatus = async () => {
     var userStatus = false;
-    await updateUserStatus(uid, userStatus)
-  }
+    await updateUserStatus(uid, userStatus);
+  };
 
   // console.log({ allUsers });
   const userHeader = ["Name", "Email", "Tel", "Status", "Actions"];
   return (
-    <div>
+    <div className='p-4'>
       <h2 className='font-bold text-2xl'>Users</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
         <div className='rounded-xl shadow-xl bg-black text-white p-8'>

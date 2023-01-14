@@ -10,7 +10,7 @@ import { SlNote } from "react-icons/sl";
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className='p-5'>
       <h2 className='font-bold text-2xl'>Admin Dashboard</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-10'>
         <div className='rounded-xl shadow-xl bg-black text-white p-8'>

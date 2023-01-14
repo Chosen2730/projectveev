@@ -41,11 +41,14 @@ export const allCategory = [
 
 export const sizes = [
   "one size",
+  "4",
+  "6",
   "8",
   "10",
   "12",
   "14",
   "16",
+  "18",
   "s",
   "m",
   "l",
