@@ -51,6 +51,8 @@ const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [limit] = useState(20);
   const [page, setPage] = useState(1);
+  const [productInStock, setProductInStock] = useState(0);
+  const [productOutOfStock, setProductOutOfStock] = useState(0);
 
   const category = [
     "Select",
@@ -99,6 +101,20 @@ const Products = () => {
   }, [dispatch]);
   error && console.log(error);
 
+  useEffect(() => {
+    console.log(allProducts);
+    const inStock = allProducts.filter((pro) => pro.status === "In Stock");
+    const outOfStock = allProducts.filter(
+      (pro) => pro.status === "Out of Stock"
+    );
+    if (inStock) {
+      setProductInStock(inStock.length);
+    }
+    if (outOfStock) {
+      setProductOutOfStock(outOfStock.length);
+    }
+  }, [allProducts]);
+  console.log(productInStock);
   const updateStatus = (productId) => {
     var value = "In stock";
     updateProductStatus(isLoggedIn, productId, value);
@@ -125,7 +141,6 @@ const Products = () => {
       [e.target.name]: e.target.value || "",
       allImages,
     });
-    // console.log(currentItem);
   };
 
   useEffect(() => {
@@ -138,7 +153,6 @@ const Products = () => {
 
   const uploadProduct = async (e) => {
     setIsLoading(true);
-    // e.preventDefault();
     const {
       title,
       desc,
@@ -149,7 +163,6 @@ const Products = () => {
       featured,
       trending,
     } = currentItem;
-    // console.log(currentItem);
     var data = {};
     data = {
       title,
@@ -171,7 +184,6 @@ const Products = () => {
         length: currentItem.length,
       };
     }
-    // console.log({ data });
     const createProductRef = await createProduct(isLoggedIn, data, allImages);
     setIsLoading(false);
     dispatch(setProductModalShown());
@@ -213,9 +225,8 @@ const Products = () => {
       const filteredImages = allImages.filter((item) => item.id !== image.id);
       setAllImages(filteredImages);
     }
-    // console.log(allImages);
   };
-  // console.log(allProducts);
+  console.log(allProducts);
 
   return (
     <div className='p-4'>
@@ -236,7 +247,7 @@ const Products = () => {
               <ImCart />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{productInStock}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -245,7 +256,7 @@ const Products = () => {
               <MdRemoveShoppingCart />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{productOutOfStock}</p>
         </div>
       </div>
       <div className='flex flex-col my-4 gap-4 sm:flex-row sm:items-center sm:justify-between'>

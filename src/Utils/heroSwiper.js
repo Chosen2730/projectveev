@@ -4,8 +4,8 @@ import { SwiperSlide, Swiper } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import men from "../images/men.png";
-import women from "../images/women.png";
+import men from "../images/men.jpg";
+import women from "../images/women.jpg";
 import kid from "../images/kids.jpg";
 import fab from "../images/fab.jpg";
 import prints from "../images/prints.jpg";
@@ -17,13 +17,13 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 export default function Slider() {
   const images = [
-    { img: men, text: "Up to 10% off website launch sales " },
-    { img: women, text: "Get beautiful and unique outfits from us" },
-    { img: kid, text: "look stylish and classy in African Prints" },
-    { img: fab, text: "Affordable luxury for Men | Women | Kids" },
-    { img: women2, text: "Owambe | Asoebi Bespoke Tailoring" },
+    { img: men, text: "Affordable Luxury For Men Women Kids" },
+    { img: women, text: "Owambe/Asoebi Bespoke Tailoring" },
+    { img: kid, text: "Get Beautiful And Unique Outfits From Us" },
+    { img: fab, text: "Culture, Style, & Class in African Prints" },
+    { img: women2, text: "Up To 10% Off Website Launch Sales" },
     { img: prints, text: "African Prints in beautiful designs" },
-    { img: women2, text: "Culture | Style | Class in African Prints" },
+    // { img: women2, text: "Culture | Style | Class in African Prints" },
   ];
   return (
     <>

@@ -33,7 +33,6 @@ export const getAllCustomOrders = (snapshot, error) => {
   const itemsQuery = query(itemsColRef, orderBy("_createdAt"));
   return onSnapshot(itemsQuery, snapshot, error);
 };
-
 export const getOrders = async (docLimit) => {
   const productsRef = collection(db, "orders");
   // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));

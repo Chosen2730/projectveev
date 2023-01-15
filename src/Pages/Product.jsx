@@ -31,10 +31,10 @@ const Product = () => {
     fabricName,
     length,
     colors,
+    status,
   } = singleProduct;
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
-
   const [activeIndex, setActiveIndex] = useState(0);
   const imageUrl = (imageURLS && imageURLS[activeIndex].url) || "";
   const dispatch = useDispatch();
@@ -122,7 +122,11 @@ const Product = () => {
               </h2>
             </div>
           )}
-
+          <div className='flex gap-2'>
+            <h2 className='text-sm'>
+              Availability: <span> {status}</span>{" "}
+            </h2>
+          </div>
           <div className='my-3'>
             <div className='flex justify-between'>
               <h2 className='uppercase font-bold text-sm'>Size</h2>
