@@ -41,6 +41,7 @@ const ProductContainer = ({ data, loading }) => {
                   className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                   src={imageUrl}
                   alt={title}
+                  loading='lazy'
                 />
                 <div className='my-3 text-center'>
                   {discountValue ? (

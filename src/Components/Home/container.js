@@ -4,6 +4,7 @@ import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import MyImage from "../../Utils/imageLoader";
 
 const Container = ({ name, data }) => {
   const navigate = useNavigate();
@@ -32,6 +33,12 @@ const Container = ({ name, data }) => {
               discount = (parseInt(discountValue) / 100) * price;
               const newPrice = price - discount;
               const imageUrl = (imageURLS && imageURLS[0].url) || "";
+              // const image = {
+              //   src: imageUrl,
+              //   height: 500,
+              //   width: 150,
+              //   alt: "item",
+              // };
               return (
                 <div
                   className='flex flex-col items-center justify-center relative'
@@ -41,6 +48,7 @@ const Container = ({ name, data }) => {
                     className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                     src={imageUrl}
                     alt={item}
+                    loading='lazy'
                   />
                   <div className='my-3 text-center'>
                     {discountValue ? (

@@ -5,7 +5,6 @@ import { MdArrowBack, MdAttachMoney } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Currency from "../Components/Configs/currency";
 import Container from "../Components/Home/container";
-import { sizes } from "../Utils/category";
 import { addToCart, updateQty } from "../Redux/features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -19,8 +18,10 @@ const Product = () => {
   const { qty, allProducts, featuredProducts } = useSelector(
     (state) => state.product
   );
+  const [sizes, setSizes] = useState([]);
   const { token } = useSelector((state) => state.auth);
   const { productId: id } = useParams();
+  const dispatch = useDispatch();
   const singleProduct = allProducts.find((product) => product.productId === id);
   const {
     desc,
@@ -33,11 +34,47 @@ const Product = () => {
     colors,
     status,
   } = singleProduct;
+
+  const sizeCategory = singleProduct.category.toLowerCase();
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
   const [activeIndex, setActiveIndex] = useState(0);
   const imageUrl = (imageURLS && imageURLS[activeIndex].url) || "";
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (sizeCategory === "women") {
+      setSizes([
+        "Select Size",
+        "UK 4",
+        "UK 6",
+        "UK 8",
+        "UK 10",
+        "UK 12",
+        "UK 14",
+        "UK 16",
+        "UK 18",
+      ]);
+    } else if (sizeCategory === "men") {
+      setSizes(["Select Size", "S", "M", "L", "XL", "XXL", "XXXL"]);
+    } else if (sizeCategory === "kids") {
+      setSizes([
+        "Select Size",
+        "1yr",
+        "2yrs",
+        "2yrs",
+        "4yrs",
+        "5yrs",
+        "6yrs",
+        "7yrs",
+        "8yrs",
+        "9yrs",
+      ]);
+    } else if (sizeCategory === "fabrics") {
+    } else {
+      setSizes([]);
+    }
+  }, [singleProduct]);
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -53,6 +90,7 @@ const Product = () => {
     }, 3000);
     return () => clearInterval(t);
   }, [activeIndex]);
+
   const addToCartHandler = (id, qty, newPrice) => {
     if (token) {
       dispatch(addToCart({ navigate, id, qty, newPrice }));
