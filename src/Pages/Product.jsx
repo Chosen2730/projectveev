@@ -19,6 +19,7 @@ const Product = () => {
     (state) => state.product
   );
   const [sizes, setSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("");
   const { token } = useSelector((state) => state.auth);
   const { productId: id } = useParams();
   const dispatch = useDispatch();
@@ -91,9 +92,9 @@ const Product = () => {
     return () => clearInterval(t);
   }, [activeIndex]);
 
-  const addToCartHandler = (id, qty, newPrice) => {
+  const addToCartHandler = () => {
     if (token) {
-      dispatch(addToCart({ navigate, id, qty, newPrice }));
+      dispatch(addToCart({ navigate, id, qty, newPrice, selectedSize }));
     } else {
       alert(
         "You need to be logged in to perform this operation, you'll be redirected to login page"
@@ -144,7 +145,7 @@ const Product = () => {
               className='font-medium line-through text-gray-500 text-xs'
               amount={price}
             />
-            <h2 className='my-2 text-sm'>{desc}</h2>
+            <h2 className='my-2 text-xs'>{desc}</h2>
           </div>
           {fabricName && (
             <div className='my-5'>
@@ -173,6 +174,7 @@ const Product = () => {
               name=''
               className='w-full bg-gray-200 shadow-md p-4 my-4 rounded-md '
               id=''
+              onChange={(e) => setSelectedSize(e.target.value)}
             >
               {sizes.map((item, i) => {
                 return <option key={i}>{item}</option>;
@@ -197,14 +199,14 @@ const Product = () => {
             </div>
             <button
               className='font-medium flex items-center justify-center text-white p-4 px-8 rounded-full bg-black gap-2 hover:scale-105 transition'
-              onClick={() => addToCartHandler(id, qty, newPrice)}
+              onClick={addToCartHandler}
             >
               Add to Cart
               <FaOpencart className='text-2xl' />
             </button>
             <button
               className='font-medium flex items-center justify-center border-black border p-4 px-8 rounded-full gap-2 hover:scale-105 transition'
-              onClick={() => addToCartHandler(id, qty, newPrice)}
+              onClick={addToCartHandler}
             >
               Buy Now
               <MdAttachMoney className='text-2xl' />

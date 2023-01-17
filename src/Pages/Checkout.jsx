@@ -101,7 +101,7 @@ const Checkout = () => {
           disPatcha(removeItem({ id: item.productId }));
         }
         alert("Thanks for doing business with us! Come back soon!!");
-        navigate("/cart");
+        navigate("/orders");
       });
     }
   };
