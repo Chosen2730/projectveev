@@ -173,14 +173,10 @@ const Product = () => {
             </button>
           </div>
           <div className='flex gap-2 my-5'>
-            <a
-              href='https://drive.google.com/drive/folders/1yFoLdBQWoiTVZxlQ4qmxYMLugoIHHcfv?pli=1'
-              target={"__blank"}
-              className='flex items-center gap-1'
-            >
+            <Link to='/size-chart' className='flex items-center gap-1'>
               <img src={tag} alt='' className='w-6' />
               <h2 className='text-xs'>Size Guide</h2>
-            </a>
+            </Link>
             <Link to='/return-policy' className='flex items-center gap-1'>
               <img src={del} alt='' className='w-6' />
               <h2 className='text-xs'>Delivery and Return</h2>

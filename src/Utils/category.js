@@ -1,9 +1,9 @@
 import fabric from "../images/fabric.jpg";
 import ready from "../images/ready.jpg";
 import custom from "../images/custom.jpg";
-import women from "../images/women.jpg";
-import men from "../images/men.jpg";
-import kids from "../images/kids.jpg";
+import women from "../images/womencat.jpg";
+import men from "../images/mencat.jpg";
+import kids from "../images/kidcat.jpg";
 export const category = [
   {
     title: "Ready to wear",
@@ -41,20 +41,20 @@ export const allCategory = [
 
 export const sizes = [
   "one size",
-  "4",
-  "6",
-  "8",
-  "10",
-  "12",
-  "14",
-  "16",
-  "18",
-  "s",
-  "m",
-  "l",
-  "xl",
-  "xxl",
-  "xxxl",
+  "UK 4",
+  "UK 6",
+  "UK 8",
+  "UK 10",
+  "UK 12",
+  "UK 14",
+  "UK 16",
+  "UK 18",
+  "S",
+  "M",
+  "L",
+  "XL",
+  "XXL",
+  "XXXL",
 ];
 
 export const color = ["red", "blue", "black", "green", "orange", "purple"];

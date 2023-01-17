@@ -19,6 +19,7 @@ import Privacy from "../Pages/Privacy";
 import Terms from "../Pages/Terms";
 import Return from "../Pages/Return";
 import Contact from "../Pages/Contact";
+import Size from "../Pages/Size";
 
 const AppRoute = () => {
   const { user } = useSelector((state) => state.auth);
@@ -37,6 +38,7 @@ const AppRoute = () => {
         <Route path='/cart' element={<Cart />} />
         <Route path='/orders' element={<Orders />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/size-chart' element={<Size />} />
         {user.admin && (
           <Route path='/admin' element={<AdminIndex />}>
             <Route index element={<Admin />} />
