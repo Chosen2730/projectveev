@@ -4,6 +4,9 @@ import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../Configs/spinner";
+// import ImageLoader from "../../Utils/imageLoader";
+import LazyLoad from "react-lazyload";
+import logo from "../../images/logo3.png";
 
 const ProductContainer = ({ data, loading }) => {
   const navigate = useNavigate();
@@ -37,12 +40,23 @@ const ProductContainer = ({ data, loading }) => {
                 className='flex flex-col items-center justify-center relative'
                 key={id}
               >
-                <img
+                {/* <img
                   className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                   src={imageUrl}
                   alt={title}
-                  loading='lazy'
-                />
+                /> */}
+                <LazyLoad
+                  height={200}
+                  placeholder={<img src={logo} />}
+                  // debounce={500}
+                >
+                  <img
+                    className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
+                    alt='text'
+                    src={imageUrl}
+                  />
+                </LazyLoad>
+
                 <div className='my-3 text-center'>
                   {discountValue ? (
                     <div>

@@ -48,7 +48,6 @@ const Container = ({ name, data }) => {
                     className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                     src={imageUrl}
                     alt={item}
-                    loading='lazy'
                   />
                   <div className='my-3 text-center'>
                     {discountValue ? (

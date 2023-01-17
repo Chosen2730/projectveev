@@ -1,20 +1,15 @@
 // import React from "react";
-// import { LazyLoadImage } from "react-lazy-load-image-component";
 // import logo from "../images/logo.png";
-// import "react-lazy-load-image-component/src/effects/blur.css";
+// // import LazyImage from "react-lazy-blur-image";
 
-// const MyImage = ({ image }) => (
-//   <div>
-//     <LazyLoadImage
-//       alt={image.alt}
-//       height={image.height}
-//       src={image.src} // use normal <img> attributes as props
-//       width={image.width}
-//       placeholderSrc={logo}
-//       effect='blur'
+// const ImageLoader = ({ uri, alt, className }) => {
+//   return (
+//     <LazyImage
+//       // placeholder={"https://picsum.photos/id/235/500/500?blur=10"}
+//       uri={uri}
+//       render={(src, style) => <img src={src} className={className} alt={alt} />}
 //     />
-//     <span>{image.caption}</span>
-//   </div>
-// );
+//   );
+// };
 
-// export default MyImage;
+// export default ImageLoader;

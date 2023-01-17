@@ -40,7 +40,7 @@ const Product = () => {
   const discount = (parseInt(discountValue || 0) / 100) * price;
   const newPrice = price - discount;
   const [activeIndex, setActiveIndex] = useState(0);
-  const imageUrl = (imageURLS && imageURLS[activeIndex].url) || "";
+  const imageUrl = (imageURLS && imageURLS[activeIndex]?.url) || "";
 
   useEffect(() => {
     if (sizeCategory === "women") {
