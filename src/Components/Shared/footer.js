@@ -30,9 +30,21 @@ const Footer = () => {
             </span>
           </p>
           <div className='flex items-center gap-3 my-5'>
-            <img src={ig} className='w-8' alt='ig' />
-            <img src={tw} className='w-8' alt='tw' />
-            <img src={fb} className='w-8' alt='fb' />
+            <a
+              href='https://instagram.com/veevclothiers?igshid=Yzg5MTU1MDY='
+              target={"__blank"}
+            >
+              <img src={ig} className='w-8' alt='ig' />
+            </a>
+            <a href='https://www.tiktok.com/@veev_clothiers?_t=8Z81hX1vefG&_r=1'>
+              <img src={tw} className='w-8' alt='tw' />
+            </a>
+            <a
+              href='https://www.facebook.com/veevclothiers?mibextid=ZbWKwL'
+              target={"__blank"}
+            >
+              <img src={fb} className='w-8' alt='fb' />
+            </a>
           </div>
         </div>
         <div>

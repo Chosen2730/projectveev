@@ -141,6 +141,7 @@ const Checkout = () => {
     { region: "Select", deliveryFee: 0 },
     { region: "Abeokuta", deliveryFee: 1000 },
     { region: "Ogun State", deliveryFee: 3000 },
+    { region: "Obada", deliveryFee: 2000 },
     { region: "Lagos State", deliveryFee: 3500 },
     { region: "Ibadan", deliveryFee: 3500 },
     { region: "SouthWest Nigeria", deliveryFee: 4000 },
