@@ -71,9 +71,11 @@ html {
 }
 .gridLayout {
   grid-template-columns: 230px 100px 350px 120px 80px 100px;
+  gap: 4;
 }
 .gridLay2 {
   grid-template-columns: repeat(8, 1fr);
+  gap: 4;
 }
 @media (max-width: 768px) {
   .category {

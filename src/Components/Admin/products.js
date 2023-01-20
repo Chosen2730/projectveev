@@ -51,6 +51,8 @@ const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [limit] = useState(20);
   const [page, setPage] = useState(1);
+  const [productInStock, setProductInStock] = useState(0);
+  const [productOutOfStock, setProductOutOfStock] = useState(0);
 
   const category = [
     "Select",
@@ -97,8 +99,19 @@ const Products = () => {
     );
     return unsubscribe;
   }, [dispatch]);
-  error && console.log(error);
 
+  useEffect(() => {
+    const inStock = allProducts.filter((pro) => pro.status === "In Stock");
+    const outOfStock = allProducts.filter(
+      (pro) => pro.status === "Out of Stock"
+    );
+    if (inStock) {
+      setProductInStock(inStock.length);
+    }
+    if (outOfStock) {
+      setProductOutOfStock(outOfStock.length);
+    }
+  }, [allProducts]);
   const updateStatus = (productId) => {
     var value = "In stock";
     updateProductStatus(isLoggedIn, productId, value);
@@ -125,7 +138,6 @@ const Products = () => {
       [e.target.name]: e.target.value || "",
       allImages,
     });
-    // console.log(currentItem);
   };
 
   useEffect(() => {
@@ -138,7 +150,6 @@ const Products = () => {
 
   const uploadProduct = async (e) => {
     setIsLoading(true);
-    // e.preventDefault();
     const {
       title,
       desc,
@@ -149,7 +160,6 @@ const Products = () => {
       featured,
       trending,
     } = currentItem;
-    // console.log(currentItem);
     var data = {};
     data = {
       title,
@@ -171,14 +181,11 @@ const Products = () => {
         length: currentItem.length,
       };
     }
-    // console.log({ data });
     const createProductRef = await createProduct(isLoggedIn, data, allImages);
     setIsLoading(false);
     dispatch(setProductModalShown());
-    console.log({ createProductRef });
     setIsLoading(false);
   };
-  // console.log(isLoading);
   const goToSingleProduct = (id) => {
     navigate(`/admin/product/${id}`);
   };
@@ -200,20 +207,19 @@ const Products = () => {
   };
 
   const handleDeleteImage = async (image) => {
-    console.log("image",image);
-    if(image?.name){
-      const filteredImages = allImages.filter((item) => item.name !== image.name);
+    if (image?.name) {
+      const filteredImages = allImages.filter(
+        (item) => item.name !== image.name
+      );
       setAllImages(filteredImages);
       if (filteredImages.length < 1) {
         document.getElementById("imagePicker").value = "";
-      } 
-    }else if(image.id){
+      }
+    } else if (image.id) {
       const filteredImages = allImages.filter((item) => item.id !== image.id);
       setAllImages(filteredImages);
     }
-    // console.log(allImages);
   };
-  // console.log(allProducts);
 
   return (
     <div className='p-4'>
@@ -234,7 +240,7 @@ const Products = () => {
               <ImCart />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{productInStock}</p>
         </div>
         <div className='rounded-xl shadow-xl bg-red-800 text-white p-8'>
           <div className='flex justify-between gap-2 items-center'>
@@ -243,7 +249,7 @@ const Products = () => {
               <MdRemoveShoppingCart />
             </i>
           </div>
-          <p className='text-4xl font-medium'>{0}</p>
+          <p className='text-4xl font-medium'>{productOutOfStock}</p>
         </div>
       </div>
       <div className='flex flex-col my-4 gap-4 sm:flex-row sm:items-center sm:justify-between'>
@@ -274,11 +280,22 @@ const Products = () => {
           </div>
           <div className=''>
             {allProducts?.map(
-              ({ productId, title, imageURLS, price, desc, status }, index) => {
+              (
+                {
+                  productId,
+                  title,
+                  imageURLS,
+                  price,
+                  desc,
+                  status,
+                  _createdAt,
+                },
+                index
+              ) => {
                 return (
                   <div
                     key={index}
-                    className='grid gridLayout px-5 py-2 text-xs items-center'
+                    className='grid gridLayout gap-3 px-5 py-2 text-xs items-center'
                   >
                     <div className='flex gap-2 items-center'>
                       <img
@@ -288,7 +305,7 @@ const Products = () => {
                       />
                       <h2 className='font-medium'>{title}</h2>
                     </div>
-                    <h2 className='capitalize'>02/04/22</h2>
+                    <h2 className='capitalize'>{_createdAt}</h2>
                     <h2 className='capitalize'>{desc.slice(0, 50)}...</h2>
                     <Currency amount={price} className='font-medium' />
                     <h2 className='capitalize'>{status}</h2>
@@ -596,7 +613,6 @@ const EditForm = (props) => {
       [e.target.name]: e.target.value,
       // allImages,
     });
-    // console.log(currentItem);
   };
 
   const imageUploadHandler = async (e) => {
@@ -633,7 +649,6 @@ const EditForm = (props) => {
 
   const handleSubmitEdit = async () => {
     setIsLoading(true);
-    // console.log(currentItemToEdit.productId, currentItemToEdit);
     await updateProduct(currentItemToEdit.productId, currentItemToEdit);
     setIsLoading(false);
     dispatch(setProductEditModalShown());
@@ -648,10 +663,7 @@ const EditForm = (props) => {
     const filteredImageURLS = currentItemToEdit.imageURLS.filter(
       (item) => item.id !== image.id
     );
-    console.log(
-      { filteredImageURLS },
-      { ...currentItemToEdit, imageURLS: filteredImageURLS }
-    );
+
     await updateProduct(currentItemToEdit.productId, {
       ...currentItemToEdit,
       imageURLS: filteredImageURLS,
@@ -661,7 +673,6 @@ const EditForm = (props) => {
       imageURLS: filteredImageURLS,
     });
     await deleteImage(image.storagePath);
-    // console.log(currentItemToEdit);
   };
 
   return (
@@ -796,7 +807,6 @@ const EditForm = (props) => {
             <div className='preview_img grid place-items-center my-5 grid-cols-5'>
               {currentItemToEdit?.imageURLS &&
                 Array.from(currentItemToEdit?.imageURLS).map((image, i) => {
-                  // console.log(image);
                   return (
                     <div key={i} className='relative'>
                       <img

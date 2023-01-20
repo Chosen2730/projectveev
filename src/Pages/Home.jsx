@@ -38,7 +38,6 @@ const Home = () => {
     );
     return unsubscribe;
   }, [dispatch]);
-  error && console.log(error);
 
   return (
     <>

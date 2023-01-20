@@ -5,7 +5,6 @@ const Currency = ({ amount, className }) => {
     style: "currency",
     currency: "ngn",
   });
-  console.log();
 
   return <h2 className={className}>{priceFormat.format(amount)}</h2>;
 };

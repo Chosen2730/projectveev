@@ -20,7 +20,6 @@ const Form = () => {
 
   const handleInputChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value, image });
-    console.log(currentItem);
   };
 
   useEffect(() => {
@@ -56,7 +55,6 @@ const Form = () => {
       _updatedAt: new Date().getTime(),
     };
     const createProductRef = await createProduct(isLoggedIn, data, image);
-    console.log(createProductRef);
   };
 
   return (
@@ -193,7 +191,6 @@ const Form = () => {
                 accept='image/*'
                 value={""}
                 onChange={(e) => {
-                  console.log(e.target.files[0]);
                   setImage(e.target.files[0]);
                 }}
               />

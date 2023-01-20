@@ -33,14 +33,11 @@ export const getAllCustomOrders = (snapshot, error) => {
   const itemsQuery = query(itemsColRef, orderBy("_createdAt"));
   return onSnapshot(itemsQuery, snapshot, error);
 };
-
 export const getOrders = async (docLimit) => {
   const productsRef = collection(db, "orders");
   // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
   let first = query(productsRef, limit(parseInt(docLimit)));
-  const documentSnapshots = await getDocs(first).catch((error) => {
-    console.log("getOrders error:", error);
-  });
+  const documentSnapshots = await getDocs(first).catch((error) => {});
   let data = documentSnapshots.docs.map((doc) => ({
     ...doc.data(),
     orderId: doc.id,
@@ -55,9 +52,7 @@ export const getUsers = async (docLimit) => {
   const productsRef = collection(db, "users");
   // let first = query(productsRef, orderBy('_createdAt', 'desc'), limit(parseInt(docLimit)));
   let first = query(productsRef, limit(parseInt(docLimit)));
-  const documentSnapshots = await getDocs(first).catch((error) => {
-    console.log("getUsers error:", error);
-  });
+  const documentSnapshots = await getDocs(first).catch((error) => {});
   let data = documentSnapshots.docs.map((doc) => ({
     ...doc.data(),
     orderId: doc.id,
@@ -75,7 +70,6 @@ export const getUserById = async (uid) => {
       const docSnap = await getDoc(docRef);
       return docSnap.exists();
     } catch (error) {
-      console.log("getProductsByCategory error by trycatch:", error);
       return true;
     }
   } else {
@@ -102,9 +96,7 @@ export const getProductsByCategory = async (category, docLimit) => {
           orderBy("updatedAt", "desc")
         );
       }
-      const documentSnapshots = await getDocs(q).catch((error) => {
-        console.log("getProductsByCategory error:", error);
-      });
+      const documentSnapshots = await getDocs(q).catch((error) => {});
       let data = documentSnapshots?.docs.map((doc) => ({
         ...doc.data(),
         productId: doc.id,
@@ -112,9 +104,7 @@ export const getProductsByCategory = async (category, docLimit) => {
       const lastVisibleItem =
         documentSnapshots?.docs[documentSnapshots.docs.length - 1];
       return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
-    } catch (error) {
-      console.log("getProductsByCategory error by trycatch:", error);
-    }
+    } catch (error) {}
   } else {
     return null;
   }
@@ -144,10 +134,8 @@ export const getUsersOrders = async (uid, docLimit) => {
         where("uid", "==", uid),
         orderBy("updatedAt", "desc")
       );
-      const documentSnapshots = await getDocs(q).catch((error) => {
-        console.log("getUsersOrders error:", error);
-      });
-      console.log(documentSnapshots);
+      const documentSnapshots = await getDocs(q).catch((error) => {});
+
       let data = documentSnapshots?.docs.map((doc) => ({
         ...doc.data(),
         productId: doc.id,
@@ -155,9 +143,7 @@ export const getUsersOrders = async (uid, docLimit) => {
       const lastVisibleItem =
         documentSnapshots?.docs[documentSnapshots.docs.length - 1];
       return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
-    } catch (error) {
-      console.log("getProductsByCategory error by trycatch:", error);
-    }
+    } catch (error) {}
   } else {
     return null;
   }
@@ -172,11 +158,10 @@ export const getOrderById = async (orderId) => {
       if (docSnap.exists()) {
         return docSnap.data();
       } else {
-        console.log("No such document!");
+        alert("No such document!");
         return "No such document!";
       }
     } catch (error) {
-      console.log("getProductsByCategory error by trycatch:", error);
       return null;
     }
   } else {
@@ -193,16 +178,13 @@ export const getAllFeaturedProducts = async (docLimit) => {
       orderBy("createdAt", "desc"),
       limit(parseInt(docLimit))
     );
-    const documentSnapshots = await getDocs(q).catch((error) => {
-      console.log("getProductsByCategory error:", error);
-    });
-    console.log(documentSnapshots);
+    const documentSnapshots = await getDocs(q).catch((error) => {});
+
     let data = documentSnapshots?.docs.map((doc) => ({
       ...doc.data(),
       productId: doc.id,
     }));
-    console.log(data);
-    // console.log(data, q, "this is...", d);
+
     const lastVisibleItem =
       documentSnapshots?.docs[documentSnapshots.docs.length - 1];
     return {
@@ -210,7 +192,6 @@ export const getAllFeaturedProducts = async (docLimit) => {
       lastVisibleItem: JSON.stringify(lastVisibleItem),
     };
   } catch (error) {
-    console.log("getProductsByCategory error by trycatch:", error);
     return null;
   }
 };
@@ -224,9 +205,7 @@ export const getAllTrendingProducts = async (docLimit) => {
       orderBy("createdAt", "desc"),
       limit(parseInt(docLimit))
     );
-    const documentSnapshots = await getDocs(q).catch((error) => {
-      console.log("getProductsByCategory error:", error);
-    });
+    const documentSnapshots = await getDocs(q).catch((error) => {});
     let data = documentSnapshots?.docs.map((doc) => ({
       ...doc.data(),
       productId: doc.id,
@@ -235,16 +214,14 @@ export const getAllTrendingProducts = async (docLimit) => {
       documentSnapshots?.docs[documentSnapshots.docs.length - 1];
     return { data, lastVisibleItem: JSON.stringify(lastVisibleItem) };
   } catch (error) {
-    console.log("getProductsByCategory error by trycatch:", error);
     return null;
   }
 };
 
 export const createUser = async (data) => {
   if (data) {
-    console.log(data);
     const user = await getUserById(data.uid);
-    console.log({ user });
+
     if (!user) {
       await addDoc(collection(db, "users"), data);
       window.location.reload();
@@ -274,9 +251,7 @@ export const addOrder = async (isLoggedIn, data) => {
 export const deleteOrder = async (orderId) => {
   if (orderId) {
     if (window.confirm("Do you want to delete this order?")) {
-      await deleteDoc(doc(db, "orders", orderId)).catch((error) => {
-        console.log("An error occured durring order delete: ", error);
-      });
+      await deleteDoc(doc(db, "orders", orderId)).catch((error) => {});
       alert("order deleted!");
       window.location.reload();
       return "success";
@@ -295,9 +270,7 @@ export const updateOrderStatus = async (id, orderStatus) => {
       const docRef = doc(db, "orders", id);
       const data = { orderStatus };
 
-      const res = await updateDoc(docRef, data).catch((error) => {
-        console.log(error);
-      });
+      const res = await updateDoc(docRef, data).catch((error) => {});
       return { msg: "success", res };
     }
     return { msg: "" };
@@ -326,7 +299,7 @@ export const updateSpecificPropOnProduct = async (
 ) => {
   if (isLoggedIn) {
     const productData = { [propt]: value };
-    console.log(productData);
+
     await updateDoc(doc(db, "products", productId), productData);
     return "success";
   } else {
@@ -396,11 +369,10 @@ export const uploadImage = async (file, productId, folder) => {
     const storageRef = ref(storage, `${folder}/${productId}/${file.name}`);
     const s = await uploadBytes(storageRef, file).then((snapshot) => snapshot);
     const downloadURL = await getDownloadURL(storageRef, s);
-    // console.log(downloadURL);
+
     const fullPath = s.metadata.fullPath;
     return { downloadURL, fullPath };
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -415,9 +387,7 @@ export const updateUserStatus = async (uid, userStatus) => {
       const docRef = doc(db, "users", uid);
       const data = { blocked: userStatus };
 
-      const res = await updateDoc(docRef, data).catch((error) => {
-        console.log(error);
-      });
+      const res = await updateDoc(docRef, data).catch((error) => {});
       return { msg: "success", res };
     }
     return { msg: "" };
