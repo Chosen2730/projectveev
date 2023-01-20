@@ -115,7 +115,8 @@ const Checkout = () => {
     });
   };
 
-  const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52";
+  // const publicKey = "pk_test_24ddae0d0c49925a3937ab60331bcc4f3d594c52";
+  const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 
   const componentProps = {
     email: informationDetails.email,
