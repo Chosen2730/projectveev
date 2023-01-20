@@ -85,9 +85,6 @@ const CustomOrder = () => {
         Our custom order page allows you to request a design that suits a
         specific need. <br />
         <br />
-        Our custom order page allows you to request a design that suits a
-        specific need. <br />
-        <br />
         After submitting your request, a member of the team will reach out to
         you for confirmations. This is to ensure that we satisfy your requests
         excellently. <br />

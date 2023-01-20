@@ -15,20 +15,20 @@ import omo from "../images/omo.jpg";
 export default function Slider() {
   const testimonial = [
     {
-      name: "Tosin Atewogboye",
+      name: "Tosin N.",
       content:
         "Thank you for our dresses, you did well, we received lots of compliments.",
       img: tosin,
     },
     {
-      name: "Pat Irete",
+      name: "Pat I.",
       content:
         "The Agbada I bought for my husband get swag o. I love it, He loves it, the fabrics,  the colours,  and the embroidery are lovely. Thank you so much more grace, I'll definitely buy more..",
       img: pat,
     },
-    { name: "Akokwu Victor", content: "Quality always", img: victor },
+    { name: "Victor A.", content: "Quality always", img: victor },
     {
-      name: "Okeoghene Omoluwabi",
+      name: "Okeoghene O.",
       content:
         "A growing brand with particular interest in customer satisfaction. When a business is built on integrity and what drives it is ensuring that the customers get premium quality, then you can be sure to go to sleep when dealing with VeeV clothiers.",
       img: omo,
