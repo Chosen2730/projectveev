@@ -107,7 +107,7 @@ const Nav = () => {
                 onClick={() => {
                   setIsDropDown(false);
                   dispatch(login());
-                }}
+                }}  
               >
                 <i className='text-lg'>
                   <AiOutlineLogin />
