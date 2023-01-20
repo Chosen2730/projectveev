@@ -69,7 +69,6 @@ const Checkout = () => {
   const onApproveOrder = (data, actions) => {
     return actions.order.capture().then(async (details) => {
       const name = details.payer.name.given_name;
-      console.log(`Transaction completed by ${name}`);
       const message = details.status === "COMPLETED" && "Approved";
       const status = details.status === "COMPLETED" && "success";
       const trxref = details.id;
@@ -92,11 +91,9 @@ const Checkout = () => {
         shippingAddress: informationDetails.address,
         phone: informationDetails.tel,
       };
-      console.log(data);
       await addOrder(isLoggedIn, data);
 
       cartItems.forEach((item) => {
-        // console.log(item);
         if (item.productId) {
           disPatcha(removeItem({ id: item.productId }));
         }

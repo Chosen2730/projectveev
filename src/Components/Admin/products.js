@@ -99,10 +99,8 @@ const Products = () => {
     );
     return unsubscribe;
   }, [dispatch]);
-  error && console.log(error);
 
   useEffect(() => {
-    console.log(allProducts);
     const inStock = allProducts.filter((pro) => pro.status === "In Stock");
     const outOfStock = allProducts.filter(
       (pro) => pro.status === "Out of Stock"
@@ -114,7 +112,6 @@ const Products = () => {
       setProductOutOfStock(outOfStock.length);
     }
   }, [allProducts]);
-  console.log(productInStock);
   const updateStatus = (productId) => {
     var value = "In stock";
     updateProductStatus(isLoggedIn, productId, value);
@@ -187,10 +184,8 @@ const Products = () => {
     const createProductRef = await createProduct(isLoggedIn, data, allImages);
     setIsLoading(false);
     dispatch(setProductModalShown());
-    console.log({ createProductRef });
     setIsLoading(false);
   };
-  // console.log(isLoading);
   const goToSingleProduct = (id) => {
     navigate(`/admin/product/${id}`);
   };
@@ -212,7 +207,6 @@ const Products = () => {
   };
 
   const handleDeleteImage = async (image) => {
-    console.log("image", image);
     if (image?.name) {
       const filteredImages = allImages.filter(
         (item) => item.name !== image.name
@@ -226,7 +220,6 @@ const Products = () => {
       setAllImages(filteredImages);
     }
   };
-  console.log(allProducts);
 
   return (
     <div className='p-4'>
@@ -620,7 +613,6 @@ const EditForm = (props) => {
       [e.target.name]: e.target.value,
       // allImages,
     });
-    // console.log(currentItem);
   };
 
   const imageUploadHandler = async (e) => {
@@ -657,7 +649,6 @@ const EditForm = (props) => {
 
   const handleSubmitEdit = async () => {
     setIsLoading(true);
-    // console.log(currentItemToEdit.productId, currentItemToEdit);
     await updateProduct(currentItemToEdit.productId, currentItemToEdit);
     setIsLoading(false);
     dispatch(setProductEditModalShown());
@@ -672,10 +663,7 @@ const EditForm = (props) => {
     const filteredImageURLS = currentItemToEdit.imageURLS.filter(
       (item) => item.id !== image.id
     );
-    console.log(
-      { filteredImageURLS },
-      { ...currentItemToEdit, imageURLS: filteredImageURLS }
-    );
+
     await updateProduct(currentItemToEdit.productId, {
       ...currentItemToEdit,
       imageURLS: filteredImageURLS,
@@ -685,7 +673,6 @@ const EditForm = (props) => {
       imageURLS: filteredImageURLS,
     });
     await deleteImage(image.storagePath);
-    // console.log(currentItemToEdit);
   };
 
   return (
@@ -820,7 +807,6 @@ const EditForm = (props) => {
             <div className='preview_img grid place-items-center my-5 grid-cols-5'>
               {currentItemToEdit?.imageURLS &&
                 Array.from(currentItemToEdit?.imageURLS).map((image, i) => {
-                  // console.log(image);
                   return (
                     <div key={i} className='relative'>
                       <img

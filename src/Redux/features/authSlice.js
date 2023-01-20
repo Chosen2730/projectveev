@@ -10,6 +10,8 @@ const ADMINS = [
   "olaitantijesuni@gmail.com",
   "paulinnocent04@gmail.com",
   "cf.youvarsity@gmail.com",
+  "veev.clothiers@gmail.com",
+  "ogohprecious@gmail.com",
 ];
 
 const initialState = {
@@ -28,7 +30,6 @@ export const login = createAsyncThunk(
   async (arg, { rejectWithValue }) => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      console.log(res);
       const fullName = res._tokenResponse.fullName;
       const firstName = res._tokenResponse.firstName;
       const lastName = res._tokenResponse.lastName;
@@ -70,7 +71,7 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, { payload }) => {
       const user = payload.user;
-      console.log({ user });
+
       const newToken = user.stsTokenManager.accessToken;
       state.token = newToken;
       state.isLoggedIn = true;
@@ -80,14 +81,17 @@ const authSlice = createSlice({
         email: user.email,
         img: user.photoURL,
       };
+
       for (let i = 0; i < ADMINS.length; i++) {
         if (state.user.email === ADMINS[i]) {
           state.user.admin = true;
+          return;
         } else {
-          state.user.admin = true;
+          state.user.admin = false;
         }
       }
     },
+
     [login.rejected]: (state) => {
       state.isLoggedIn = false;
     },

@@ -21,7 +21,6 @@ const SingleOrder = () => {
     return fetch;
   }, [allOrders, orderID]);
 
-  console.log(order, allOrders);
   const {
     name,
     email,

@@ -49,8 +49,6 @@ const Orders = () => {
     return unsubscribe;
   }, []);
 
-  console.log({ allOrders, customOrders });
-
   const cancelled = allOrders.filter(
     (order) => order.orderStatus === "cancelled"
   );

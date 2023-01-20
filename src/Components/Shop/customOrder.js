@@ -6,40 +6,39 @@ import Spinner from "../Configs/spinner";
 
 const CustomOrder = () => {
   const defaultOrderItems = {
-    name: '',
-    email: '',
-    tel: '',
-    social: '',
-    text: '',
-    shoulder: '',
-    upper_waist: '',
-    lower_waist: '',
-    waist: '',
-    thigh: '',
-    dress_length: '',
-    bust: '',
-    top_length: '',
-    cuff: '',
-    full_hip: '',
-    knee: '',
-    tommy: '',
-    sleeve_length: '',
-    round_sleeve: '',
-    skirt_trouser_length: '',
-    ankle: '',
-    message: '',
-    quatity: '',
+    name: "",
+    email: "",
+    tel: "",
+    social: "",
+    text: "",
+    shoulder: "",
+    upper_waist: "",
+    lower_waist: "",
+    waist: "",
+    thigh: "",
+    dress_length: "",
+    bust: "",
+    top_length: "",
+    cuff: "",
+    full_hip: "",
+    knee: "",
+    tommy: "",
+    sleeve_length: "",
+    round_sleeve: "",
+    skirt_trouser_length: "",
+    ankle: "",
+    message: "",
+    quatity: "",
     imageUrls: [],
     _createdAt: new Date().toDateString(),
     _updatedAt: new Date().toDateString(),
-  }
+  };
   // const [fabricImages, setFabricImages] = useState([]);
   const [styleImages, setStyleImages] = useState([]);
   const [orderItems, setOrderItems] = useState(defaultOrderItems);
   const [isLoading, setIsLoading] = useState(false);
   // const uploadFabric = (e) => {
   //   setFabricImages(e.target.files);
-  //   console.log(fabricImages);
   // };
   const uploadStyles = (e) => {
     const newImage = Array.prototype.slice.call(e.target.files);
@@ -60,13 +59,13 @@ const CustomOrder = () => {
       [e.target.name]: e.target.value,
       // allImages,
     });
-    // console.log(orderItems);
   };
 
   const handleDeleteImage = (image) => {
-    const filteredImages = styleImages.filter((item) => item.name !== image.name);
+    const filteredImages = styleImages.filter(
+      (item) => item.name !== image.name
+    );
     setStyleImages(filteredImages);
-    console.log(filteredImages);
     if (filteredImages.length < 1) {
       document.getElementById("imagePicker").value = "";
     }
@@ -75,11 +74,9 @@ const CustomOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(orderItems);
-    await createCustomOrder(orderItems, styleImages)
+    await createCustomOrder(orderItems, styleImages);
     setIsLoading(false);
-
-  }
+  };
 
   return (
     <div>
@@ -111,7 +108,13 @@ const CustomOrder = () => {
         info@veevclothiers.com or WhatsApp +2348067891075; +2349039878244
       </h2>
 
-      <form action='' className='text-sm' onSubmit={(e) => { alert('hello') }}>
+      <form
+        action=''
+        className='text-sm'
+        onSubmit={(e) => {
+          alert("hello");
+        }}
+      >
         <div>
           <h2>Personal Information</h2>
           <div className='grid grid-cols-2 gap-4'>
@@ -372,13 +375,14 @@ const CustomOrder = () => {
             setItem={handleInputChange}
           />
         </div>
-        <button className='bg-black rounded-xl px-8 py-4 text-white' type="submit"
-          onClick={(e) => { handleSubmit(e) }}>
-          {isLoading ? (
-            <Spinner loaderText={"Submiting"} />
-          ) :
-            "Submit"
-          }
+        <button
+          className='bg-black rounded-xl px-8 py-4 text-white'
+          type='submit'
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          {isLoading ? <Spinner loaderText={"Submiting"} /> : "Submit"}
         </button>
       </form>
     </div>

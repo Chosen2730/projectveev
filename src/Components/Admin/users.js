@@ -28,14 +28,12 @@ const Users = () => {
     };
     fetch();
   }, [limit]);
-  // console.log({activeUsers, blockedUsers});
 
   const updateStatus = async () => {
     var userStatus = false;
     await updateUserStatus(uid, userStatus);
   };
 
-  console.log({ allUsers });
   const userHeader = ["Name", "Email"];
   return (
     <div className='p-4'>
@@ -82,7 +80,6 @@ const Users = () => {
           </div>
           <div className='p-5'>
             {allUsers.map(({ displayName, email, photoURL }, i) => {
-              console.log(photoURL);
               return (
                 <div key={i} className='grid grid-cols-2 gap-6 my-3 text-xs'>
                   <div className='flex items-center gap-4'>
