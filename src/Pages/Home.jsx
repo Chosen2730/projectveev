@@ -15,9 +15,11 @@ const Home = () => {
   }, []);
   const [trendingProduct, setTrendingProduct] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = getAllProducts(
       (querySnapshot) => {
         const updatedItems = querySnapshot.docs.map((docSnapshot) => ({
@@ -33,6 +35,7 @@ const Home = () => {
         );
         setTrendingProduct(trend);
         setFeaturedProduct(feat);
+        setLoading(false);
       },
       (error) => setError(error)
     );
@@ -44,8 +47,12 @@ const Home = () => {
       <Hero />
       <div className='max-w-6xl mx-auto p-8 relative z-10'>
         <Slide data={category} />
-        <Container name='new & featured' data={featuredProduct} />
-        <Container name='trending' data={trendingProduct} />
+        <Container
+          name='new & featured'
+          loading={loading}
+          data={featuredProduct}
+        />
+        <Container name='trending' loading={loading} data={trendingProduct} />
         <Testimonial />
         <Subscribe />
       </div>

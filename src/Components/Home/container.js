@@ -4,10 +4,26 @@ import { AiFillEye } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import MyImage from "../../Utils/imageLoader";
+import Spinner from "../Configs/spinner";
+import LazyLoad from "react-lazyload";
+import logo from "../../images/logo3.png";
 
-const Container = ({ name, data }) => {
+const Container = ({ name, data, loading }) => {
   const navigate = useNavigate();
+
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-[300px] w-full'>
+        <Spinner loaderText='Loading' />
+      </div>
+    );
+  } else if (data?.length < 1) {
+    return (
+      <div className='flex items-center justify-center h-[300px] w-full'>
+        <h1 className='text-base italic'>No {name} product at the moment</h1>
+      </div>
+    );
+  }
   return (
     <div className='my-20'>
       <div className='flex gap-3 items-center my-6'>
@@ -33,22 +49,28 @@ const Container = ({ name, data }) => {
               discount = (parseInt(discountValue) / 100) * price;
               const newPrice = price - discount;
               const imageUrl = (imageURLS && imageURLS[0].url) || "";
-              // const image = {
-              //   src: imageUrl,
-              //   height: 500,
-              //   width: 150,
-              //   alt: "item",
-              // };
+
               return (
                 <div
                   className='flex flex-col items-center justify-center relative'
                   key={id}
                 >
-                  <img
+                  {/* <img
                     className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
                     src={imageUrl}
                     alt={item}
-                  />
+                  /> */}
+                  <LazyLoad
+                    height={200}
+                    placeholder={<img src={logo} />}
+                    // debounce={500}
+                  >
+                    <img
+                      className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
+                      alt='text'
+                      src={imageUrl}
+                    />
+                  </LazyLoad>
                   <div className='my-3 text-center'>
                     {discountValue ? (
                       <div>

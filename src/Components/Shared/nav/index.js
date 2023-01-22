@@ -98,7 +98,7 @@ const Nav = () => {
                   <i className='text-lg'>
                     <AiOutlineLogout />
                   </i>
-                  <h1 className='capitalize'>Logout</h1>
+                  <h1 className='capitalize'>Sign Out</h1>
                 </div>
               </div>
             ) : (
@@ -107,12 +107,12 @@ const Nav = () => {
                 onClick={() => {
                   setIsDropDown(false);
                   dispatch(login());
-                }}  
+                }}
               >
                 <i className='text-lg'>
                   <AiOutlineLogin />
                 </i>
-                <h1 className='capitalize'>Login</h1>
+                <h1 className='capitalize'>Sign In</h1>
               </div>
             )}
           </div>

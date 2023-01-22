@@ -40,11 +40,6 @@ const ProductContainer = ({ data, loading }) => {
                 className='flex flex-col items-center justify-center relative'
                 key={id}
               >
-                {/* <img
-                  className='w-full h-[500px] object-cover shadow-xl shadow-gray-100 rounded-md'
-                  src={imageUrl}
-                  alt={title}
-                /> */}
                 <LazyLoad
                   height={200}
                   placeholder={<img src={logo} />}
